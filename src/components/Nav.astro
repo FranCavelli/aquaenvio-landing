@@ -60,16 +60,35 @@ const links = [
 </header>
 
 <script>
-  // Smooth scroll en los anchors internos (#funciones, #app, etc.). Hecho por JS
-  // para que funcione incluso con "reducir movimiento" activado.
+  // Smooth scroll en los anchors internos (#funciones, #app, etc.). Animado a
+  // mano con requestAnimationFrame para que funcione SIEMPRE, incluso con
+  // "reducir movimiento" activado (que convierte el scroll suave nativo en salto).
+  const NAV_OFFSET = 80; // alto aprox del nav fijo
+
+  function smoothTo(targetY: number, duration = 650) {
+    const startY = window.scrollY;
+    const dist = targetY - startY;
+    if (Math.abs(dist) < 2) return;
+    let t0: number | null = null;
+    function step(ts: number) {
+      if (t0 === null) t0 = ts;
+      const p = Math.min((ts - t0) / duration, 1);
+      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; // easeInOutQuad
+      window.scrollTo(0, startY + dist * e);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href')?.slice(1);
       if (!id) return;
-      const el = document.getElementById(id) || (id === 'top' ? document.body : null);
+      const el = id === 'top' ? document.body : document.getElementById(id);
       if (!el) return;
       e.preventDefault();
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const targetY = id === 'top' ? 0 : el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+      smoothTo(targetY);
       history.pushState(null, '', '#' + id);
     });
   });
