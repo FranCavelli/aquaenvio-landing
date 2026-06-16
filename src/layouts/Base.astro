@@ -69,5 +69,17 @@ const {
     <script>
       import '../scripts/animations.ts';
     </script>
+
+    <!-- Registro de visita (IP + ubicación vía Cloudflare) en el backend de la app.
+         Best-effort, fire-and-forget; el server dedup 1 por IP cada 30 min. -->
+    <script is:inline>
+      (function () {
+        try {
+          var url = 'https://aquaenvio.sbs/api/cotizar/visita?origen=landing';
+          if (navigator.sendBeacon) navigator.sendBeacon(url);
+          else fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true }).catch(function () {});
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>
