@@ -1,0 +1,22 @@
+{
+  "name": "aquaenvio-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing moderna de AquaEnvio (Astro + GSAP + Three.js)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "gsap": "^3.13.0",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  }
+}

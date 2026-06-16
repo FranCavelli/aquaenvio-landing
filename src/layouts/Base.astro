@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'AquaEnvio · Gestión para distribuidoras de agua',
+  description = 'Repartos, ventas, clientes, caja y mapas en una sola app. El repartidor vende desde el celular, incluso sin señal, y vos ves todo en tiempo real.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a2e4d" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/og.jpg" />
+
+    <!-- Fuente Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <!-- Quita la clase no-js apenas corre JS -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+    <noscript>
+      <style>[data-reveal]{opacity:1;transform:none}</style>
+    </noscript>
+  </head>
+  <body class="bg-slate-50 text-slate-800 overflow-x-hidden">
+    <slot />
+
+    <!-- Animaciones globales (GSAP + ScrollTrigger) -->
+    <script>
+      import '../scripts/animations.ts';
+    </script>
+  </body>
+</html>

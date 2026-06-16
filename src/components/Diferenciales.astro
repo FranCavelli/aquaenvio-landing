@@ -1,0 +1,45 @@
+---
+const items = [
+  {
+    t: 'Funciona sin señal',
+    d: 'El repartidor carga la venta offline y se sincroniza al volver la conexión.',
+    icon: '<path d="m2 2 20 20"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><line x1="12" x2="12.01" y1="20" y2="20"/>',
+  },
+  {
+    t: 'Ubicación en vivo',
+    d: 'Seguí a tus repartidores y clientes en el mapa, en tiempo real.',
+    icon: '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+  },
+  {
+    t: 'Una o varias empresas',
+    d: 'Multiempresa con roles y módulos configurables por empresa.',
+    icon: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  },
+  {
+    t: 'Sin instalación',
+    d: 'Entra desde el navegador o se instala como app. Sin permanencia.',
+    icon: '<path d="M16 16v-2a4 4 0 0 0-8 0v2"/><rect width="20" height="14" x="2" y="6" rx="2"/><path d="M12 13v.01"/>',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+  <div
+    class="grid gap-5 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:grid-cols-2 sm:p-8 lg:grid-cols-4"
+    data-reveal
+  >
+    {
+      items.map((i) => (
+        <div class="flex items-start gap-3">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={i.icon} />
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-slate-800">{i.t}</p>
+            <p class="mt-0.5 text-xs leading-relaxed text-slate-500">{i.d}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,46 @@
+---
+import { whatsappUrl, mailtoUrl } from '../config';
+---
+
+<section id="contacto" class="mx-auto max-w-6xl px-4 pb-24 pt-8">
+  <div class="relative overflow-hidden rounded-3xl px-6 py-16 text-center text-white shadow-2xl" data-reveal>
+    <!-- Imagen de fondo opcional: dejá /public/images/cta.jpg -->
+    <img
+      src="/images/cta.jpg"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover"
+      onerror="this.style.display='none'"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-aqua-900 via-aqua-800/95 to-aqua-700/90"></div>
+    <!-- Blob decorativo -->
+    <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-cyan-400/25 blur-3xl"></div>
+
+    <div class="relative mx-auto max-w-xl">
+      <h2 class="text-2xl font-bold tracking-tight sm:text-4xl">
+        Empezá tu primera semana gratis
+      </h2>
+      <p class="mx-auto mt-3 max-w-md text-cyan-100/80">
+        Escribinos por WhatsApp o mail y coordinamos una demo con tus datos. Sin compromiso.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:-translate-y-0.5 hover:bg-blue-700"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          WhatsApp
+        </a>
+        <a
+          href={mailtoUrl}
+          class="inline-flex items-center gap-2 rounded-full bg-white/10 px-7 py-3.5 text-sm font-semibold text-white ring-1 ring-white/20 backdrop-blur transition hover:bg-white/15"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Enviar mail
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

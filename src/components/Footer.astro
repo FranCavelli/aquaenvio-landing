@@ -1,0 +1,26 @@
+---
+import { whatsappUrl, mailtoUrl } from '../config';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-slate-200 bg-white py-10">
+  <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-slate-400 sm:flex-row">
+    <div class="flex items-center gap-2 text-slate-700">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C4 11.1 3 13 3 15a7 7 0 0 0 7 7Z"/></svg>
+      <span class="font-bold">AquaEnvio</span>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-slate-600 transition hover:text-cyan-600">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        WhatsApp
+      </a>
+      <a href={mailtoUrl} class="inline-flex items-center gap-1.5 text-slate-600 transition hover:text-cyan-600">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Mail
+      </a>
+    </div>
+
+    <span>© {year} AquaEnvio · Gestión de distribución de agua</span>
+  </div>
+</footer>

@@ -1,0 +1,41 @@
+---
+/**
+ * Tile de video en loop (estilo "GIF"): autoplay, mudo, en bucle.
+ *  - `src`  → archivo en /public (ej: "/videos/dashboard.mp4").
+ *  - `poster` → imagen de respaldo mientras carga / si el video no anda (ej: "/images/dashboard.jpg").
+ *  - Detrás queda el mismo placeholder que ImagePlaceholder por si falta todo.
+ */
+interface Props {
+  src: string;
+  poster?: string;
+  label?: string;
+  ratio?: string; // clase de aspect-ratio de Tailwind
+  class?: string;
+}
+
+const { src, poster, label = '', ratio = 'aspect-[4/3]', class: cls = '' } = Astro.props;
+---
+
+<div class={`group relative overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200/80 ${ratio} ${cls}`}>
+  <!-- Placeholder de fondo (se ve solo si no carga ni el video ni el póster) -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,#ecfeff_0%,#eff6ff_100%)] p-4 text-center">
+    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-cyan-500 shadow-sm ring-1 ring-cyan-100">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+      </svg>
+    </div>
+    {label && <span class="text-xs font-medium text-cyan-600/80">{label}</span>}
+  </div>
+
+  <video
+    src={src}
+    poster={poster}
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    aria-label={label}
+    class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+  ></video>
+</div>
