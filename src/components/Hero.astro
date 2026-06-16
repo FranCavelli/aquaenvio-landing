@@ -1,10 +1,14 @@
 ---
 // Ventas que "entran" animadas alrededor de la gota (efecto de actividad en vivo).
 const ventas = [
-  { nombre: 'Mili', dir: 'Las Heras 380', monto: '$ 10.000', pos: 'left-0 top-10' },
-  { nombre: 'Carlos', dir: 'San Martín 1240', monto: '$ 6.500', pos: 'right-0 top-24' },
-  { nombre: 'Kiosco La Esquina', dir: 'Belgrano 75', monto: '$ 18.200', pos: 'left-2 bottom-28' },
-  { nombre: 'Vero', dir: 'Mitre 920', monto: '$ 4.200', pos: 'right-3 bottom-12' },
+  { nombre: 'Mili', dir: 'Las Heras 380', monto: '$ 10.000', pos: 'left-0 top-6' },
+  { nombre: 'Carlos', dir: 'San Martín 1240', monto: '$ 6.500', pos: 'right-1 top-10' },
+  { nombre: 'Kiosco La Esquina', dir: 'Belgrano 75', monto: '$ 18.200', pos: 'left-6 top-36' },
+  { nombre: 'Vero', dir: 'Mitre 920', monto: '$ 4.200', pos: 'right-0 top-44' },
+  { nombre: 'Bar El Trébol', dir: 'Rivadavia 540', monto: '$ 22.000', pos: 'left-1 bottom-44' },
+  { nombre: 'Norma', dir: 'Sarmiento 88', monto: '$ 5.800', pos: 'right-6 bottom-48' },
+  { nombre: 'Despensa Sur', dir: 'Centenario 1500', monto: '$ 14.300', pos: 'left-10 bottom-14' },
+  { nombre: 'Lucas', dir: '9 de Julio 333', monto: '$ 7.700', pos: 'right-2 bottom-16' },
 ];
 ---
 
@@ -147,14 +151,17 @@ const ventas = [
     const cards = gsap.utils.toArray<HTMLElement>('.venta-card');
     if (cards.length) {
       gsap.set(cards, { opacity: 0 });
-      const step = 1.6; // cada cuánto entra una nueva
-      const visible = 2; // cuánto se queda visible
-      const cycle = cards.length * step; // ciclo completo de cada tarjeta
-      // Cada tarjeta tiene su propio ciclo desfasado → se solapan (una entra
-      // mientras otra todavía está visible).
+      const visible = 1.8; // cuánto se queda visible
+      const active = 0.5 + visible + 0.5; // entra + queda + sale
+      // Tiempos de entrada (s) dentro del ciclo. Algunos casi coinciden (0/0.35 y
+      // 3.5/3.85) → a veces aparecen 2 casi al mismo tiempo. El ciclo es igual
+      // para todas, así el patrón se repite parejo y en bucle.
+      const entradas = [0, 0.35, 1.8, 3.5, 3.85, 5.3, 6.7, 8.1];
+      const cycle = 9.6;
       cards.forEach((c, i) => {
+        const t = entradas[i % entradas.length];
         gsap
-          .timeline({ repeat: -1, delay: 1 + i * step, repeatDelay: cycle - (1 + visible) })
+          .timeline({ repeat: -1, delay: 1 + t, repeatDelay: cycle - active })
           .to(c, { opacity: 1, duration: 0.5, ease: 'power1.out' })
           .to(c, { opacity: 0, duration: 0.5, ease: 'power1.in' }, `+=${visible}`);
       });
