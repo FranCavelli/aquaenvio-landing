@@ -28,14 +28,35 @@ const { src, poster, label = '', ratio = 'aspect-[4/3]', class: cls = '' } = Ast
   </div>
 
   <video
-    src={src}
-    poster={poster}
-    autoplay
+    data-src={src}
+    data-poster={poster}
     loop
     muted
     playsinline
-    preload="metadata"
+    preload="none"
     aria-label={label}
-    class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+    class="lazy-video absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
   ></video>
 </div>
+
+<script>
+  // Lazy-load: cada video carga su fuente/póster y se reproduce SOLO cuando se
+  // acerca al viewport (y se pausa al salir). Evita bajar ~MB de video/imágenes
+  // en la carga inicial → mejora LCP y ancho de banda.
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) {
+          if (v.dataset.poster && !v.poster) v.poster = v.dataset.poster;
+          if (v.dataset.src && !v.src) v.src = v.dataset.src;
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    },
+    { rootMargin: '300px 0px' }
+  );
+  document.querySelectorAll<HTMLVideoElement>('video.lazy-video').forEach((v) => io.observe(v));
+</script>
