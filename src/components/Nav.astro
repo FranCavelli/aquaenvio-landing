@@ -1,11 +1,17 @@
 ---
 import { whatsappUrl, mailtoUrl } from '../config';
 
+interface Props {
+  base?: string; // '' en el home (scroll suave); '/' en otras páginas (vuelve al home)
+}
+const { base = '' } = Astro.props;
+
 const links = [
-  { href: '#app', label: 'La app' },
-  { href: '#funciones', label: 'Funciones' },
-  { href: '#galeria', label: 'Capturas' },
-  { href: '#calculadora', label: 'Precio' },
+  { href: `${base}#app`, label: 'La app' },
+  { href: `${base}#funciones`, label: 'Funciones' },
+  { href: `${base}#galeria`, label: 'Capturas' },
+  { href: `${base}#calculadora`, label: 'Precio' },
+  { href: '/comparativa', label: 'Comparativa' },
 ];
 ---
 
@@ -15,7 +21,7 @@ const links = [
   data-nav
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5">
-    <a href="#top" class="flex items-center gap-2 text-white" data-nav-logo>
+    <a href={`${base}#top`} class="flex items-center gap-2 text-white" data-nav-logo>
       <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-200">
           <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>

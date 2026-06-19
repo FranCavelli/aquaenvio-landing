@@ -4,12 +4,41 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  path?: string; // ruta para el canonical, ej: "/comparativa"
+  ogImage?: string;
 }
 
 const {
-  title = 'AquaEnvio · Gestión para distribuidoras de agua',
-  description = 'Repartos, ventas, clientes, caja y mapas en una sola app. El repartidor vende desde el celular, incluso sin señal, y vos ves todo en tiempo real.',
+  title = 'AquaEnvio · Software para reparto de agua, soda y soderías',
+  description = 'Sistema argentino para distribuidoras de agua y soda: repartos, clientes, envases, caja y facturación AFIP desde el celular del repartidor (anda sin señal). Probalo gratis 1 semana.',
+  path = '/',
+  ogImage = 'https://aquaenvio.com/images/og.jpg',
 } = Astro.props;
+
+const SITE = 'https://aquaenvio.com';
+const canonical = SITE + path;
+
+// Datos estructurados para Google (rich results de software/precio).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'AquaEnvio',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web, Android, iOS',
+  description,
+  url: SITE,
+  inLanguage: 'es-AR',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'ARS',
+    description: 'Suscripción mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
+  },
+  areaServed: { '@type': 'Country', name: 'Argentina' },
+  audience: {
+    '@type': 'BusinessAudience',
+    name: 'Soderías y distribuidoras de agua, soda y bebidas',
+  },
+};
 ---
 
 <!doctype html>
@@ -18,23 +47,29 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="keywords" content="software reparto de agua, sistema para sodería, app reparto de agua, gestión distribuidora de agua, software soda y agua, control de envases, facturación AFIP sodería, reparto de agua Argentina" />
     <meta name="theme-color" content="#0a2e4d" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
 
     <!-- Open Graph (preview en WhatsApp / redes) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AquaEnvio" />
-    <meta property="og:url" content="https://aquaenvio.com/" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_AR" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://aquaenvio.com/images/og.jpg" />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://aquaenvio.com/images/og.jpg" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Datos estructurados para Google -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
     <!-- Fuente Inter (carga no bloqueante) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
