@@ -1,0 +1,22 @@
+---
+// Encabezado oscuro reutilizable para páginas sueltas (SEO: trae el H1).
+// El nav es texto blanco, así que necesita un fondo oscuro arriba.
+interface Props {
+  badge?: string;
+  title: string;
+  subtitle?: string;
+}
+const { badge, title, subtitle } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 pt-28 pb-16 text-white">
+  <div class="pointer-events-none absolute -right-20 -top-10 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:32px_32px]"></div>
+  <div class="relative mx-auto max-w-4xl px-4 text-center">
+    {badge && (
+      <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-100 ring-1 ring-white/20">{badge}</span>
+    )}
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">{title}</h1>
+    {subtitle && <p class="mx-auto mt-4 max-w-2xl text-cyan-100/85">{subtitle}</p>}
+  </div>
+</section>
