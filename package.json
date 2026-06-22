@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Landing moderna de AquaEnvio (Astro + GSAP + Three.js)",
+  "description": "Landing moderna de Aquaenvio (Astro + GSAP + Three.js)",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

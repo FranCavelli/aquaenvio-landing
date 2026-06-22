@@ -1,20 +1,20 @@
 ---
 /**
- * Sección de video de introducción.
- * Para usar tu video: dejá el archivo en  /public/videos/intro.mp4
+ * SecciÃ³n de video de introducciÃ³n.
+ * Para usar tu video: dejÃ¡ el archivo en  /public/videos/intro.mp4
  * (opcional: un poster en /public/images/intro-poster.jpg).
- * Mientras no exista, se muestra el cartel "Poné tu video de introducción aquí".
+ * Mientras no exista, se muestra el cartel "PonÃ© tu video de introducciÃ³n aquÃ­".
  */
 ---
 
 <section id="video" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:py-24">
   <div class="mx-auto max-w-2xl text-center" data-reveal>
-    <span class="text-sm font-semibold text-cyan-600">Mirá cómo funciona</span>
+    <span class="text-sm font-semibold text-cyan-600">MirÃ¡ cÃ³mo funciona</span>
     <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-      AquaEnvio en 60 segundos
+      Aquaenvio en 60 segundos
     </h2>
     <p class="mt-3 text-slate-500">
-      Una recorrida rápida por la app, del reparto al dashboard.
+      Una recorrida rÃ¡pida por la app, del reparto al dashboard.
     </p>
   </div>
 
@@ -22,7 +22,7 @@
     class="relative mx-auto mt-10 aspect-video w-full max-w-4xl overflow-hidden rounded-3xl bg-slate-900 shadow-2xl ring-1 ring-black/10"
     data-reveal
   >
-    <!-- Placeholder (queda detrás del video; si el video no carga, se ve esto) -->
+    <!-- Placeholder (queda detrÃ¡s del video; si el video no carga, se ve esto) -->
     <div
       id="video-ph"
       class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 p-6 text-center text-white"
@@ -32,11 +32,11 @@
           <path d="M8 5v14l11-7z"></path>
         </svg>
       </div>
-      <p class="text-base font-semibold">Poné tu video de introducción aquí</p>
+      <p class="text-base font-semibold">PonÃ© tu video de introducciÃ³n aquÃ­</p>
       <p class="font-mono text-xs text-cyan-100/70">/public/videos/intro.mp4</p>
     </div>
 
-    <!-- Video real: aparece solo si dejás el archivo. Si no existe, se oculta. -->
+    <!-- Video real: aparece solo si dejÃ¡s el archivo. Si no existe, se oculta. -->
     <video
       class="absolute inset-0 h-full w-full bg-transparent object-cover"
       controls
