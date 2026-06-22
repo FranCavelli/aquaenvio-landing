@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'Aquaenvio Â· Software para reparto de agua, soda y soderÃ­as',
-  description = 'Sistema argentino para distribuidoras de agua y soda: repartos, clientes, envases, caja y facturaciÃ³n AFIP desde el celular del repartidor (anda sin seÃ±al). Probalo gratis 1 semana.',
+  title = 'Aquaenvio · Software para reparto de agua, soda y soderías',
+  description = 'Sistema argentino para distribuidoras de agua y soda: repartos, clientes, envases, caja y facturación AFIP desde el celular del repartidor (anda sin señal). Probalo gratis 1 semana.',
   path = '/',
   ogImage = 'https://aquaenvio.com/images/og.jpg',
 } = Astro.props;
@@ -31,12 +31,12 @@ const jsonLd = {
   offers: {
     '@type': 'Offer',
     priceCurrency: 'ARS',
-    description: 'SuscripciÃ³n mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
+    description: 'Suscripción mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
   },
   areaServed: { '@type': 'Country', name: 'Argentina' },
   audience: {
     '@type': 'BusinessAudience',
-    name: 'SoderÃ­as y distribuidoras de agua, soda y bebidas',
+    name: 'Soderías y distribuidoras de agua, soda y bebidas',
   },
 };
 ---
@@ -47,7 +47,7 @@ const jsonLd = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="keywords" content="software reparto de agua, sistema para soderÃ­a, app reparto de agua, gestiÃ³n distribuidora de agua, software soda y agua, control de envases, facturaciÃ³n AFIP soderÃ­a, reparto de agua Argentina" />
+    <meta name="keywords" content="software reparto de agua, sistema para sodería, app reparto de agua, gestión distribuidora de agua, software soda y agua, control de envases, facturación AFIP sodería, reparto de agua Argentina" />
     <meta name="theme-color" content="#0a2e4d" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -105,7 +105,7 @@ const jsonLd = {
       import '../scripts/animations.ts';
     </script>
 
-    <!-- Registro de visita (IP + ubicaciÃ³n vÃ­a Cloudflare) en el backend de la app.
+    <!-- Registro de visita (IP + ubicación vía Cloudflare) en el backend de la app.
          Best-effort, fire-and-forget; el server dedup 1 por IP cada 30 min. -->
     <script is:inline>
       (function () {
