@@ -11,6 +11,7 @@ const TARIFAS = {
   margenPct: 50, // ganancia (%)
   dolarTipo: 'blue',
   minimoArs: 15999, // piso en ARS
+  mesesBonificacion: 2, // los primeros N meses van al costo (con el mismo piso)
 };
 
 const costoUsd = (clientes: number, usuarios: number) =>
@@ -20,6 +21,10 @@ const costoUsd = (clientes: number, usuarios: number) =>
 
 const precioUsd = (clientes: number, usuarios: number) =>
   Math.ceil(costoUsd(clientes, usuarios) * (1 + TARIFAS.margenPct / 100));
+
+/** Precio de los primeros meses: al costo (sin margen) pero nunca bajo el piso. */
+const bonificadoArs = (clientes: number, usuarios: number, dolar: number) =>
+  Math.max(costoUsd(clientes, usuarios) * dolar, TARIFAS.minimoArs);
 
 const fmtArs = (n: number) =>
   '$ ' + Math.round(Number.isFinite(n) ? n : 0).toLocaleString('es-AR');
@@ -35,6 +40,7 @@ function init() {
   const arsEl = $('calc-ars');
   const usdEl = $('calc-usd');
   const loadingEl = $('calc-loading');
+  const bonifEl = $('calc-bonificado');
 
   if (!usuariosRange || !clientesRange || !arsEl || !usdEl) return;
 
@@ -57,9 +63,12 @@ function init() {
 
     if (ars == null) {
       arsEl!.textContent = '—';
+      if (bonifEl) bonifEl.textContent = '—';
       return;
     }
     if (loadingEl) loadingEl.style.display = 'none';
+    // Precio bonificado de los primeros meses (sin animación: es secundario).
+    if (bonifEl) bonifEl.textContent = fmtArs(bonificadoArs(clientes, usuarios, dolar!));
 
     // Animación de conteo del precio (GSAP).
     gsap.to(

@@ -77,6 +77,19 @@ import { whatsappUrl } from '../config';
       <div class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
         <span id="calc-usd">US$ 0</span>/mes · dólar blue
       </div>
+
+      <!-- Bonificación de bienvenida: los primeros meses van al costo. -->
+      <div class="mt-4 rounded-2xl bg-white/15 p-4 backdrop-blur">
+        <p class="text-xs font-semibold uppercase tracking-wide text-cyan-50/90">
+          Tus primeros 2 meses
+        </p>
+        <p id="calc-bonificado" class="num mt-0.5 text-3xl font-bold leading-none">—</p>
+        <p class="mt-1.5 text-xs leading-relaxed text-cyan-50/80">
+          Arrancás pagando <b>al costo</b>, sin nuestra ganancia. Recién al tercer mes
+          pasás al precio de arriba.
+        </p>
+      </div>
+
       <div class="my-6 h-px bg-white/20"></div>
       <p class="mb-3 text-sm font-medium text-cyan-50/90">
         Incluye todos los módulos, actualizaciones y soporte.
