@@ -16,7 +16,13 @@ const {
 } = Astro.props;
 
 const SITE = 'https://aquaenvio.com';
-const canonical = SITE + path;
+
+// El canonical SIEMPRE termina en barra. GitHub Pages sirve la pagina en
+// /funciones/ y responde 301 en /funciones; si el canonical apunta a la version
+// sin barra, Google llega a la pagina, lee un canonical que lleva a una
+// redireccion y NO la indexa. Paso de verdad: de 4 paginas quedaba indexada
+// solo la home, que es la unica donde la URL ya coincide consigo misma.
+const canonical = SITE + (path.endsWith('/') ? path : path + '/');
 
 // Datos estructurados para Google (rich results de software/precio).
 const jsonLd = {
