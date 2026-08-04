@@ -2,24 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
+import VideoIntro from '../components/VideoIntro.astro';
 import Showcase from '../components/Showcase.astro';
+import Contenido from '../components/Contenido.astro';
+import Novedades from '../components/Novedades.astro';
 import Comparativa from '../components/Comparativa.astro';
-import Features from '../components/Features.astro';
 import Calculadora from '../components/Calculadora.astro';
-import Diferenciales from '../components/Diferenciales.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
+
+// El recorrido de la página es el del envase: la etiqueta (qué es), lo de
+// adentro (la app andando), el contenido (los módulos), lo nuevo, la góndola
+// (comparación), la información del plan (precio) y el precinto (probarla).
 ---
 
 <Base>
   <Nav />
   <main>
     <Hero />
+    <VideoIntro />
     <Showcase />
+    <Contenido />
+    <Novedades />
     <Comparativa />
-    <Features />
     <Calculadora />
-    <Diferenciales />
     <CTA />
   </main>
   <Footer />
