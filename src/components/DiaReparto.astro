@@ -1,0 +1,98 @@
+---
+/**
+ * "Un día de reparto" — la historia en cuatro cuadros: dos clips en loop
+ * (el problema: las hojas) y dos fotos (la solución: el reparto tranquilo).
+ * Los clips cargan y arrancan recién al acercarse al viewport.
+ */
+const cuadros = [
+  {
+    tipo: 'video',
+    src: '/videos/veo-papeles.mp4',
+    t: 'Las hojas se llenan de tachaduras',
+    d: 'Quién pagó, quién debe, cuántos envases quedaron. Todo en papeles que se mezclan.',
+  },
+  {
+    tipo: 'video',
+    src: '/videos/veo-viento.mp4',
+    t: 'Y un día, la plata se vuela',
+    d: 'Una hoja que se pierde es una venta que nadie cobra. Pasa todos los meses.',
+  },
+  {
+    tipo: 'foto',
+    src: '/images/foto-repartidor.jpg',
+    t: 'El reparto sale igual que siempre',
+    d: 'Mismo recorrido, mismos clientes. La única diferencia: el cuaderno ya no viaja en el camión.',
+  },
+  {
+    tipo: 'foto',
+    src: '/images/foto-dueno.jpg',
+    t: 'Y vos lo ves todo, al instante',
+    d: 'Cada venta cargada en la calle aparece en tu celular. Con el mate, sin sumar nada.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+  <div class="mx-auto max-w-2xl text-center" data-reveal>
+    <span class="text-sm font-semibold text-cyan-600">Un día de reparto</span>
+    <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+      De las hojas al celular
+    </h2>
+  </div>
+
+  <div class="mt-10 grid gap-6 sm:grid-cols-2">
+    {
+      cuadros.map((c) => (
+        <figure
+          class="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-black/5"
+          data-reveal
+        >
+          <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
+            {c.tipo === 'video' ? (
+              <video
+                data-src={c.src}
+                loop
+                muted
+                playsinline
+                preload="none"
+                class="dia-video absolute inset-0 h-full w-full object-cover"
+                aria-label={c.t}
+              />
+            ) : (
+              <img
+                src={c.src}
+                alt={c.t}
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
+          </div>
+          <figcaption class="p-5">
+            <p class="text-sm font-semibold text-slate-800">{c.t}</p>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">{c.d}</p>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  // Mismo patrón lazy que el resto del sitio: el clip carga y arranca solo
+  // cuando la tarjeta se acerca al viewport, y se pausa al salir.
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) {
+          if (v.dataset.src && !v.src) v.src = v.dataset.src;
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    },
+    { rootMargin: '250px 0px' }
+  );
+  document.querySelectorAll<HTMLVideoElement>('video.dia-video').forEach((v) => io.observe(v));
+</script>

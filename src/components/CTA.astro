@@ -8,7 +8,18 @@ import { whatsappUrl, mailtoUrl } from '../config';
     <!-- Blob decorativo -->
     <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-cyan-400/25 blur-3xl"></div>
 
-    <div class="relative mx-auto max-w-xl">
+    <!-- La entrega feliz: foto al costado en desktop, arriba del texto queda mucho -->
+    <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[38%] lg:block">
+      <img
+        src="/images/foto-cliente.jpg"
+        alt="Clienta recibiendo su bidón en la puerta"
+        loading="lazy"
+        class="h-full w-full object-cover opacity-90"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-aqua-800 via-aqua-800/40 to-transparent"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-xl lg:mr-[38%]">
       <h2 class="text-2xl font-bold tracking-tight sm:text-4xl">
         Empezá tu primera semana gratis
       </h2>

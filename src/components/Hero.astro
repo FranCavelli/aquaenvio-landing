@@ -77,11 +77,23 @@ const ventas = [
       </dl>
     </div>
 
-    <!-- Gotas de agua (SVG, misma gota del logo) cayendo — solo en desktop -->
+    <!-- El reparto en vivo: clip en loop con las ventas entrando encima — solo en desktop -->
     <div class="relative hidden h-[560px] w-full lg:block" data-hero-3d>
-      <div class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-3xl"></div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="gota-hero absolute left-1/2 top-1/2 h-[92%] w-auto text-cyan-200/90"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path></svg>
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-3xl"></div>
+        <div class="absolute left-1/2 top-1/2 w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-white/20">
+          <video
+            class="block h-auto w-full object-cover"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/images/hero-clip-poster.jpg"
+            src="/videos/veo-camioneta.mp4"
+            aria-label="Repartidor de agua en la camioneta"></video>
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-aqua-900/35 via-transparent to-transparent"></div>
+        </div>
       </div>
 
       <!-- Ventas entrando: aparecen en distintos puntos alrededor de la gota -->
