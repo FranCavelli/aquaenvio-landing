@@ -1,9 +1,9 @@
 ---
 /**
  * Sección de video de introducción.
- * Para usar tu video: dejá el archivo en  /public/videos/intro.mp4
- * (opcional: un poster en /public/images/intro-poster.jpg).
- * Mientras no exista, se muestra el cartel "Poné tu video de introducción aquí".
+ * El archivo va en /public/videos/intro.mp4 (poster en /public/images/intro-poster.jpg).
+ * El video arranca "sellado": marco con degradé, botón de play grande al centro
+ * y sin la barra de controles; los controles nativos aparecen recién al dar play.
  */
 ---
 
@@ -19,34 +19,54 @@
     </p>
   </div>
 
+  <!-- Marco: recuadro con degradé de la marca alrededor del player -->
   <div
-    class="relative mx-auto mt-10 aspect-video w-full max-w-4xl overflow-hidden rounded-3xl bg-slate-900 shadow-2xl ring-1 ring-black/10"
+    class="mx-auto mt-10 w-full max-w-4xl rounded-[2rem] bg-gradient-to-br from-cyan-400 via-cyan-600 to-aqua-900 p-1.5 shadow-2xl"
     data-reveal
   >
-    <!-- Placeholder (queda detrás del video; si el video no carga, se ve esto) -->
-    <div
-      id="video-ph"
-      class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 p-6 text-center text-white"
-    >
-      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="ml-1 text-cyan-200">
-          <path d="M8 5v14l11-7z"></path>
-        </svg>
-      </div>
-      <p class="text-base font-semibold">Poné tu video de introducción aquí</p>
-      <p class="font-mono text-xs text-cyan-100/70">/public/videos/intro.mp4</p>
-    </div>
+    <div class="relative aspect-video w-full overflow-hidden rounded-[1.65rem] bg-slate-900">
+      <video
+        id="intro-player"
+        class="absolute inset-0 h-full w-full bg-transparent object-cover"
+        playsinline
+        preload="metadata"
+        poster="/images/intro-poster.jpg"
+        onerror="this.style.display='none'"
+      >
+        <source src="/videos/intro.mp4" type="video/mp4" />
+      </video>
 
-    <!-- Video real: aparece solo si dejás el archivo. Si no existe, se oculta. -->
-    <video
-      class="absolute inset-0 h-full w-full bg-transparent object-cover"
-      controls
-      playsinline
-      preload="metadata"
-      poster="/images/intro-poster.jpg"
-      onerror="this.style.display='none'"
-    >
-      <source src="/videos/intro.mp4" type="video/mp4" />
-    </video>
+      <!-- Botón de play al centro: se rompe el sello y aparecen los controles -->
+      <button
+        id="intro-play"
+        type="button"
+        aria-label="Reproducir la presentación de Aquaenvio"
+        class="group absolute inset-0 flex cursor-pointer items-center justify-center bg-slate-950/25 transition hover:bg-slate-950/10"
+      >
+        <span
+          class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 backdrop-blur transition group-hover:scale-110 group-hover:bg-white/30 sm:h-24 sm:w-24"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" class="ml-1.5 text-white drop-shadow">
+            <path d="M8 5v14l11-7z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
   </div>
 </section>
+
+<script>
+  const video = document.getElementById('intro-player') as HTMLVideoElement | null;
+  const play = document.getElementById('intro-play');
+  if (video && play) {
+    play.addEventListener('click', () => {
+      video.controls = true;
+      video.play().catch(() => {});
+      play.remove();
+    });
+    // Al terminar vuelve el poster; los controles quedan por si quiere repetirlo.
+    video.addEventListener('ended', () => {
+      video.load();
+    });
+  }
+</script>
