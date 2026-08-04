@@ -81,11 +81,12 @@ const ventas = [
     <div class="relative hidden h-[560px] w-full lg:block" data-hero-3d>
       <div class="absolute inset-0 overflow-hidden">
         <div class="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-3xl"></div>
-        <!-- Recorte sin fondo: el dueño con su escritorio, mate, monitor y bidón -->
+        <!-- Recorte sin fondo: el dueño con su escritorio, mate, monitor y bidón.
+             La máscara funde los bordes de abajo y los costados con el fondo. -->
         <img
           src="/images/oficina-cutout.webp"
           alt="Dueño de la distribuidora mirando las ventas del día en el monitor"
-          class="absolute bottom-4 left-1/2 w-[96%] -translate-x-1/2 drop-shadow-[0_28px_44px_rgba(4,20,40,0.5)]"
+          class="hero-cutout absolute bottom-4 left-1/2 w-[96%] -translate-x-1/2 drop-shadow-[0_28px_44px_rgba(4,20,40,0.5)]"
         />
         <!-- Chapita de marca permanente (mismo estilo que el video de presentación) -->
         <div class="absolute left-2 top-2 flex items-center gap-2 rounded-full bg-gradient-to-br from-[#0a2e4d] to-[#0a4a73] py-1.5 pl-2 pr-4 shadow-lg ring-1 ring-white/15">
@@ -126,6 +127,20 @@ const ventas = [
   </div>
 
   <style>
+    /* Fundido de los bordes del recorte: transparente abajo y en los costados. */
+    .hero-cutout {
+      -webkit-mask-image:
+        linear-gradient(to top, transparent 0%, #000 26%),
+        linear-gradient(to right, transparent 0%, #000 16%),
+        linear-gradient(to left, transparent 0%, #000 16%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to top, transparent 0%, #000 26%),
+        linear-gradient(to right, transparent 0%, #000 16%),
+        linear-gradient(to left, transparent 0%, #000 16%);
+      mask-composite: intersect;
+    }
+
     .gota-hero {
       transform: translate(-50%, -50%);
       animation: gotaFloat 5s ease-in-out infinite;
