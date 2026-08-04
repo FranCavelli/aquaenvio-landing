@@ -81,18 +81,16 @@ const ventas = [
     <div class="relative hidden h-[560px] w-full lg:block" data-hero-3d>
       <div class="absolute inset-0 overflow-hidden">
         <div class="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-3xl"></div>
-        <div class="absolute left-1/2 top-1/2 w-[94%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-white/20">
-          <img
-            src="/images/foto-oficina.jpg"
-            alt="Dueño de la distribuidora mirando las ventas del día en el monitor"
-            class="block h-auto w-full object-cover"
-          />
-          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-aqua-900/35 via-transparent to-transparent"></div>
-          <!-- Chapita de marca permanente (mismo estilo que el video de presentación) -->
-          <div class="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-gradient-to-br from-[#0a2e4d] to-[#0a4a73] py-1.5 pl-2 pr-4 shadow-lg ring-1 ring-white/15">
-            <img src="/favicon.svg" alt="" class="h-7 w-7" />
-            <span class="text-sm font-bold tracking-wide text-white">Aquaenvio</span>
-          </div>
+        <!-- Recorte sin fondo: el dueño con su escritorio, mate, monitor y bidón -->
+        <img
+          src="/images/oficina-cutout.webp"
+          alt="Dueño de la distribuidora mirando las ventas del día en el monitor"
+          class="absolute bottom-4 left-1/2 w-[96%] -translate-x-1/2 drop-shadow-[0_28px_44px_rgba(4,20,40,0.5)]"
+        />
+        <!-- Chapita de marca permanente (mismo estilo que el video de presentación) -->
+        <div class="absolute left-2 top-2 flex items-center gap-2 rounded-full bg-gradient-to-br from-[#0a2e4d] to-[#0a4a73] py-1.5 pl-2 pr-4 shadow-lg ring-1 ring-white/15">
+          <img src="/favicon.svg" alt="" class="h-7 w-7" />
+          <span class="text-sm font-bold tracking-wide text-white">Aquaenvio</span>
         </div>
       </div>
 
