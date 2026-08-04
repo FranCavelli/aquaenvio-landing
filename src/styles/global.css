@@ -20,6 +20,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ───── Títulos: Archivo variable, ancha y pesada (traída del rediseño) ─────
+   Solo los headings; el cuerpo sigue en Inter. */
+h1,
+h2,
+h3 {
+  font-family: 'Archivo', var(--font-sans);
+  font-variation-settings: 'wdth' 115, 'wght' 800;
+  letter-spacing: -0.025em;
+}
+
 /* Números tabulares (precios / calculadora) */
 .num {
   font-variant-numeric: tabular-nums;
