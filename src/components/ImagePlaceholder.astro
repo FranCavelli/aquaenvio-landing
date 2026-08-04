@@ -1,0 +1,54 @@
+---
+/**
+ * Slot de imagen con placeholder "Poné tu imagen aquí".
+ *
+ * Cómo usar tus imágenes:
+ *  - Pasá `src` apuntando a un archivo dentro de /public (ej: "/images/dashboard.jpg").
+ *  - Dejá el archivo en esa ruta y listo: se muestra tu imagen.
+ *  - Si el archivo todavía no existe, se ve el cartel "Poné tu imagen aquí"
+ *    (el placeholder aparece solo si la imagen no carga).
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+  label?: string;
+  ratio?: string; // clase de aspect-ratio de Tailwind, ej: "aspect-[4/3]"
+  class?: string;
+}
+
+const {
+  src,
+  alt = '',
+  label = '',
+  ratio = 'aspect-[4/3]',
+  class: cls = '',
+} = Astro.props;
+---
+
+<div class={`ph group relative overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200/80 ${ratio} ${cls}`}>
+  <!-- Placeholder de fondo (queda atrás; la imagen lo tapa si carga) -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,#ecfeff_0%,#eff6ff_100%)] p-4 text-center">
+    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-cyan-500 shadow-sm ring-1 ring-cyan-100">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="9" cy="9" r="2"></circle>
+        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+      </svg>
+    </div>
+    <span class="text-sm font-semibold text-slate-500">Poné tu imagen aquí</span>
+    {label && <span class="text-xs font-medium text-cyan-600/80">{label}</span>}
+    {src && <span class="font-mono text-[11px] text-slate-400">{src}</span>}
+  </div>
+
+  {
+    src && (
+      <img
+        src={src}
+        alt={alt || label}
+        loading="lazy"
+        class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+        onerror="this.style.display='none'"
+      />
+    )
+  }
+</div>

@@ -1,162 +1,169 @@
 ---
-import { whatsappUrl } from '../config';
-import Bidon from './Bidon.astro';
-
-// EL BIDÓN, parado y a contraluz.
-//
-// El objeto manda: un bidón de 20 litros dibujado, con su etiqueta, que se va
-// llenando de agua mientras bajás la página. El titular va serigrafiado sobre
-// el plástico, al lado, y la ficha del producto en la etiqueta blanca de abajo.
-
-const ficha: [string, string][] = [
-  ['Contenido', 'Reparto, clientes, envases, caja y facturación'],
-  ['Modo de uso', 'Desde el navegador o instalada como app'],
-  ['Conservación', 'Anda sin señal: guarda y sincroniza al volver'],
-  ['Vencimiento', 'No tiene: sin permanencia, cortás cuando quieras'],
-  ['Soporte', 'Por WhatsApp, con una persona del otro lado'],
+// Ventas que "entran" animadas alrededor de la gota (efecto de actividad en vivo).
+const ventas = [
+  { nombre: 'Mili', dir: 'Las Heras 380', monto: '$ 10.000', pos: 'left-0 top-6' },
+  { nombre: 'Carlos', dir: 'San Martín 1240', monto: '$ 6.500', pos: 'right-1 top-10' },
+  { nombre: 'Kiosco La Esquina', dir: 'Belgrano 75', monto: '$ 18.200', pos: 'left-6 top-36' },
+  { nombre: 'Vero', dir: 'Mitre 920', monto: '$ 4.200', pos: 'right-0 top-44' },
+  { nombre: 'Bar El Trébol', dir: 'Rivadavia 540', monto: '$ 22.000', pos: 'left-1 bottom-44' },
+  { nombre: 'Norma', dir: 'Sarmiento 88', monto: '$ 5.800', pos: 'right-6 bottom-48' },
+  { nombre: 'Despensa Sur', dir: 'Centenario 1500', monto: '$ 14.300', pos: 'left-10 bottom-14' },
+  { nombre: 'Lucas', dir: '9 de Julio 333', monto: '$ 7.700', pos: 'right-2 bottom-16' },
 ];
 ---
 
-<section id="top" class="envase relative isolate overflow-hidden bg-pc-900">
-  <!-- Luz de atrás: el envase está contra la ventana. -->
-  <div
-    class="pointer-events-none absolute inset-0 -z-20"
-    aria-hidden="true"
-    style="background: radial-gradient(85% 65% at 68% 34%, #1478E0 0%, #0B4FA8 30%, #06305C 58%, #041B33 86%)"
-  >
-  </div>
+<section
+  id="top"
+  class="relative overflow-hidden bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 text-white"
+>
+  <!-- Blobs de luz (parallax con GSAP) -->
+  <div class="blob pointer-events-none absolute -left-28 -top-28 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" data-blob></div>
+  <div class="blob pointer-events-none absolute -bottom-44 right-[-6rem] h-[28rem] w-[28rem] rounded-full bg-blue-500/25 blur-3xl" data-blob></div>
+  <div class="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:32px_32px]"></div>
 
-  <!-- Gotas de condensación sobre el plástico. -->
-  <div class="pointer-events-none absolute inset-0 -z-10 opacity-70" aria-hidden="true">
-    {
-      [
-        [12, 22, 5], [21, 61, 3], [8, 78, 4], [31, 15, 2.5], [46, 84, 3.5],
-        [58, 26, 2], [72, 71, 4.5], [88, 38, 3], [94, 66, 2.5], [65, 12, 3],
-      ].map(([left, top, r]) => (
-        <span
-          class="absolute rounded-full bg-white/20 shadow-[inset_0_-1px_2px_rgba(255,255,255,.5)]"
-          style={`left:${left}%; top:${top}%; width:${r * 2}px; height:${r * 2.4}px`}
-        />
-      ))
-    }
-  </div>
+  <div class="relative mx-auto grid min-h-[92vh] max-w-6xl items-center gap-8 px-4 pb-16 pt-28 lg:grid-cols-2 lg:pt-24">
+    <!-- Texto -->
+    <div class="relative z-10">
+      <span class="hero-item inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-cyan-100 ring-1 ring-white/15 backdrop-blur">
+        <span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+        Gestión para distribuidoras de agua
+      </span>
 
-  <div class="relative mx-auto grid max-w-[1180px] items-center gap-8 px-5 pb-14 pt-32 sm:gap-10 sm:px-9 lg:grid-cols-[1.15fr_minmax(0,380px)] lg:gap-16 lg:pb-20 lg:pt-32">
-    <!-- Serigrafía sobre el plástico.
-         SIN data-reveal a propósito: el titular es el elemento más grande de
-         la primera pantalla, y si arranca en opacity 0 esperando a GSAP, en un
-         celular barato la página se ve vacía hasta que carga el script (y si
-         el script falla, para siempre). -->
-    <div class="order-2 lg:order-1">
-      <h1 class="t-marca serigrafia text-[2.35rem] sm:text-6xl lg:text-[4.25rem]">
-        El cuaderno del reparto, adentro del celular
+      <h1 class="hero-item mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+        Tu distribuidora,<br />
+        <span class="bg-gradient-to-r from-cyan-200 via-cyan-100 to-white bg-clip-text text-transparent">
+          ordenada y en tu mano.
+        </span>
       </h1>
-      <p class="mt-7 max-w-[48ch] text-[1.0625rem] leading-relaxed text-pc-100/90">
-        El repartidor carga la venta en la puerta del cliente, aunque no haya
-        señal. En la misma cuenta quedan el saldo, los envases prestados y la
-        factura. Vos ves el día cerrado desde el celular.
+
+      <p class="hero-item mt-5 max-w-md text-base text-cyan-100/85 sm:text-lg">
+        Repartos, ventas, clientes, caja y mapas en una sola app. El repartidor
+        vende desde el celular —incluso sin señal— y vos ves todo en tiempo real.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+      <div class="hero-item mt-8 flex flex-wrap gap-3">
         <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="precinto t-legal inline-flex items-center gap-2.5 px-7 py-4 text-[12px] transition hover:brightness-105 active:translate-y-px"
+          href="#calculadora"
+          class="rounded-full bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:-translate-y-0.5 hover:bg-blue-700"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
-          Probar una semana gratis
+          Calculá tu precio
         </a>
-        <a href="#app" class="t-legal text-[12px] text-white underline decoration-2 underline-offset-[7px] transition hover:text-luz">
-          Ver la app andando
+        <a
+          href="#funciones"
+          class="rounded-full bg-white/10 px-7 py-3.5 text-sm font-semibold text-white ring-1 ring-white/20 backdrop-blur transition hover:bg-white/15"
+        >
+          Ver funciones
         </a>
       </div>
 
-      <p class="t-legal mt-8 text-[10px] text-pc-100/85">
-        Sin tarjeta · Sin permanencia · Los 2 primeros meses van al costo
+      <p class="hero-item mt-4 flex items-center gap-2 text-sm text-cyan-100/85">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-cyan-300"><path d="M20 6 9 17l-5-5"/></svg>
+        Primera semana <b class="font-semibold text-white">gratis</b> · sin compromiso
       </p>
-    </div>
 
-    <!-- El envase. En el celular va PRIMERO: si queda debajo del texto, lo
-         primero que se ve es una pantalla azul sin una gota de agua. -->
-    <div class="relative order-1 mx-auto w-[128px] sm:w-[190px] lg:order-2 lg:w-full lg:max-w-[360px]">
-      <Bidon marca="Aquaenvio" bajada="Software de reparto" class="w-full" />
-      <!-- Con el envase chico, la bajada de la etiqueta no se lee: va acá, a
-           tamaño de lectura, para que no quede sólo un bidón de agua. -->
-      <p class="t-legal mt-3 text-center text-[10px] text-pc-100/90 lg:hidden">
-        Software de reparto
-      </p>
-      <!-- Indicador de nivel, como el del costado del envase. -->
-      <div class="pointer-events-none absolute -left-2 bottom-[14%] hidden select-none sm:block" aria-hidden="true">
-        <div class="flex items-end gap-2">
-          <div>
-            <p class="t-legal text-right text-[9px] text-white/90">Nivel</p>
-            <p class="t-dato mt-0.5 text-right text-lg text-white/90"><span data-nivel-num>3</span> L</p>
-          </div>
-          <div class="h-12 w-px bg-white/40"></div>
+      <dl class="hero-item mt-10 flex max-w-md gap-8">
+        <div>
+          <dt class="text-2xl font-bold text-white">+9</dt>
+          <dd class="text-xs text-cyan-100/70">módulos</dd>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- La etiqueta: la ficha del producto, en papel, pegada abajo del envase. -->
-  <div class="relative mx-auto max-w-[1180px] sm:px-6" >
-    <div class="etiqueta relative">
-      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-label-200 px-5 py-3 sm:px-9">
-        <p class="t-legal text-[11px] text-ink">Aquaenvio</p>
-        <p class="t-legal text-[11px] text-inksoft">Software de reparto · Argentina</p>
-      </div>
-
-      <dl class="grid gap-x-10 px-5 py-7 sm:grid-cols-2 sm:px-9 lg:grid-cols-3">
-        {
-          ficha.map(([k, v]) => (
-            <div class="border-b border-label-200 py-3 last:border-b-0 sm:border-b">
-              <dt class="t-legal text-[10px] text-inksoft">{k}</dt>
-              <dd class="mt-1 text-[0.9375rem] leading-snug text-ink">{v}</dd>
-            </div>
-          ))
-        }
-        <div class="py-3">
-          <dt class="t-legal text-[10px] text-inksoft">Origen</dt>
-          <dd class="mt-1 text-[0.9375rem] leading-snug text-ink">Argentina. Precio en pesos</dd>
+        <div>
+          <dt class="text-2xl font-bold text-white">100%</dt>
+          <dd class="text-xs text-cyan-100/70">en la nube</dd>
+        </div>
+        <div>
+          <dt class="text-2xl font-bold text-white">Offline</dt>
+          <dd class="text-xs text-cyan-100/70">vende sin señal</dd>
         </div>
       </dl>
     </div>
+
+    <!-- Gotas de agua (SVG, misma gota del logo) cayendo — solo en desktop -->
+    <div class="relative hidden h-[560px] w-full lg:block" data-hero-3d>
+      <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-3xl"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="gota-hero absolute left-1/2 top-1/2 h-[92%] w-auto text-cyan-200/90"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path></svg>
+      </div>
+
+      <!-- Ventas entrando: aparecen en distintos puntos alrededor de la gota -->
+      {
+        ventas.map((v) => (
+          <div class={`venta-card absolute z-10 hidden rounded-2xl bg-white/95 p-3 shadow-2xl ring-1 ring-black/5 backdrop-blur sm:block ${v.pos}`}>
+            <div class="flex items-center gap-2.5">
+              <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-slate-800">Venta registrada</p>
+                <p class="text-[11px] text-slate-400">{v.nombre} · {v.dir}</p>
+              </div>
+              <span class="ml-2 num text-sm font-bold text-cyan-600">{v.monto}</span>
+            </div>
+          </div>
+        ))
+      }
+
+      <!-- Tarjeta flotante "en vivo" -->
+      <div class="hero-card absolute right-1 top-2 z-10 hidden rounded-2xl bg-white/95 px-3.5 py-2.5 shadow-2xl ring-1 ring-black/5 backdrop-blur sm:block">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+          </span>
+          <p class="text-xs font-semibold text-slate-700">Repartidor en vivo</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- La línea del agua: el corte con la sección de abajo no es recto. -->
-  <svg class="relative -mb-px block w-full" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" style="height:52px">
-    <path d="M0 26 C 180 6 320 46 520 32 C 720 18 860 52 1040 38 C 1120 32 1170 26 1200 22 L1200 60 L0 60 Z" fill="#041B33"></path>
-    <path d="M0 26 C 180 6 320 46 520 32 C 720 18 860 52 1040 38 C 1120 32 1170 26 1200 22" fill="none" stroke="#9BDDFA" stroke-opacity="0.5" stroke-width="2"></path>
-  </svg>
+  <style>
+    .gota-hero {
+      transform: translate(-50%, -50%);
+      animation: gotaFloat 5s ease-in-out infinite;
+      will-change: transform;
+      filter: drop-shadow(0 10px 30px rgba(34, 211, 238, 0.25));
+    }
+    @keyframes gotaFloat {
+      0%, 100% { transform: translate(-50%, calc(-50% - 10px)); }
+      50%      { transform: translate(-50%, calc(-50% + 10px)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gota-hero { animation: none; transform: translate(-50%, -50%); }
+    }
+  </style>
+
+  <!-- Onda inferior -->
+  <div class="pointer-events-none absolute bottom-0 left-0 w-full leading-none text-white">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" class="h-[60px] w-full sm:h-[90px]" fill="currentColor">
+      <path d="M0 48c180 32 360 40 540 24S900 24 1080 32s300 28 360 30V90H0z"></path>
+    </svg>
+  </div>
 </section>
 
 <script>
-  // EL MOMENTO ANIMADO: el bidón se llena mientras bajás. Se escribe una sola
-  // variable CSS (--nivel) y el resto lo resuelve el SVG.
   import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  gsap.registerPlugin(ScrollTrigger);
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
-  const envase = document.querySelector<HTMLElement>('.envase');
-  const numero = document.querySelector<HTMLElement>('[data-nivel-num]');
-
-  if (envase) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      envase.style.setProperty('--nivel', '1');
-      if (numero) numero.textContent = '20';
-    } else {
-      ScrollTrigger.create({
-        trigger: envase,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.4,
-        onUpdate: (self) => {
-          const nivel = 0.14 + self.progress * 0.86;
-          envase.style.setProperty('--nivel', nivel.toFixed(3));
-          if (numero) numero.textContent = String(Math.round(nivel * 20));
-        },
+  // Ventas "entrando": de a una, fade in → queda un momento → fade out, en bucle
+  // infinito. Es solo opacidad (sin movimiento), así que corre también con
+  // "reducir movimiento" activado. Solo en desktop (en mobile están ocultas).
+  if (isDesktop) {
+    const cards = gsap.utils.toArray<HTMLElement>('.venta-card');
+    if (cards.length) {
+      gsap.set(cards, { opacity: 0 });
+      const visible = 1.8; // cuánto se queda visible
+      const active = 0.5 + visible + 0.5; // entra + queda + sale
+      // Tiempos de entrada (s) dentro del ciclo. Algunos casi coinciden (0/0.35 y
+      // 3.5/3.85) → a veces aparecen 2 casi al mismo tiempo. El ciclo es igual
+      // para todas, así el patrón se repite parejo y en bucle.
+      const entradas = [0, 0.35, 1.8, 3.5, 3.85, 5.3, 6.7, 8.1];
+      const cycle = 9.6;
+      cards.forEach((c, i) => {
+        const t = entradas[i % entradas.length];
+        gsap
+          .timeline({ repeat: -1, delay: 1 + t, repeatDelay: cycle - active })
+          .to(c, { opacity: 1, duration: 0.5, ease: 'power1.out' })
+          .to(c, { opacity: 0, duration: 0.5, ease: 'power1.in' }, `+=${visible}`);
       });
     }
   }

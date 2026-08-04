@@ -54,7 +54,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="keywords" content="software reparto de agua, sistema para sodería, app reparto de agua, gestión distribuidora de agua, software soda y agua, control de envases, facturación AFIP sodería, reparto de agua Argentina" />
-    <meta name="theme-color" content="#041B33" />
+    <meta name="theme-color" content="#0a2e4d" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
@@ -77,21 +77,19 @@ const jsonLd = {
     <!-- Datos estructurados para Google -->
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
-    <!-- Archivo variable, con eje de ANCHO. Es la disciplina real del
-         packaging: una sola familia, la marca ancha y pesada, la letra legal
-         angosta. Carga no bloqueante. -->
+    <!-- Fuente Inter (carga no bloqueante) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       />
     </noscript>
 
@@ -105,27 +103,7 @@ const jsonLd = {
       <style>[data-reveal]{opacity:1;transform:none}</style>
     </noscript>
   </head>
-  <body class="bg-label-100 text-ink overflow-x-hidden">
-    <!--
-      THESIS: la página ES el envase de 20 litros. Refusa el hero centrado con
-      mockup flotante y las tres tarjetas con ícono: acá el contenido vive
-      serigrafiado sobre el plástico o impreso en la etiqueta, nunca en cards.
-      OWN-WORLD: policarbonato azul a contraluz (#041B33 → #57C4F5) contra papel
-      de etiqueta frío (#FFFFFF/#F2F7FB) y tinta negra. Sin un solo color de
-      afuera del envase: la acción ES el otro material — papel sobre el
-      plástico, tinta sobre el papel. Todo redondeado y con sombras blandas,
-      como la app. Archivo variable en tres anchos: marca ancha 115, texto 100,
-      legal angosta 84 en versalitas.
-      STORY: el que reparte agua entiende en un renglón que esto reemplaza el
-      cuaderno, ve la app andando adentro del envase, lee el precio como una
-      tabla de información del plan y rompe el precinto para probarla.
-      FIRST VIEWPORT: el bidón dibujado y a contraluz a la derecha, llenándose
-      de agua con el scroll; el titular serigrafiado sobre el plástico a la
-      izquierda; debajo, la ficha del producto en la etiqueta de papel.
-      FORM: etiqueta de envase de agua, candidata 4 de la lista, seed e0888601.
-      FINISH: unreviewed and undocumented is unfinished; this build ends with
-      the finish review, the verdict, and DESIGN.md.
-    -->
+  <body class="bg-slate-50 text-slate-800 overflow-x-hidden">
     <slot />
 
     <!-- Animaciones globales (GSAP + ScrollTrigger) -->

@@ -3,27 +3,27 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Showcase from '../components/Showcase.astro';
-import Contenido from '../components/Contenido.astro';
-import Novedades from '../components/Novedades.astro';
+import Features from '../components/Features.astro';
+import Diferenciales from '../components/Diferenciales.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
 
 const title = 'Funciones del software de reparto de agua | Aquaenvio';
 const description =
-  'Repartos, clientes, ventas, pedidos, carga y descarga, caja, envases en comodato, mapas en vivo y facturación ARCA. Todo lo que una distribuidora de agua necesita, en una sola app.';
+  'Repartos, clientes, ventas, pedidos, carga y descarga, caja, mapas en vivo y dashboard. Todo lo que una sodería o distribuidora de agua necesita, en una sola app.';
 ---
 
 <Base title={title} description={description} path="/funciones">
   <Nav base="/" />
   <main>
     <PageHeader
-      badge="Contenido"
-      title="Todo lo que hoy está en el cuaderno"
-      subtitle="Un módulo por cada parte del reparto: recorrido, clientes, ventas, envases, caja, mapa y facturación. Ninguno se paga aparte."
+      badge="Funciones"
+      title="Todo lo que tu sodería necesita, en una sola app"
+      subtitle="Un módulo para cada parte de tu operación: repartos, clientes, ventas, envases, caja, mapas y reportes. Sin planillas ni cuadernos."
     />
     <Showcase />
-    <Contenido />
-    <Novedades />
+    <Features />
+    <Diferenciales />
     <CTA />
   </main>
   <Footer />

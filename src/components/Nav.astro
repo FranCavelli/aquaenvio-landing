@@ -1,85 +1,76 @@
 ---
-import { whatsappUrl } from '../config';
+import { whatsappUrl, mailtoUrl } from '../config';
 
 interface Props {
   base?: string; // '' en el home (scroll suave); '/' en otras páginas (vuelve al home)
 }
 const { base = '' } = Astro.props;
 
-// La banda del cuello del envase: una tira finita en versalitas, sin píldoras
-// ni vidrio. Sobre el plástico va en blanco; pasada la etiqueta se vuelve papel.
 const links = [
   { href: `${base}#app`, label: 'La app' },
-  { href: `${base}#nuevo`, label: 'Nuevo' },
-  // Las páginas propias, no anclas: hasta acá sólo se llegaba desde el pie,
-  // a media página de scroll, y en el celular no había nada de nada.
-  // Con barra final: sin ella, GitHub Pages se come un 301 en cada visita.
-  { href: '/funciones/', label: 'Funciones' },
-  { href: '/precio/', label: 'Precio' },
-  { href: '/comparativa/', label: 'Comparativa' },
+  { href: `${base}#funciones`, label: 'Funciones' },
+  { href: `${base}#comparativa`, label: 'Comparativa' },
+  { href: `${base}#calculadora`, label: 'Precio' },
 ];
-
-// Cuando el header se vuelve papel hay que separarlo del contenido: en el home
-// la tira va sobre el plástico, en las otras páginas también.
-
 ---
 
-<header id="nav" class="fixed inset-x-0 top-0 z-50 w-full transition-[background,box-shadow] duration-300" data-nav>
-  <!-- w-full + min-w-0 no son de adorno: la tira de secciones de abajo es una
-       fila que no se achica, y sin esto estiraba TODO el header a lo ancho de
-       sus links, empujando el botón de acción fuera de la pantalla. -->
-  <div class="mx-auto w-full min-w-0 max-w-[1180px] px-5 sm:px-9">
-  <div class="flex min-w-0 items-center justify-between gap-4 py-3">
-    <a href={`${base}#top`} class="nav-tinta flex items-center gap-2.5 text-white transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>
-        <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path>
-      </svg>
-      <span class="t-legal text-[13px]">Aquaenvio</span>
+<header
+  id="nav"
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  data-nav
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5">
+    <a href={`${base}#top`} class="flex items-center gap-2 text-white" data-nav-logo>
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-200">
+          <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>
+          <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path>
+        </svg>
+      </span>
+      <span class="text-lg font-extrabold tracking-tight">Aquaenvio</span>
     </a>
 
-    <nav class="hidden items-center gap-6 md:flex" aria-label="Secciones">
+    <nav class="hidden items-center gap-1 md:flex" data-nav-links>
       {
         links.map((l) => (
-          <a href={l.href} class="nav-tinta-soft t-legal text-[10.5px] text-white/90 transition-colors hover:text-white">
+          <a
+            href={l.href}
+            class="rounded-full px-3.5 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+          >
             {l.label}
           </a>
         ))
       }
     </nav>
 
-    <a
-      href={whatsappUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="precinto t-legal inline-flex min-h-[44px] items-center gap-2 px-4 text-[10.5px] transition hover:brightness-105"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
-      Probar gratis
-    </a>
-  </div>
-
-  <!-- En el celular la barra de arriba no entra: las secciones van en una tira
-       que se desliza, justo debajo. Sin esto, /funciones, /precio y
-       /comparativa sólo existían en el pie, a media página de scroll. -->
-  <nav class="nav-tira -mx-5 flex max-w-[100vw] gap-5 overflow-x-auto px-5 pb-2.5 md:hidden" aria-label="Secciones">
-    {
-      links.map((l) => (
-        <a href={l.href} class="nav-tinta-soft t-legal shrink-0 text-[10px] text-white/90 transition-colors">
-          {l.label}
-        </a>
-      ))
-    }
-  </nav>
+    <div class="flex items-center gap-2">
+      <a
+        href={mailtoUrl}
+        class="hidden items-center gap-1.5 rounded-full bg-white/10 px-3 py-2 text-sm font-semibold text-white ring-1 ring-white/20 backdrop-blur transition hover:bg-white/15 sm:inline-flex"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Mail
+      </a>
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+        WhatsApp
+      </a>
+    </div>
   </div>
 </header>
 
 <script>
-  // Scroll suave a mano con requestAnimationFrame: el nativo se anula cuando el
-  // sistema tiene activado "reducir movimiento" y el salto queda seco.
-  const NAV_OFFSET = 72;
+  // Smooth scroll en los anchors internos (#funciones, #app, etc.). Animado a
+  // mano con requestAnimationFrame para que funcione SIEMPRE, incluso con
+  // "reducir movimiento" activado (que convierte el scroll suave nativo en salto).
+  const NAV_OFFSET = 80; // alto aprox del nav fijo
 
-  function smoothTo(targetY: number, duration = 620) {
+  function smoothTo(targetY: number, duration = 650) {
     const startY = window.scrollY;
     const dist = targetY - startY;
     if (Math.abs(dist) < 2) return;
@@ -87,7 +78,7 @@ const links = [
     function step(ts: number) {
       if (t0 === null) t0 = ts;
       const p = Math.min((ts - t0) / duration, 1);
-      const e = 1 - Math.pow(1 - p, 4); // easeOutQuart
+      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; // easeInOutQuad
       window.scrollTo(0, startY + dist * e);
       if (p < 1) requestAnimationFrame(step);
     }

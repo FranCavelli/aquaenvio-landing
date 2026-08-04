@@ -1,287 +1,86 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   EL ENVASE
-   El mundo de esta página es el bidón de 20 litros: policarbonato azul a
-   contraluz y la etiqueta pegada encima. Dos materiales y nada más: el
-   PLÁSTICO (azul, translúcido, donde grita la marca) y la ETIQUETA (papel frío
-   casi blanco, donde se lee de verdad).
-
-   Un envase de verdad no tiene una sola esquina viva, y la app tampoco: todo
-   va redondeado y con sombras blandas. La acción NUNCA trae un color de
-   afuera — es el otro material: papel sobre el plástico, tinta sobre el papel.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* ───── Paleta de marca (mismos colores que la app) ───── */
 @theme {
-  /* Policarbonato: del fondo del envase a la luz que lo atraviesa. */
-  --color-pc-950: #02101F;
-  --color-pc-900: #041B33;
-  --color-pc-800: #06305C;
-  --color-pc-700: #0B4FA8;
-  --color-pc-600: #0F63C8;
-  --color-pc-500: #1478E0;
-  --color-pc-400: #35A0EF;
-  --color-pc-300: #57C4F5;
-  --color-pc-200: #9BDDFA;
-  --color-pc-100: #C9E9FB;
+  --color-aqua-950: #07223a;
+  --color-aqua-900: #0a2e4d;
+  --color-aqua-800: #0b3d63;
+  --color-aqua-700: #0a4a73;
 
-  /* Etiqueta: papel frío, nunca crema. */
-  --color-label-50: #FFFFFF;
-  --color-label-100: #F2F7FB;
-  --color-label-200: #E2EBF3;
-  --color-label-300: #C7D6E3;
-
-  /* Tinta legal del envase. */
-  --color-ink: #08121C;
-  --color-inksoft: #40566B;
-
-  /* Luz del agua: lo que resalta sin traer un color de afuera. */
-  --color-luz: #9BDDFA;
-
-  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-
-  /* Redondeos: los mismos que la app. Nada con esquina viva. */
-  --radius-panel: 1.75rem;
-  --radius-pieza: 1.125rem;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 html {
-  -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  background: var(--color-pc-900);
-  /* En el raíz también: si sólo lo tiene <body>, un hijo que se pasa de ancho
-     ensancha el documento entero y los elementos fijos se van de pantalla. */
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-sans);
-  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
-  color: var(--color-ink);
-  background: var(--color-label-100);
 }
 
-/* ───── Tipografía del envase ─────────────────────────────────────────────
-   Una sola familia, tres anchos. Es la disciplina real del packaging: la
-   marca va ancha y pesada, el texto legal va angosto y chico, y nada más
-   entra en el envase. */
-
-.t-marca {
-  font-variation-settings: 'wdth' 115, 'wght' 800;
-  letter-spacing: -0.032em;
-  line-height: 0.94;
-  text-wrap: balance;
-}
-
-.t-legal {
-  font-variation-settings: 'wdth' 84, 'wght' 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.t-dato {
-  font-variation-settings: 'wdth' 100, 'wght' 700;
-  font-variant-numeric: tabular-nums;
-}
-
+/* Números tabulares (precios / calculadora) */
 .num {
   font-variant-numeric: tabular-nums;
 }
 
-/* ───── Serigrafía ────────────────────────────────────────────────────────
-   La tinta blanca sobre el plástico no es plana: se apoya sobre una curva y
-   la luz de atrás la muerde por abajo. */
-
-.serigrafia {
-  color: #fff;
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.3),
-    0 -1px 2px rgba(2, 16, 31, 0.5);
-}
-
-/* ───── Panel de etiqueta ─────────────────────────────────────────────────
-   El bloque de papel pegado al envase. Esquinas redondeadas y sombra blanda y
-   difusa: es una etiqueta moderna sobre un envase curvo, no un ticket. */
-
-.etiqueta {
-  background: var(--color-label-50);
-  border-radius: var(--radius-panel);
-  box-shadow:
-    0 28px 60px -28px rgba(2, 16, 31, 0.45),
-    0 8px 20px -12px rgba(2, 16, 31, 0.22);
-  overflow: hidden;
-}
-
-/* Regla de la letra legal: hairline real, no borde de card. */
-.rayado > * + * {
-  border-top: 1px solid var(--color-label-200);
-}
-
-/* ───── El agua ───────────────────────────────────────────────────────────
-   El único momento animado del sitio: el nivel sube mientras bajás la
-   página. Lo mueve GSAP escribiendo --nivel (0 → 1) sobre .envase. */
-
-.envase {
-  --nivel: 0.14;
-}
-
-/* ───── Burbujas sueltas ─────────────────────────────────────────────────
-   En las secciones de plástico suben burbujas muy tenues: es lo que hace que
-   el azul se lea como agua y no como un fondo azul cualquiera. */
-
-.burbujas span {
-  position: absolute;
-  bottom: -40px;
-  border-radius: 9999px;
-  background: rgba(234, 246, 255, 0.22);
-  box-shadow: inset 0 -1px 2px rgba(255, 255, 255, 0.4);
-  animation: flotar 16s linear infinite;
-}
-
-@keyframes flotar {
-  0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 0.5; }
-  100% { transform: translateY(-115vh) translateX(18px); opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .burbujas span { animation: none; opacity: 0.4; }
-}
-
-/* ───── Reveals ──────────────────────────────────────────────────────────
-   Sin JS queda todo visible; GSAP sólo lo levanta. */
-
+/* ───── Estados iniciales para reveals con GSAP (evita parpadeo) ───── */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(28px);
   will-change: transform, opacity;
 }
 
+/* Si JS está deshabilitado, mostrar todo igual */
 .no-js [data-reveal] {
   opacity: 1;
   transform: none;
 }
 
-/* ───── El precinto ──────────────────────────────────────────────────────
-   La acción es siempre EL OTRO MATERIAL: sobre el plástico azul, un trozo de
-   etiqueta; sobre el papel blanco, tinta. Nada de traer un color de afuera del
-   envase. El troquelado de los bordes es el del precinto que se rompe. */
-
-.precinto {
-  position: relative;
-  border-radius: 9999px;
-  background: var(--color-label-50);
-  color: var(--color-ink);
-  box-shadow:
-    0 14px 30px -14px rgba(2, 16, 31, 0.75),
-    0 2px 6px -2px rgba(2, 16, 31, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.precinto:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 18px 36px -14px rgba(2, 16, 31, 0.8),
-    0 3px 8px -2px rgba(2, 16, 31, 0.34);
-}
-
-.precinto:active {
-  transform: translateY(0);
-}
-
-/* Sobre la etiqueta blanca se da vuelta: tinta sobre el papel. */
-.precinto-tinta {
-  background: var(--color-ink);
-  color: var(--color-label-50);
-  box-shadow:
-    0 14px 30px -14px rgba(2, 16, 31, 0.5),
-    0 2px 6px -2px rgba(2, 16, 31, 0.22);
-}
-
-/* Con el header hecho papel, el botón blanco desaparecería. */
-.nav-papel .precinto {
-  background: var(--color-ink);
-  color: var(--color-label-50);
-}
-
-/* ───── La banda del cuello ──────────────────────────────────────────────
-   Arriba de todo es transparente sobre el plástico; pasada la etiqueta se
-   vuelve papel, como una segunda etiqueta más finita. */
-
-.nav-papel {
-  background: var(--color-label-50);
-  box-shadow: 0 1px 0 0 var(--color-label-300), 0 10px 26px -18px rgba(2, 16, 31, 0.7);
-}
-
-/* La tira de secciones del celular: se desliza sin barra a la vista. */
-.nav-tira {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.nav-tira::-webkit-scrollbar { display: none; }
-
-.nav-papel .nav-tinta { color: var(--color-ink); }
-.nav-papel .nav-tinta-soft { color: var(--color-inksoft); }
-.nav-papel .nav-hairline { background: var(--color-label-300); }
-
-/* ───── Sliders ──────────────────────────────────────────────────────────
-   Vestidos como el indicador de nivel del envase: barra recta, tirador duro. */
-
+/* ───── Slider estilo app ───── */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   height: 8px;
   border-radius: 9999px;
-  background: var(--color-label-200);
+  background: #e2e8f0;
   outline: none;
 }
-
-/* El tirador va grande a propósito: esto se arrastra con el pulgar, parado al
-   lado del camión. Chico se vuelve imposible de agarrar. */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   border-radius: 9999px;
-  background: var(--color-ink);
-  box-shadow: 0 2px 8px -2px rgba(2, 16, 31, 0.6), inset 0 0 0 3px rgba(255, 255, 255, 0.9);
+  background: #ffffff;
+  border: 3px solid #0891b2;
+  box-shadow: 0 1px 4px rgba(8, 145, 178, 0.4);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
-
 input[type="range"]::-webkit-slider-thumb:active {
-  transform: scaleY(1.14);
+  transform: scale(1.15);
 }
-
 input[type="range"]::-moz-range-thumb {
-  width: 30px;
-  height: 30px;
-  border: 0;
+  width: 22px;
+  height: 22px;
   border-radius: 9999px;
-  background: var(--color-ink);
+  background: #ffffff;
+  border: 3px solid #0891b2;
+  box-shadow: 0 1px 4px rgba(8, 145, 178, 0.4);
   cursor: pointer;
 }
 
-/* Foco visible en todo lo que se toca. */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-summary:focus-visible {
-  outline: 3px solid var(--color-label-50);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px var(--color-pc-600);
+/* ───── Canvas del modelo 3D ───── */
+#droplet {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
+/* Respeta usuarios que prefieren menos movimiento */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-reveal] { opacity: 1; transform: none; }
-  .agua { transform: translateY(0); }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }

@@ -1,11 +1,6 @@
 ---
-import Bidon from './Bidon.astro';
-
-// Encabezado de las páginas sueltas: la etiqueta con el envase adentro.
-//
-// El envase va DENTRO del panel, a la derecha: puesto arriba y suelto dejaba
-// medio papel en blanco y el bidón solo en el medio del azul.
-// El "badge" es la denominación de la etiqueta, en la cabecera del papel.
+// Encabezado oscuro reutilizable para páginas sueltas (SEO: trae el H1).
+// El nav es texto blanco, así que necesita un fondo oscuro arriba.
 interface Props {
   badge?: string;
   title: string;
@@ -14,39 +9,14 @@ interface Props {
 const { badge, title, subtitle } = Astro.props;
 ---
 
-<section class="relative overflow-hidden bg-pc-900 pb-16">
-  <div
-    class="pointer-events-none absolute inset-0"
-    aria-hidden="true"
-    style="background: radial-gradient(120% 90% at 50% 0%, #1478E0 0%, #0B4FA8 34%, #06305C 62%, #041B33 88%)"
-  >
-  </div>
-
-  <div class="relative mx-auto max-w-[1180px] px-5 pt-32 sm:px-6">
-    <div class="etiqueta relative">
-      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-label-200 px-6 py-3.5 sm:px-10">
-        <p class="t-legal text-[11px] text-ink">Aquaenvio</p>
-        {badge && <p class="t-legal text-[11px] text-inksoft">{badge}</p>}
-      </div>
-
-      <div class="grid items-center gap-8 px-6 py-11 sm:px-10 sm:py-14 lg:grid-cols-[1fr_minmax(0,190px)] lg:gap-14">
-        <div class="min-w-0">
-          <h1 class="t-marca max-w-[20ch] text-[2.1rem] text-ink sm:text-[3.25rem]">{title}</h1>
-          {subtitle && <p class="mt-6 max-w-[54ch] text-[1.0625rem] leading-relaxed text-inksoft">{subtitle}</p>}
-        </div>
-
-        <div class="hidden justify-self-center lg:block">
-          <Bidon marca="Aquaenvio" bajada="Software de reparto" class="w-[170px]" id="bidon-pagina" />
-        </div>
-      </div>
-    </div>
+<section class="relative overflow-hidden bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 pt-28 pb-16 text-white">
+  <div class="pointer-events-none absolute -right-20 -top-10 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:32px_32px]"></div>
+  <div class="relative mx-auto max-w-4xl px-4 text-center">
+    {badge && (
+      <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-100 ring-1 ring-white/20">{badge}</span>
+    )}
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">{title}</h1>
+    {subtitle && <p class="mx-auto mt-4 max-w-2xl text-cyan-100/85">{subtitle}</p>}
   </div>
 </section>
-
-<style>
-  /* Acá el envase está quieto: no hay scroll que lo llene, así que se muestra
-     lleno de entrada. */
-  section :global(.bidon) {
-    --nivel: 0.82;
-  }
-</style>
