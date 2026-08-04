@@ -139,7 +139,9 @@ const ventas = [
   </style>
 
   <!-- Onda inferior -->
-  <div class="pointer-events-none absolute bottom-0 left-0 w-full leading-none text-white">
+  <!-- El color de la onda tiene que ser EL MISMO que el bg del body (slate-50),
+       si no queda una costura de blancos distintos contra la sección siguiente. -->
+  <div class="pointer-events-none absolute bottom-0 left-0 w-full leading-none text-slate-50">
     <svg viewBox="0 0 1440 90" preserveAspectRatio="none" class="h-[60px] w-full sm:h-[90px]" fill="currentColor">
       <path d="M0 48c180 32 360 40 540 24S900 24 1080 32s300 28 360 30V90H0z"></path>
     </svg>
