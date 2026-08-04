@@ -45,6 +45,7 @@ function init() {
   if (!usuariosRange || !clientesRange || !arsEl || !usdEl) return;
 
   let dolar: number | null = null;
+  let sinCotizacion = false; // no se pudo traer el dólar: se avisa, no se inventa
   let shownArs = 0; // valor actual mostrado (para animar el conteo)
 
   const clamp = (v: number, min: number, max: number) =>
@@ -62,13 +63,32 @@ function init() {
     usdEl!.textContent = fmtUsd(usd);
 
     if (ars == null) {
+      if (sinCotizacion) {
+        // Se muestra el piso, que es un número cierto, y se dice por qué no
+        // hay más precisión. Nunca un precio derivado de un dólar inventado.
+        arsEl!.textContent = fmtArs(TARIFAS.minimoArs);
+        if (bonifEl) bonifEl.textContent = 'Al costo, con el mismo piso';
+        if (loadingEl) {
+          loadingEl.textContent =
+            'Hoy no pudimos traer la cotización del dólar: este es el precio mínimo. Escribinos y te pasamos el tuyo.';
+        }
+        return;
+      }
       arsEl!.textContent = '—';
       if (bonifEl) bonifEl.textContent = '—';
       return;
     }
     if (loadingEl) loadingEl.style.display = 'none';
-    // Precio bonificado de los primeros meses (sin animación: es secundario).
-    if (bonifEl) bonifEl.textContent = fmtArs(bonificadoArs(clientes, usuarios, dolar!));
+
+    // Los primeros meses van al costo, pero con el mismo piso: en una
+    // distribuidora chica el costo queda por debajo del piso y las dos cifras
+    // dan igual. Repetir el número se lee como un descuento que no existe, así
+    // que en ese caso se dice lo que realmente pasa.
+    if (bonifEl) {
+      const bonif = bonificadoArs(clientes, usuarios, dolar!);
+      bonifEl.textContent =
+        Math.round(bonif) >= Math.round(ars) ? 'Al costo, con el mismo piso' : fmtArs(bonif);
+    }
 
     // Animación de conteo del precio (GSAP).
     gsap.to(
@@ -121,8 +141,12 @@ function init() {
       }
     })
     .catch(() => {
-      // Sin cotización: mostramos el piso para no dejar "—".
-      dolar = TARIFAS.minimoArs / precioUsd(getClientes(), getUsuarios());
+      // Sin cotización NO se inventa un dólar: antes se despejaba uno desde el
+      // piso, y a partir de ahí cada movimiento del slider mostraba un precio
+      // sacado de un tipo de cambio falso. Se muestra el piso, se avisa, y los
+      // sliders dejan de mover la cifra en pesos.
+      dolar = null;
+      sinCotizacion = true;
       render();
     });
 

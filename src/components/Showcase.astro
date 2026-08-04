@@ -1,55 +1,106 @@
 ---
 import VideoTile from './VideoTile.astro';
+import Burbujas from './Burbujas.astro';
+
+// MODO DE USO — la app andando, adentro del envase.
+//
+// Las capturas son de pantallas de 900 px: metidas en una grilla de tarjetas
+// quedaban a 350 px y no se leía una letra, que es justo lo contrario de lo
+// que esta sección tiene que probar. Así que van GRANDES, una debajo de otra,
+// casi a tamaño real, con el texto al costado. La del celular va primera
+// porque es la única que está a escala nativa y es donde se usa de verdad.
+
+const pantallas = [
+  {
+    src: '/videos/reparto.mp4',
+    poster: '/images/reparto.jpg',
+    t: 'El recorrido del día',
+    d: 'Los clientes en el orden en que los visitás, con los pendientes y los pedidos fijados arriba de todo hasta que les vendas.',
+  },
+  {
+    src: '/videos/clientes.mp4',
+    poster: '/images/clientes.jpg',
+    t: 'La ficha del cliente',
+    d: 'Saldo de la cuenta, los precios que tiene ese cliente y cuántos envases le quedan prestados.',
+  },
+  {
+    src: '/videos/dashboard.mp4',
+    poster: '/images/dashboard.jpg',
+    t: 'El día cerrado',
+    d: 'Cobrado, vendido y bidones del día, sin sumar nada a mano y sin esperar a la noche.',
+  },
+  {
+    src: '/videos/mapa.mp4',
+    poster: '/images/mapa.jpg',
+    t: 'Dónde está el camión',
+    d: 'Los repartidores y los clientes ubicados en el mapa, actualizados en vivo.',
+  },
+  {
+    src: '/videos/caja.mp4',
+    poster: '/images/caja.jpg',
+    t: 'La caja del día',
+    d: 'Lo que entró, lo que salió y el cierre, sin juntar papelitos hasta fin de mes.',
+  },
+];
 ---
 
-<!-- "Vender es un toque" — la app en el celular, dentro de un mockup -->
-<section id="app" class="scroll-mt-24 bg-white py-16 sm:py-24">
-  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2">
-    <div data-reveal>
-      <span class="text-sm font-semibold text-cyan-600">En el celular del repartidor</span>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Vender es un toque</h2>
-      <p class="mt-3 max-w-md text-slate-500">
-        Pensada para el día a día en la calle: rápida, simple y a prueba de zonas sin señal.
+<section id="app" class="relative scroll-mt-20 overflow-hidden bg-pc-900 py-20 sm:py-28">
+  <div
+    class="pointer-events-none absolute inset-0"
+    aria-hidden="true"
+    style="background: linear-gradient(180deg, #041B33 0%, #06305C 52%, #0B4FA8 100%)"
+  >
+  </div>
+  <Burbujas cantidad={16} />
+
+  <div class="relative mx-auto max-w-[1180px] px-5 sm:px-9">
+    <div class="max-w-2xl" data-reveal>
+      <h2 class="t-marca serigrafia text-[2rem] sm:text-5xl">Así se ve por dentro</h2>
+      <p class="mt-5 max-w-[52ch] text-[1.0625rem] leading-relaxed text-pc-100/90">
+        No son maquetas: es la app funcionando, grabada de una distribuidora
+        andando. Lo que hace el repartidor en la calle y lo que mira el dueño a
+        la noche, en las mismas pantallas que vas a usar vos.
       </p>
-      <ul class="mt-6 space-y-3">
-        {
-          [
-            'Ordená el reparto y registrá la venta en segundos.',
-            'Funciona sin señal: se guarda y sincroniza solo.',
-            '"Para mañana" y pedidos fijados arriba de la lista.',
-            'Envases, transferencias y saldo del cliente al toque.',
-          ].map((b) => (
-            <li class="flex items-start gap-2.5 text-sm text-slate-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-cyan-600"><path d="M20 6 9 17l-5-5"/></svg>
-              {b}
-            </li>
-          ))
-        }
-      </ul>
     </div>
 
-    <!-- Mockup de celular -->
-    <div class="flex justify-center" data-reveal>
-      <div class="relative w-[260px] sm:w-[290px]">
-        <!-- resplandor detrás -->
-        <div class="pointer-events-none absolute inset-0 -z-10 scale-110 rounded-[3rem] bg-cyan-400/25 blur-3xl"></div>
-        <!-- cuerpo del teléfono -->
-        <div class="relative rounded-[2.75rem] bg-slate-950 p-3 shadow-2xl ring-1 ring-black/10">
-          <!-- pantalla (completa, sin notch) -->
-          <div class="overflow-hidden rounded-[2rem] bg-slate-950">
-            <VideoTile
-              src="/videos/mobile-reparto.mp4"
-              poster="/images/mobile-reparto.jpg"
-              label="Reparto en el celular"
-              ratio="aspect-[9/19]"
-            />
-          </div>
+    <!-- El celular: la única a escala real, y donde se usa de verdad. -->
+    <div class="mt-14 grid items-center gap-10 sm:grid-cols-[minmax(0,270px)_1fr] sm:gap-12" data-reveal>
+      <figure class="mx-auto w-full max-w-[270px] sm:mx-0">
+        <div class="rounded-[2rem] border-2 border-pc-200/40 bg-pc-950 p-2.5">
+          <VideoTile
+            src="/videos/mobile-reparto.mp4"
+            poster="/images/mobile-reparto.jpg"
+            label="Reparto en el celular"
+            ratio="aspect-[9/19]"
+          />
         </div>
-        <!-- botones laterales -->
-        <div class="absolute -right-1 top-24 h-16 w-1 rounded-r bg-slate-800"></div>
-        <div class="absolute -left-1 top-20 h-10 w-1 rounded-l bg-slate-800"></div>
-        <div class="absolute -left-1 top-32 h-10 w-1 rounded-l bg-slate-800"></div>
+      </figure>
+      <div>
+        <p class="t-legal text-[10px] text-luz">En la mano del repartidor</p>
+        <h3 class="t-marca serigrafia mt-3 text-[1.7rem] sm:text-[2.25rem]">Vender es un toque</h3>
+        <p class="mt-4 max-w-[46ch] leading-relaxed text-pc-100/90">
+          Elige el cliente, marca lo que le dejó y cobra. Si está sin señal se
+          guarda igual y sube solo cuando vuelve la conexión: nadie tiene que
+          acordarse de nada al final del día.
+        </p>
       </div>
+    </div>
+
+    <!-- Las pantallas del dueño: grandes, casi a tamaño real. -->
+    <div class="mt-16 space-y-14 border-t border-pc-200/25 pt-14 sm:space-y-16">
+      {
+        pantallas.map((p) => (
+          <figure class="grid gap-6 lg:grid-cols-[1fr_minmax(0,260px)] lg:items-start lg:gap-10" data-reveal>
+            <div class="min-w-0 rounded-[1.5rem] border border-pc-200/25 p-2">
+              <VideoTile src={p.src} poster={p.poster} label={p.t} ratio="aspect-[16/10]" acercarEnCelular />
+            </div>
+            <figcaption class="min-w-0 lg:pt-2">
+              <p class="t-dato text-[1.0625rem] text-white">{p.t}</p>
+              <p class="mt-2 leading-relaxed text-pc-100/85">{p.d}</p>
+            </figcaption>
+          </figure>
+        ))
+      }
     </div>
   </div>
 </section>

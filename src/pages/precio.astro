@@ -3,25 +3,25 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Calculadora from '../components/Calculadora.astro';
-import Diferenciales from '../components/Diferenciales.astro';
+import Comparativa from '../components/Comparativa.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
 
 const title = 'Precio del software de reparto de agua en pesos | Aquaenvio';
 const description =
-  'Suscripción mensual en pesos argentinos, sin costo de implementación y con 1 semana de prueba gratis. Calculá tu plan según usuarios y uso. Más barato que las alternativas en dólares.';
+  'Suscripción mensual en pesos argentinos, sin costo de puesta en marcha y con 1 semana de prueba gratis. Calculá tu plan según usuarios y clientes. Más barato que las alternativas en dólares.';
 ---
 
 <Base title={title} description={description} path="/precio">
   <Nav base="/" />
   <main>
     <PageHeader
-      badge="Precio"
+      badge="Información del plan"
       title="Precio en pesos, sin sorpresas"
-      subtitle="Pagás según tu uso, en pesos argentinos y sin costo de implementación. Probalo 1 semana gratis, sin tarjeta."
+      subtitle="Pagás por el tamaño de tu distribuidora, en pesos y sin costo de puesta en marcha. La primera semana es gratis y no hace falta tarjeta."
     />
     <Calculadora />
-    <Diferenciales />
+    <Comparativa />
     <CTA />
   </main>
   <Footer />

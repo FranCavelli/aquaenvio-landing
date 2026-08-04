@@ -1,0 +1,199 @@
+---
+/**
+ * EL BIDÓN DE 20 LITROS, dibujado.
+ *
+ * Es el objeto de la página, así que se dibuja de verdad: tapa, precinto,
+ * pico, hombro y el cuerpo acanalado. Adentro tiene agua, y el nivel del agua
+ * es la variable --nivel que escribe el scroll (0 → 1). Las burbujas suben
+ * despacio; con "reducir movimiento" quedan quietas.
+ *
+ * `marca` es lo que va serigrafiado en la etiqueta pegada al envase.
+ */
+interface Props {
+  marca?: string;
+  bajada?: string;
+  class?: string;
+  id?: string;
+}
+const { marca = 'Aquaenvio', bajada = 'Software de reparto', class: cls = '', id = 'bidon' } = Astro.props;
+
+const aguaId = `${id}-agua`;
+const vidrioId = `${id}-vidrio`;
+const luzId = `${id}-luz`;
+
+// Burbujas: posición, tamaño y demora, fijas (no hace falta azar).
+const burbujas = [
+  { x: 78, r: 3.5, d: 0 },
+  { x: 118, r: 2.2, d: 1.7 },
+  { x: 155, r: 4.5, d: 0.6 },
+  { x: 196, r: 2.6, d: 2.4 },
+  { x: 226, r: 3.2, d: 1.2 },
+  { x: 96, r: 2, d: 3.1 },
+];
+---
+
+<svg
+  class={`bidon ${cls}`}
+  viewBox="0 0 300 540"
+  fill="none"
+  role="img"
+  aria-label="Bidón de 20 litros de agua"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <!-- El cuerpo del envase: pico angosto que se abre al cuerpo acanalado. -->
+    <clipPath id={vidrioId}>
+      <path
+        d="M137 52 C137 52 78 80 58 140 C50 164 44 184 44 212 L40 462 Q40 514 92 514 L208 514 Q260 514 260 462 L256 212 C256 184 250 164 242 140 C222 80 163 52 163 52 Z"
+      ></path>
+    </clipPath>
+
+    <linearGradient id={aguaId} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9BDDFA" stop-opacity="0.95"></stop>
+      <stop offset="35%" stop-color="#35A0EF" stop-opacity="0.92"></stop>
+      <stop offset="100%" stop-color="#0B4FA8" stop-opacity="0.98"></stop>
+    </linearGradient>
+
+    <linearGradient id={luzId} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.34"></stop>
+      <stop offset="18%" stop-color="#ffffff" stop-opacity="0.06"></stop>
+      <stop offset="72%" stop-color="#ffffff" stop-opacity="0"></stop>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.16"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Tapa y precinto. -->
+  <rect x="126" y="2" width="48" height="26" rx="9" fill="#06305C"></rect>
+  <rect x="126" y="2" width="48" height="26" rx="9" fill={`url(#${luzId})`}></rect>
+  <rect x="124" y="28" width="52" height="7" rx="3" fill="#C9E9FB" fill-opacity="0.9"></rect>
+  <rect x="133" y="35" width="34" height="20" fill="#06305C"></rect>
+
+  <!-- El plástico vacío. -->
+  <g clip-path={`url(#${vidrioId})`}>
+    <rect x="0" y="0" width="300" height="540" fill="#0A3E7F" fill-opacity="0.5"></rect>
+
+    <!-- El agua. Sube con --nivel. -->
+    <g class="bidon-agua">
+      <rect x="0" y="0" width="300" height="560" fill={`url(#${aguaId})`}></rect>
+      <rect x="0" y="0" width="300" height="3" fill="#C9E9FB" fill-opacity="0.9"></rect>
+
+      <!-- Burbujas subiendo dentro del agua. -->
+      {
+        burbujas.map((b) => (
+          <circle
+            class="burbuja"
+            cx={b.x}
+            cy="540"
+            r={b.r}
+            fill="#EAF6FF"
+            fill-opacity="0.55"
+            style={`animation-delay:${b.d}s`}
+          />
+        ))
+      }
+    </g>
+
+    <!-- Acanaladuras del envase. -->
+    {
+      [186, 214, 430, 458].map((y) => (
+        <rect x="0" y={y} width="300" height="9" fill="#02101F" fill-opacity="0.16" />
+      ))
+    }
+
+    <!-- Reflejo del vidrio, encima de todo. -->
+    <rect x="0" y="0" width="300" height="540" fill={`url(#${luzId})`}></rect>
+  </g>
+
+  <!-- Contorno del envase. -->
+  <path
+    d="M137 52 C137 52 78 80 58 140 C50 164 44 184 44 212 L40 462 Q40 514 92 514 L208 514 Q260 514 260 462 L256 212 C256 184 250 164 242 140 C222 80 163 52 163 52 Z"
+    stroke="#C9E9FB"
+    stroke-opacity="0.45"
+    stroke-width="2"
+  ></path>
+
+  <!-- La etiqueta pegada al envase. -->
+  <g>
+    <rect x="41" y="262" width="218" height="96" rx="10" fill="#FFFFFF"></rect>
+    <rect x="41" y="262" width="218" height="96" rx="10" fill={`url(#${luzId})`} opacity="0.5"></rect>
+    
+    <text
+      x="150"
+      y="312"
+      text-anchor="middle"
+      fill="#08121C"
+      style="font-family:Archivo,system-ui,sans-serif;font-variation-settings:'wdth' 115,'wght' 800;font-size:30px;letter-spacing:-0.5px"
+      >{marca}</text
+    >
+    <!-- La bajada sólo entra cuando el envase está grande: a 128 px de ancho
+         quedaría en 4 px y sería una mancha. En chico la dice el HTML de al
+         lado, a tamaño de lectura. -->
+    <text
+      class="bajada"
+      x="150"
+      y="336"
+      text-anchor="middle"
+      fill="#40566B"
+      style="font-family:Archivo,system-ui,sans-serif;font-variation-settings:'wdth' 84,'wght' 600;font-size:10px;letter-spacing:2.2px;text-transform:uppercase"
+      >{bajada.toUpperCase()}</text
+    >
+  </g>
+
+  <!-- Marca de litros grabada en el plástico, abajo. -->
+  <text
+    x="150"
+    y="488"
+    text-anchor="middle"
+    fill="#EAF6FF"
+    fill-opacity="0.5"
+    style="font-family:Archivo,system-ui,sans-serif;font-variation-settings:'wdth' 84,'wght' 700;font-size:13px;letter-spacing:3px"
+    >20 L</text
+  >
+</svg>
+
+<style>
+  .bidon {
+    filter: drop-shadow(0 30px 40px rgba(2, 16, 31, 0.55));
+  }
+
+  /* El agua: el nivel lo pone --nivel (0 = vacío, 1 = lleno). */
+  .bidon-agua {
+    transform: translateY(calc((1 - var(--nivel, 0.14)) * 470px));
+  }
+
+  .burbuja {
+    animation: subir 7s linear infinite;
+  }
+
+  /* Por debajo de 1024 px el envase se dibuja chico y la bajada quedaría en
+     4 px. Se oculta y la dice el texto de al lado. */
+  @media (max-width: 1023px) {
+    .bidon .bajada {
+      display: none;
+    }
+  }
+
+  @keyframes subir {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.55;
+    }
+    88% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateY(-520px);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burbuja {
+      animation: none;
+      opacity: 0.35;
+    }
+  }
+</style>

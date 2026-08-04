@@ -1,105 +1,72 @@
 /**
- * Animaciones globales con GSAP + ScrollTrigger:
- *  - Entrada del hero (stagger).
- *  - Reveal de secciones al hacer scroll.
- *  - Barra de navegación que cambia al scrollear.
- *  - Parallax de los blobs del hero.
+ * Movimiento de la página.
+ *
+ * El momento animado del sitio es UNO: el agua que sube en el envase (vive en
+ * Hero.astro). Acá sólo queda lo que hace falta para que el contenido no
+ * aparezca de golpe y para que la banda del cuello del envase se vuelva sólida
+ * cuando dejás atrás la etiqueta.
  */
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function start() {
-  // ───── Hero: entrada en cascada ─────
-  const heroItems = gsap.utils.toArray<HTMLElement>('.hero-item');
-  if (heroItems.length) {
-    gsap.from(heroItems, {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      stagger: 0.12,
-      delay: 0.1,
-    });
-  }
-  const heroCards = gsap.utils.toArray<HTMLElement>('.hero-card');
-  if (heroCards.length) {
-    gsap.from(heroCards, {
-      y: 16,
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.7,
-      ease: 'back.out(1.6)',
-      stagger: 0.15,
-      delay: 0.7,
-    });
+  // Con "reducir movimiento" no se anima NADA: hay que mostrar todo a mano
+  // porque el estado inicial (opacity 0) lo pone el CSS y un gsap.set() con
+  // estilos inline le gana al @media del stylesheet.
+  if (quieto) {
+    gsap.set('[data-reveal], [data-reveal-item]', { opacity: 1, y: 0, clearProps: 'transform' });
+    marcarNav();
+    return;
   }
 
-  // ───── Reveal simple (cualquier [data-reveal]) ─────
+  // ───── Aparición del contenido ─────
+  // Siempre .to() hacia visible desde un estado inicial explícito: con .from()
+  // + ScrollTrigger las tarjetas quedan clavadas en invisible si el trigger no
+  // llega a dispararse.
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
     gsap.to(el, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 85%' },
+      duration: 0.7,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
     });
   });
 
-  // ───── Reveal en grupo con stagger (grillas) ─────
-  // Mismo patrón que el reveal simple: setear estado inicial y animar HACIA
-  // visible con .to(). Evita el footgun de .from()+ScrollTrigger, que aplica
-  // opacity:0 con immediateRender pero a veces no dispara el "play" y deja
-  // las cards clavadas en invisible.
   gsap.utils.toArray<HTMLElement>('[data-reveal-group]').forEach((group) => {
     const items = group.querySelectorAll<HTMLElement>('[data-reveal-item]');
     if (!items.length) return;
-    gsap.set(group, { opacity: 1, y: 0 }); // el grupo en sí no se oculta
-    gsap.set(items, { opacity: 0, y: 28 });
+    gsap.set(group, { opacity: 1, y: 0 });
+    gsap.set(items, { opacity: 0, y: 20 });
     gsap.to(items, {
       opacity: 1,
       y: 0,
       duration: 0.6,
-      ease: 'power3.out',
-      stagger: 0.08,
-      // Dispara apenas la grilla asoma desde abajo (aparecen un momento antes
-      // de scrollear encima).
+      ease: 'expo.out',
+      stagger: 0.06,
       scrollTrigger: { trigger: group, start: 'top 95%' },
     });
   });
 
-  // ───── Parallax de los blobs del hero ─────
-  if (!reduced) {
-    gsap.utils.toArray<HTMLElement>('[data-blob]').forEach((blob, i) => {
-      gsap.to(blob, {
-        yPercent: i % 2 === 0 ? 18 : -18,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#top',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    });
-  }
+  marcarNav();
+}
 
-  // ───── Nav: fondo sólido al scrollear ─────
+/**
+ * La banda del cuello: arriba de todo es transparente sobre el plástico y,
+ * apenas pasás el envase, se vuelve papel (una segunda etiqueta más finita).
+ */
+function marcarNav() {
   const nav = document.querySelector<HTMLElement>('[data-nav]');
-  if (nav) {
-    const onScroll = () => {
-      const scrolled = window.scrollY > 24;
-      nav.classList.toggle('bg-aqua-900/90', scrolled);
-      nav.classList.toggle('shadow-lg', scrolled);
-      nav.classList.toggle('backdrop-blur', scrolled);
-      nav.classList.toggle('py-2', scrolled);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
+  if (!nav) return;
+  const onScroll = () => {
+    nav.classList.toggle('nav-papel', window.scrollY > 40);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 if (document.readyState === 'loading') {

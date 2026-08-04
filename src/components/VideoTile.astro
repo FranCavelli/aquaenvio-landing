@@ -1,9 +1,9 @@
 ---
 /**
- * Tile de video en loop (estilo "GIF"): autoplay, mudo, en bucle.
+ * Video en loop de la app, visto a través del plástico del envase.
  *  - `src`  → archivo en /public (ej: "/videos/dashboard.mp4").
- *  - `poster` → imagen de respaldo mientras carga / si el video no anda (ej: "/images/dashboard.jpg").
- *  - Detrás queda el mismo placeholder que ImagePlaceholder por si falta todo.
+ *  - `poster` → imagen de respaldo mientras carga (ej: "/images/dashboard.jpg").
+ * Filo duro y sin radios: es una ventana en el envase, no una card.
  */
 interface Props {
   src: string;
@@ -11,20 +11,30 @@ interface Props {
   label?: string;
   ratio?: string; // clase de aspect-ratio de Tailwind
   class?: string;
+  /**
+   * Acercar en el celular. Las capturas son de pantallas de 1440 px: metidas
+   * en 350 px de ancho, la letra de la app queda en 5 px y no se lee nada.
+   * Con esto, en pantallas chicas se muestra agrandada la parte de la
+   * izquierda —el menú y la primera columna de datos, que es lo que importa—
+   * en vez de todo el escritorio en miniatura.
+   */
+  acercarEnCelular?: boolean;
 }
 
-const { src, poster, label = '', ratio = 'aspect-[4/3]', class: cls = '' } = Astro.props;
+const {
+  src,
+  poster,
+  label = '',
+  ratio = 'aspect-[4/3]',
+  class: cls = '',
+  acercarEnCelular = false,
+} = Astro.props;
 ---
 
-<div class={`group relative overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200/80 ${ratio} ${cls}`}>
-  <!-- Placeholder de fondo (se ve solo si no carga ni el video ni el póster) -->
-  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,#ecfeff_0%,#eff6ff_100%)] p-4 text-center">
-    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-cyan-500 shadow-sm ring-1 ring-cyan-100">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="6 3 20 12 6 21 6 3"></polygon>
-      </svg>
-    </div>
-    {label && <span class="text-xs font-medium text-cyan-600/80">{label}</span>}
+<div class={`group relative overflow-hidden rounded-[1.125rem] bg-pc-800 ${ratio} ${cls}`}>
+  <!-- Fondo mientras no cargó nada. -->
+  <div class="absolute inset-0 flex items-center justify-center bg-[linear-gradient(160deg,#0B4FA8_0%,#06305C_100%)] p-4 text-center">
+    {label && <span class="t-legal text-[10px] text-pc-200/90">{label}</span>}
   </div>
 
   <video
@@ -35,14 +45,33 @@ const { src, poster, label = '', ratio = 'aspect-[4/3]', class: cls = '' } = Ast
     playsinline
     preload="none"
     aria-label={label}
-    class="lazy-video absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-  ></video>
+    class={`lazy-video absolute inset-0 h-full w-full object-cover ${acercarEnCelular ? 'acercar' : ''}`}></video>
+
+  <!-- Brillo del plástico: una franja de luz cruzando la ventana. -->
+  <div
+    class="pointer-events-none absolute inset-0 mix-blend-screen"
+    aria-hidden="true"
+    style="background: linear-gradient(105deg, rgba(155,221,250,.16) 0%, rgba(155,221,250,0) 34%, rgba(155,221,250,0) 68%, rgba(155,221,250,.09) 100%)"
+  >
+  </div>
 </div>
 
+<style>
+  /* Acercar en pantallas chicas: la captura es de un escritorio de 1440 px y
+     a 350 px de ancho no se lee una letra. Se agranda apoyada en el borde
+     izquierdo, que es donde están el menú y los datos. */
+  @media (max-width: 1023px) {
+    .acercar {
+      transform: scale(2.1);
+      transform-origin: 6% 30%;
+    }
+  }
+</style>
+
 <script>
-  // Lazy-load: cada video carga su fuente/póster y se reproduce SOLO cuando se
-  // acerca al viewport (y se pausa al salir). Evita bajar ~MB de video/imágenes
-  // en la carga inicial → mejora LCP y ancho de banda.
+  // Lazy-load: cada video carga su fuente y se reproduce SOLO cuando se acerca
+  // al viewport (y se pausa al salir). Sin esto se bajaban megas de video en la
+  // carga inicial y el LCP se iba a 9 s.
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
