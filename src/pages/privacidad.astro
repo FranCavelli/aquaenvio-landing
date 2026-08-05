@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Política de privacidad | Aquaenvio';
+const description =
+  'Qué datos trata Aquaenvio, para qué se usan, con quién se comparten y cómo ejercer tus derechos según la Ley 25.326.';
+---
+
+<Base title={title} description={description} path="/privacidad">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Legal"
+      title="Política de privacidad"
+      subtitle="Última actualización: 5 de agosto de 2026"
+    />
+
+    <section class="bg-white py-14 sm:py-16">
+      <article class="privacidad mx-auto max-w-3xl px-4 text-slate-600">
+        <h2>1. Quién trata los datos</h2>
+        <p>
+          Aquaenvio es un sistema de gestión para distribuidoras de agua y bidones. El responsable
+          del tratamiento es <strong>Francisco Tomás Cavelli Montini</strong>, CUIT 20-43099711-5,
+          con domicilio en Río Negro 757, Lincoln, provincia de Buenos Aires, Argentina.
+        </p>
+        <p>
+          Cada distribuidora que usa Aquaenvio es responsable de los datos de sus propios clientes;
+          Aquaenvio los trata por su cuenta y orden, únicamente para prestarle el servicio.
+        </p>
+
+        <h2>2. Qué datos se tratan</h2>
+        <ul>
+          <li><strong>De quienes usan la app:</strong> nombre de usuario, rol, empresa a la que pertenecen y actividad dentro del sistema.</li>
+          <li><strong>De los clientes de cada distribuidora:</strong> nombre, dirección, teléfono, pedidos, envases y saldo de cuenta corriente.</li>
+          <li><strong>Ubicación:</strong> las coordenadas de los domicilios para armar los recorridos, y la posición del repartidor mientras usa la app de reparto.</li>
+          <li><strong>Pedidos desde la página pública:</strong> nombre, teléfono, dirección y detalle del pedido.</li>
+          <li><strong>Datos técnicos:</strong> dirección IP y navegador, con fines de seguridad y para evitar pedidos duplicados.</li>
+        </ul>
+        <p>
+          <strong>No se tratan datos de tarjetas:</strong> los pagos los procesa Mercado Pago en sus
+          propios sistemas.
+        </p>
+
+        <h2>3. Para qué se usan</h2>
+        <p>
+          Solo para prestar el servicio: registrar clientes y pedidos, armar recorridos, cobrar,
+          emitir comprobantes, avisar por WhatsApp o por notificación cuando entra un pedido, y dar
+          soporte. Los datos no se venden ni se ceden con fines publicitarios.
+        </p>
+
+        <h2>4. Con quién se comparten</h2>
+        <p>Con los proveedores necesarios para que el servicio funcione:</p>
+        <ul>
+          <li><strong>Meta (WhatsApp Business Platform):</strong> para enviar y recibir los avisos de pedidos.</li>
+          <li><strong>Mercado Pago:</strong> para procesar los cobros.</li>
+          <li><strong>OpenAI y Anthropic:</strong> para las funciones de inteligencia artificial (interpretar pedidos, sugerir recorridos). Se les envía el texto necesario para esa función puntual, no la base de clientes.</li>
+          <li><strong>Amazon Web Services:</strong> alojamiento del servidor, en Estados Unidos.</li>
+          <li><strong>Cloudflare:</strong> seguridad y entrega del sitio.</li>
+        </ul>
+        <p>
+          Como el servidor está en Estados Unidos, los datos se transfieren fuera de la Argentina.
+          Esa transferencia se hace para poder prestar el servicio contratado.
+        </p>
+
+        <h2>5. Cuánto se conservan</h2>
+        <p>
+          Mientras la distribuidora mantenga su cuenta activa y, después, por el plazo que exijan
+          las obligaciones fiscales y contables. Los pedidos web que no se confirman se dan de baja
+          automáticamente a las 24 horas.
+        </p>
+
+        <h2>6. Cookies y almacenamiento local</h2>
+        <p>
+          No usamos cookies de publicidad ni de seguimiento. En el navegador se guarda un token de
+          sesión para mantener la cuenta abierta y los datos cargados en la página de pedidos.
+        </p>
+
+        <h2>7. Tus derechos</h2>
+        <p>
+          Por la Ley 25.326 de Protección de los Datos Personales podés pedir el acceso,
+          la rectificación, la actualización o la supresión de tus datos escribiendo a
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a>. Si sos cliente de una
+          distribuidora, también podés pedírselo directamente a ella.
+        </p>
+        <p>
+          La Agencia de Acceso a la Información Pública, en su carácter de órgano de control de la
+          Ley 25.326, tiene la atribución de atender las denuncias y reclamos que se interpongan con
+          relación al incumplimiento de las normas sobre protección de datos personales.
+        </p>
+
+        <h2>8. Cambios en esta política</h2>
+        <p>
+          Los cambios se publican en esta misma página, con la fecha de actualización nueva. Si el
+          cambio es importante, además lo avisamos dentro de la aplicación.
+        </p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Tipografía del texto legal (no hay plugin typography: se estila a mano). */
+  .privacidad h2 {
+    margin-top: 2.25rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-slate-800, #1e293b);
+  }
+  .privacidad h2:first-child {
+    margin-top: 0;
+  }
+  .privacidad p {
+    margin-top: 0.75rem;
+    line-height: 1.75;
+  }
+  .privacidad ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .privacidad li {
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+  .privacidad strong {
+    color: var(--color-slate-800, #1e293b);
+    font-weight: 600;
+  }
+  .privacidad a {
+    color: var(--color-cyan-700, #0e7490);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
