@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { REDES, CONTACTO } from '../config';
 
 interface Props {
   title?: string;
@@ -24,26 +25,77 @@ const SITE = 'https://aquaenvio.com';
 // solo la home, que es la unica donde la URL ya coincide consigo misma.
 const canonical = SITE + (path.endsWith('/') ? path : path + '/');
 
-// Datos estructurados para Google (rich results de software/precio).
+// Datos estructurados para Google.
+//
+// Van los TRES tipos juntos en un @graph, no solo el software:
+//   - Organization + WebSite le dicen a Google que la marca "Aquaenvio" ES este
+//     dominio. Sin eso, buscando "aquaenvio" a secas Google no sabe que el
+//     dominio es el sitio oficial y rankea antes los posteos de Instagram.
+//   - sameAs cierra el circuito con los perfiles: el perfil ya enlaza al sitio,
+//     ahora el sitio enlaza al perfil. Google usa ese ida y vuelta para
+//     confirmar la identidad de la marca.
+// Los @id son anclas internas del grafo (no son URLs que haya que crear).
+const ORG_ID = SITE + '/#organizacion';
+const WEB_ID = SITE + '/#sitio';
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Aquaenvio',
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Web, Android, iOS',
-  description,
-  url: SITE,
-  inLanguage: 'es-AR',
-  offers: {
-    '@type': 'Offer',
-    priceCurrency: 'ARS',
-    description: 'Suscripción mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
-  },
-  areaServed: { '@type': 'Country', name: 'Argentina' },
-  audience: {
-    '@type': 'BusinessAudience',
-    name: 'Soderías y distribuidoras de agua, soda y bebidas',
-  },
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': ORG_ID,
+      name: 'Aquaenvio',
+      alternateName: ['AquaEnvio', 'Aqua Envio'],
+      url: SITE,
+      logo: {
+        '@type': 'ImageObject',
+        url: SITE + '/images/apple-touch-icon.png',
+        width: 180,
+        height: 180,
+      },
+      image: ogImage,
+      description:
+        'Software argentino de gestión para distribuidoras de agua, soda y soderías: repartos, clientes, envases, caja y facturación AFIP.',
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+      sameAs: [REDES.instagram],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        telephone: '+' + CONTACTO.whatsapp,
+        email: CONTACTO.email,
+        areaServed: 'AR',
+        availableLanguage: ['es-AR'],
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': WEB_ID,
+      name: 'Aquaenvio',
+      url: SITE,
+      inLanguage: 'es-AR',
+      publisher: { '@id': ORG_ID },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Aquaenvio',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web, Android, iOS',
+      description,
+      url: SITE,
+      inLanguage: 'es-AR',
+      publisher: { '@id': ORG_ID },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'ARS',
+        description: 'Suscripción mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
+      },
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+      audience: {
+        '@type': 'BusinessAudience',
+        name: 'Soderías y distribuidoras de agua, soda y bebidas',
+      },
+    },
+  ],
 };
 ---
 
