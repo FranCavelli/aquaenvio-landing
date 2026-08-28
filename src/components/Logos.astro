@@ -148,17 +148,12 @@ const fila2: Logo[] = [
     }
   }
 
-  /* Sin movimiento: se puede pasar a mano */
+  /* Con "reducir movimiento" del sistema NO se frena del todo: el desplazamiento
+     es lento, parejo y sin destellos, y frenarlo dejaba el carrusel clavado
+     (Windows suele tener esa opción prendida). Solo se afloja el ritmo. */
   @media (prefers-reduced-motion: reduce) {
     .cinta {
-      animation: none;
-    }
-    .fila {
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .fila::-webkit-scrollbar {
-      display: none;
+      animation-duration: calc(var(--dur, 60s) * 2);
     }
   }
 </style>
