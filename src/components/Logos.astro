@@ -1,0 +1,164 @@
+---
+/**
+ * Carrusel de logos "Confían en Aquaenvio".
+ *
+ * Dos filas que se deslizan en sentidos opuestos, en loop infinito y sin JS:
+ * cada fila lleva la lista DUPLICADA y se anima el contenedor un -50%, así el
+ * corte cae justo donde vuelve a empezar la copia y no se nota.
+ * Los PNG (fondo transparente) están en /images/logos/.
+ */
+
+// ancho: el ancho real del PNG (alto 152) — va en el <img> para que no salte el layout.
+type Logo = { slug: string; nombre: string; ancho: number; doble?: boolean };
+
+// doble = el logo trae bajada abajo del nombre (va un poco más alto para que
+// el nombre quede del mismo tamaño óptico que los de una sola línea).
+const fila1: Logo[] = [
+  { slug: 'aguas-del-parque', nombre: 'Aguas del Parque', ancho: 757, doble: true },
+  { slug: 'manantial-sur', nombre: 'Manantial Sur', ancho: 840 },
+  { slug: 'cristal-andino', nombre: 'Cristal Andino', ancho: 708, doble: true },
+  { slug: 'agua-viva', nombre: 'Agua Viva', ancho: 747 },
+  { slug: 'la-vertiente', nombre: 'La Vertiente', ancho: 721, doble: true },
+  { slug: 'glaciar', nombre: 'Glaciar', ancho: 700 },
+  { slug: 'ondina', nombre: 'Ondina', ancho: 513, doble: true },
+  { slug: 'aguas-del-litoral', nombre: 'Aguas del Litoral', ancho: 1077 },
+  { slug: 'puro-norte', nombre: 'Puro Norte', ancho: 672, doble: true },
+  { slug: 'torrente', nombre: 'Torrente', ancho: 714 },
+  { slug: 'agualina', nombre: 'Agualina', ancho: 536, doble: true },
+];
+
+const fila2: Logo[] = [
+  { slug: 'alaska', nombre: 'Alaska', ancho: 638, doble: true },
+  { slug: 'fuente-clara', nombre: 'Fuente Clara', ancho: 754 },
+  { slug: 'hidropack', nombre: 'HidroPack', ancho: 553, doble: true },
+  { slug: 'aguas-serranas', nombre: 'Aguas Serranas', ancho: 788 },
+  { slug: 'el-aljibe', nombre: 'El Aljibe', ancho: 602, doble: true },
+  { slug: 'agua-del-valle', nombre: 'Agua del Valle', ancho: 756 },
+  { slug: 'aquabid', nombre: 'AquaBid', ancho: 509, doble: true },
+  { slug: 'nieve-azul', nombre: 'Nieve Azul', ancho: 615 },
+  { slug: 'rio-claro', nombre: 'Río Claro', ancho: 523, doble: true },
+  { slug: 'aguas-pampa', nombre: 'Aguas Pampa', ancho: 807 },
+  { slug: 'bidon-express', nombre: 'Bidón Express', ancho: 808, doble: true },
+];
+---
+
+<section id="clientes" class="scroll-mt-24 border-y border-slate-200 bg-white py-14 sm:py-16">
+  <div class="mx-auto max-w-3xl px-4 text-center" data-reveal>
+    <span class="text-sm font-semibold text-cyan-600">Confían en Aquaenvio</span>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+      Distribuidoras que reparten con el sistema
+    </h2>
+    <p class="mt-3 text-slate-500">
+      Soderías, distribuidoras de bidones y revendedores que todos los días
+      arman su reparto, cobran y controlan la caja desde Aquaenvio.
+    </p>
+  </div>
+
+  <div class="carrusel mt-10 space-y-6">
+    {[fila1, fila2].map((fila, i) => (
+      <div class="fila" data-sentido={i === 0 ? 'izq' : 'der'}>
+        <div class="cinta" style={`--dur:${i === 0 ? 64 : 78}s`}>
+          {[0, 1].map((copia) => (
+            <ul class="pista" aria-hidden={copia === 1 ? 'true' : undefined}>
+              {fila.map((l) => (
+                <li>
+                  <img
+                    src={`/images/logos/${l.slug}.png`}
+                    alt={copia === 0 ? l.nombre : ''}
+                    width={l.ancho}
+                    height="152"
+                    decoding="async"
+                    fetchpriority="low"
+                    class={l.doble ? 'h-9 sm:h-14' : 'h-7 sm:h-10'}
+                  />
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Recorte + difuminado de los bordes para que los logos "entren y salgan" */
+  .fila {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  }
+
+  .cinta {
+    display: flex;
+    width: max-content;
+    animation: desliza var(--dur, 60s) linear infinite;
+  }
+
+  .fila[data-sentido='der'] .cinta {
+    animation-direction: reverse;
+  }
+
+  .carrusel:hover .cinta {
+    animation-play-state: paused;
+  }
+
+  .pista {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    padding-right: 2.25rem;
+    margin: 0;
+    list-style: none;
+  }
+
+  .pista img {
+    width: auto;
+    max-width: none;
+    opacity: 0.92;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .pista img:hover {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.04);
+  }
+
+  @media (min-width: 640px) {
+    .pista {
+      gap: 3.5rem;
+      padding-right: 3.5rem;
+    }
+  }
+
+  @keyframes desliza {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* Sin movimiento: se puede pasar a mano */
+  @media (prefers-reduced-motion: reduce) {
+    .cinta {
+      animation: none;
+    }
+    .fila {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .fila::-webkit-scrollbar {
+      display: none;
+    }
+  }
+</style>
