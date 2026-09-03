@@ -1,14 +1,18 @@
 ---
 // Mismos módulos que la app / la landing /cotizar.
 const modulos = [
-  { t: 'Repartos', d: 'Ordená el recorrido, registrá ventas y envases, y deshacé con un toque.', icon: '<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>' },
-  { t: 'Clientes', d: 'Ficha completa, saldo, precios por cliente e historial de compras.', icon: '<path d="M16 7a4 4 0 1 0-8 0"/><path d="M12 11v8"/><path d="M8 21h8"/><circle cx="12" cy="7" r="4"/>' },
-  { t: 'Ventas e historial', d: 'Cobros, transferencias y totales del día al instante.', icon: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>' },
-  { t: 'Pedidos y "para mañana"', d: 'Avisos de pedidos y clientes a visitar, fijados arriba hasta venderles.', icon: '<path d="M11 13.73 4 21"/><path d="M21 3 13.73 11"/><path d="m21 3-8 8"/><path d="M18 2a2 2 0 0 1 2 2"/>' },
-  { t: 'Carga y descarga', d: 'Carga del camión, cierre y control de bidones vacíos y retorno.', icon: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>' },
+  { t: 'Repartos con navegación', d: 'Orden por la ruta más corta y mapa a pantalla completa tipo GPS: te dice dónde doblar, con voz, y la lista de clientes encima para vender con un toque.', nuevo: true, icon: '<polygon points="3 11 22 2 13 21 11 13 3 11"/>' },
+  { t: 'Clientes', d: 'Ficha completa, saldo, precios por cliente e historial. La dirección se autocompleta o se marca en el mapa.', icon: '<path d="M16 7a4 4 0 1 0-8 0"/><path d="M12 11v8"/><path d="M8 21h8"/><circle cx="12" cy="7" r="4"/>' },
+  { t: 'Ventas e historial', d: 'Cobros en efectivo, transferencia o Mercado Pago, pago mixto y totales del día al instante.', icon: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>' },
+  { t: 'Pedidos por WhatsApp y web', d: 'Tus clientes piden solos desde un link o por WhatsApp; el pedido cae en el reparto del día y avisa al repartidor.', nuevo: true, icon: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>' },
+  { t: 'Avisos al cliente', d: '"¿Pasamos hoy?" con un toque, resumen de cuenta por WhatsApp y vinculación con un QR en la puerta.', nuevo: true, icon: '<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>' },
+  { t: 'Cobro con QR', d: 'Mercado Pago integrado: el repartidor muestra el QR, el cliente paga y la venta queda cobrada sola.', nuevo: true, icon: '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>' },
+  { t: 'Carga y descarga', d: 'Carga del camión, cierre y control de bidones vacíos y retorno, con aviso cuando se está quedando sin agua.', icon: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>' },
   { t: 'Caja y gastos', d: 'Caja diaria y gastos, con cierre y seguimiento.', icon: '<rect width="20" height="14" x="2" y="5" rx="2"/><path d="M12 12h.01"/>' },
-  { t: 'Mapas en vivo', d: 'Clientes y repartidores en el mapa, ubicación en tiempo real.', icon: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/>' },
-  { t: 'Dashboard', d: 'Cobrado, vendido, bidones y reportes por mes y por día.', icon: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>' },
+  { t: 'Mostrador', d: 'Venta en la planta sin cliente: bidón propio o cambio, con cierre de turno.', nuevo: true, icon: '<path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/>' },
+  { t: 'Facturación electrónica', d: 'Comprobantes con CAE de ARCA (ex AFIP) desde la venta, con PDF y QR, sueltos o por lote.', nuevo: true, icon: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>' },
+  { t: 'Mapas en vivo', d: 'Clientes y repartidores en el mapa, ubicación en tiempo real y ruta al próximo cliente.', icon: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/>' },
+  { t: 'Dashboard e IA', d: 'Cobrado, vendido, bidones y reportes por mes y por día; un copiloto que sugiere a quién ir y analiza tus rutas.', icon: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>' },
 ];
 ---
 
@@ -19,7 +23,7 @@ const modulos = [
       Todo lo que necesitás, en un lugar
     </h2>
     <p class="mt-3 text-slate-500">
-      Un módulo para cada parte de tu operación. Sin planillas ni cuadernos.
+      Un módulo para cada parte de tu operación, y el reparto te guía como un GPS. Sin planillas ni cuadernos.
     </p>
   </div>
 
@@ -30,7 +34,10 @@ const modulos = [
           <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-sm transition group-hover:scale-105">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={m.icon} />
           </div>
-          <h3 class="mt-4 font-semibold text-slate-800">{m.t}</h3>
+          <h3 class="mt-4 flex items-center gap-2 font-semibold text-slate-800">
+            {m.t}
+            {m.nuevo && <span class="rounded-full bg-cyan-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-cyan-700 ring-1 ring-cyan-200">Nuevo</span>}
+          </h3>
           <p class="mt-1 text-sm leading-relaxed text-slate-500">{m.d}</p>
         </div>
       ))
