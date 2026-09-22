@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 
 const title = 'Política de privacidad | Aquaenvio';
 const description =
-  'Qué datos trata Aquaenvio, para qué se usan, con quién se comparten y cómo ejercer tus derechos según la Ley 25.326.';
+  'Qué datos trata Aquaenvio, para qué se usan, con quién se comparten, cómo pedir que los borremos y cómo ejercer tus derechos según la Ley 25.326.';
 ---
 
 <Base title={title} description={description} path="/privacidad">
@@ -15,7 +15,7 @@ const description =
     <PageHeader
       badge="Legal"
       title="Política de privacidad"
-      subtitle="Última actualización: 5 de agosto de 2026"
+      subtitle="Última actualización: 22 de septiembre de 2026"
     />
 
     <section class="bg-white py-14 sm:py-16">
@@ -91,7 +91,41 @@ const description =
           relación al incumplimiento de las normas sobre protección de datos personales.
         </p>
 
-        <h2>8. Cambios en esta política</h2>
+        <h2 id="eliminar-datos">8. Cómo pedir que borremos tus datos</h2>
+        <p>
+          Podés pedir que borremos todo lo que tenemos tuyo, sin tener que dar explicaciones.
+          Se hace así:
+        </p>
+        <ol>
+          <li>
+            Escribí a <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a> desde
+            el mail o con el teléfono con el que te registraste, pidiendo la eliminación.
+          </li>
+          <li>
+            Decinos el nombre de la distribuidora con la que operás, si la sabés. Nos ayuda a
+            encontrarte, pero si no la tenés a mano igual te buscamos.
+          </li>
+          <li>
+            Te confirmamos por el mismo medio dentro de los <strong>10 días hábiles</strong>, y en
+            esa respuesta te decimos qué se borró.
+          </li>
+        </ol>
+        <p>
+          Si nos escribís por WhatsApp, borramos también la conversación y lo que hayamos
+          guardado de ella.
+        </p>
+        <p>
+          <strong>Lo que no se puede borrar</strong>, y es importante que lo sepas: las ventas que
+          ya se facturaron quedan guardadas porque la ley impositiva obliga a conservarlas. No se
+          usan para nada más que eso. Todo el resto —tus datos de contacto, tu dirección, tus
+          pedidos, tu historial de consumo— sí se borra.
+        </p>
+        <p>
+          Si sos cliente de una distribuidora que usa Aquaenvio, también podés pedírselo
+          directamente a ella: es la responsable de los datos de sus propios clientes.
+        </p>
+
+        <h2>9. Cambios en esta política</h2>
         <p>
           Los cambios se publican en esta misma página, con la fecha de actualización nueva. Si el
           cambio es importante, además lo avisamos dentro de la aplicación.
@@ -122,6 +156,17 @@ const description =
     margin-top: 0.75rem;
     padding-left: 1.25rem;
     list-style: disc;
+  }
+  /* La de los pasos para pedir el borrado: sin esto sale sin números. */
+  .privacidad ol {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: decimal;
+  }
+  /* El link de Meta entra por #eliminar-datos: que el título no quede tapado
+     por la barra de arriba al saltar. */
+  .privacidad h2[id] {
+    scroll-margin-top: 5rem;
   }
   .privacidad li {
     margin-top: 0.5rem;

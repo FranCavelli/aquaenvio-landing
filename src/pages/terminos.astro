@@ -1,0 +1,178 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Términos y condiciones | Aquaenvio';
+const description =
+  'Qué incluye el servicio de Aquaenvio, cómo se cobra, de quién son los datos y cómo se da de baja.';
+---
+
+<Base title={title} description={description} path="/terminos">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Legal"
+      title="Términos y condiciones"
+      subtitle="Última actualización: 22 de septiembre de 2026"
+    />
+
+    <section class="bg-white py-14 sm:py-16">
+      <article class="terminos mx-auto max-w-3xl px-4 text-slate-600">
+        <h2>1. Quién presta el servicio</h2>
+        <p>
+          Aquaenvio es un sistema de gestión para distribuidoras de agua, soda y bidones. Lo presta
+          <strong>Francisco Tomás Cavelli Montini</strong>, CUIT 20-43099711-5, con domicilio en
+          Río Negro 757, Lincoln, provincia de Buenos Aires, Argentina.
+        </p>
+        <p>
+          Al usar Aquaenvio aceptás estas condiciones. Si contratás en nombre de una empresa,
+          confirmás que podés obligarla.
+        </p>
+
+        <h2>2. Qué incluye</h2>
+        <p>
+          El acceso a la aplicación web y móvil con los módulos que tengas habilitados: repartos,
+          clientes, ventas, pedidos, carga y descarga, envases, caja y gastos, mapas y los avisos
+          por WhatsApp. Los módulos se prenden y se apagan desde Configuración.
+        </p>
+        <p>
+          Incluye también las actualizaciones: cuando sale una función nueva, la tenés sin pagar
+          nada aparte.
+        </p>
+
+        <h2>3. Precio y facturación</h2>
+        <p>
+          El precio es mensual y se informa antes de contratar. Se expresa en pesos según la
+          cotización del día y varía con la cantidad de usuarios y de clientes. La primera semana
+          es gratis, no hay costo de instalación ni permanencia mínima.
+        </p>
+        <p>
+          Si un pago se atrasa, avisamos antes de suspender nada. La suspensión por falta de pago
+          no borra tus datos: quedan disponibles para cuando regularices.
+        </p>
+
+        <h2>4. De quién son los datos</h2>
+        <p>
+          <strong>Los datos que cargás son tuyos.</strong> Tus clientes, tus precios, tus ventas y
+          tu historial son de tu distribuidora, no nuestros. Los usamos para prestarte el servicio
+          y para nada más: no los vendemos, no los cedemos y no los usamos para ofrecerle nada a
+          nadie.
+        </p>
+        <p>
+          Podés pedir una copia cuando quieras, y te la damos en un formato que se pueda abrir en
+          una planilla.
+        </p>
+        <p>
+          Cómo tratamos los datos personales está detallado en la
+          <a href="/privacidad/">política de privacidad</a>.
+        </p>
+
+        <h2>5. Qué esperamos de vos</h2>
+        <p>
+          Que uses el sistema para tu actividad y que cuides el acceso: cada persona con su usuario,
+          sin compartir contraseñas. Si sospechás que alguien entró sin permiso, avisanos.
+        </p>
+        <p>
+          Los mensajes que salen por WhatsApp a tus clientes son tu responsabilidad. WhatsApp tiene
+          sus propias reglas y castiga al número que le escribe a gente que no pidió recibir nada:
+          conviene mandar solo a los clientes que vincularon su número.
+        </p>
+
+        <h2>6. Disponibilidad</h2>
+        <p>
+          Trabajamos para que el sistema esté disponible siempre, pero no podemos prometer que no
+          se va a caer nunca. La app del repartidor <strong>funciona sin señal</strong> y sincroniza
+          cuando vuelve la conexión, justamente para que una caída no te frene el reparto.
+        </p>
+        <p>
+          Cuando hay una interrupción planificada, avisamos antes.
+        </p>
+
+        <h2>7. La facturación fiscal</h2>
+        <p>
+          La facturación electrónica con CAE se emite contra ARCA (ex AFIP) con los datos y el
+          certificado de tu empresa. Nosotros ponemos la herramienta; el contenido de cada
+          comprobante y el cumplimiento fiscal son de tu distribuidora.
+        </p>
+        <p>
+          Esta función está disponible solo para Argentina.
+        </p>
+
+        <h2>8. Cómo se da de baja</h2>
+        <p>
+          Cuando quieras, sin preaviso ni penalidad: escribinos y damos de baja la cuenta al final
+          del período que ya está pago. Antes de cerrarla te entregamos tus datos si los pedís.
+        </p>
+        <p>
+          Si querés además que borremos todo, está explicado en
+          <a href="/privacidad/#eliminar-datos">cómo pedir que borremos tus datos</a>.
+        </p>
+        <p>
+          De nuestro lado, solo suspenderíamos una cuenta por falta de pago sostenida o por un uso
+          que perjudique a terceros, y siempre avisando antes.
+        </p>
+
+        <h2>9. Responsabilidad</h2>
+        <p>
+          Aquaenvio es una herramienta de gestión: las decisiones comerciales, los precios que
+          cargás y lo que le cobrás a cada cliente son tuyos. No respondemos por el lucro cesante
+          ni por daños indirectos derivados del uso del sistema.
+        </p>
+        <p>
+          Esto no limita las responsabilidades que la ley no permite limitar.
+        </p>
+
+        <h2>10. Cambios en estas condiciones</h2>
+        <p>
+          Los cambios se publican en esta misma página con la fecha nueva. Si alguno te afecta de
+          verdad —el precio, el alcance del servicio— lo avisamos dentro de la aplicación antes de
+          que entre en vigencia.
+        </p>
+
+        <h2>11. Ley aplicable</h2>
+        <p>
+          Se aplica la ley argentina. Ante cualquier diferencia, primero hablamos; si hiciera falta
+          ir más lejos, son competentes los tribunales ordinarios de Lincoln, provincia de Buenos
+          Aires.
+        </p>
+
+        <h2>12. Contacto</h2>
+        <p>
+          Por WhatsApp al <a href="https://wa.me/5492355514603">+54 9 2355 51-4603</a> o por mail a
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a>.
+        </p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Misma tipografía que la política de privacidad: son las dos páginas
+     legales y tienen que leerse igual. */
+  .terminos h2 {
+    margin-top: 2.25rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-slate-800, #1e293b);
+  }
+  .terminos h2:first-child {
+    margin-top: 0;
+  }
+  .terminos p {
+    margin-top: 0.75rem;
+    line-height: 1.75;
+  }
+  .terminos strong {
+    color: var(--color-slate-800, #1e293b);
+    font-weight: 600;
+  }
+  .terminos a {
+    color: var(--color-cyan-700, #0e7490);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
