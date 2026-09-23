@@ -40,121 +40,12 @@ const features: ({ f: string } & Record<Col, Celda>)[] = [
   { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
 ];
 
-/* ── Precios ──────────────────────────────────────────────────────────────
-   Aquaenvio: misma fórmula que la calculadora (src/scripts/calculator.ts).
-   Los montos en dólares se pasan a pesos en el navegador con el blue del
-   día (dolarapi), igual que la calculadora; DOLAR_REF es el respaldo. */
-const DOLAR_REF = 1560; // blue venta al 23/09/2026
-const MINIMO_ARS = 15999;
-const aquaUsd = (clientes: number, usuarios: number) => Math.ceil((3 + clientes * 0.005 + usuarios) * 1.5);
-
-type Precio = { ars?: number; usd?: number; texto?: string; nota?: string };
-type Fila = 'aqua' | 'sodapp' | 'yaku';
-
-const escenarios: { titulo: string; detalle: string; precios: Record<Fila, Precio> }[] = [
-  {
-    titulo: 'Sodería chica',
-    detalle: '1 repartidor + el dueño · 150 clientes',
-    precios: {
-      aqua: { usd: aquaUsd(150, 2) },
-      sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
-      yaku: { usd: 48, nota: 'Básico · el Lite corta en 100 clientes' },
-    },
-  },
-  {
-    titulo: 'Distribuidora mediana',
-    detalle: '3 repartidores + 1 administrativo · 600 clientes',
-    precios: {
-      aqua: { usd: aquaUsd(600, 4) },
-      sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
-      yaku: { usd: 48, nota: 'Básico · 4 usuarios' },
-    },
-  },
-  {
-    titulo: 'Distribuidora grande',
-    detalle: '8 repartidores + 2 administrativos · 2.000 clientes',
-    precios: {
-      aqua: { usd: aquaUsd(2000, 10) },
-      sodapp: { ars: 308000, nota: 'Business · 1.000 pedidos, después $230 c/u' },
-      yaku: { usd: 106, nota: 'Premium + 2 usuarios extra' },
-    },
-  },
-];
-
-const aArs = (p: Precio, min = 0) => (p.ars ?? (p.usd != null ? Math.max(p.usd * DOLAR_REF, min) : null));
-const fmt = (n: number) => '$ ' + Math.round(n).toLocaleString('es-AR');
-const veces = (n: number) => String(Math.round(n * 10) / 10).replace('.', ',');
-
-const filasPrecio: { key: Fila; name: string }[] = [
-  { key: 'aqua', name: 'Aquaenvio' },
-  { key: 'sodapp', name: 'Sodapp' },
-  { key: 'yaku', name: 'Yaku' },
-];
 ---
 
 <section id="comparativa" class="scroll-mt-24 bg-slate-50 py-16 sm:py-24">
   <div class="mx-auto max-w-6xl px-4">
-    <div class="mx-auto max-w-2xl text-center" data-reveal>
-      <span class="text-sm font-semibold text-cyan-600">Comparativa</span>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-        Aquaenvio vs los demás sistemas
-      </h2>
-      <p class="mt-3 text-slate-500">
-        Seis sistemas de reparto de agua que se usan en Argentina, comparados con lo que cada uno
-        publica en su propia web.
-      </p>
-    </div>
-
-    <!-- ── Precio ─────────────────────────────────────────────────────── -->
-    <div class="mt-12" data-reveal>
-
-      <div class="grid gap-5 lg:grid-cols-3">
-        {escenarios.map((e) => {
-          const aqua = aArs(e.precios.aqua, MINIMO_ARS)!;
-          const sodapp = aArs(e.precios.sodapp)!;
-          return (
-            <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p class="font-bold text-slate-900">{e.titulo}</p>
-              <p class="text-xs text-slate-500">{e.detalle}</p>
-              <ul class="mt-4 flex-1 divide-y divide-slate-100 text-sm">
-                {filasPrecio.map((f) => {
-                  const p = e.precios[f.key];
-                  const esAqua = f.key === 'aqua';
-                  const ars = aArs(p, esAqua ? MINIMO_ARS : 0);
-                  return (
-                    <li class={`flex items-start justify-between gap-3 py-2.5 ${esAqua ? '-mx-2 rounded-lg bg-cyan-50 px-2' : ''}`}>
-                      <div class="min-w-0">
-                        <p class={esAqua ? 'font-bold text-aqua-900' : 'font-medium text-slate-700'}>{f.name}</p>
-                        {p.nota && <p class="text-xs text-slate-400">{p.nota}</p>}
-                      </div>
-                      <p class={`shrink-0 text-right tabular-nums ${esAqua ? 'text-lg font-extrabold text-aqua-900' : 'font-semibold text-slate-700'}`}>
-                        {ars != null ? (
-                          <span data-precio-usd={p.usd} data-precio-min={esAqua ? MINIMO_ARS : undefined}>{fmt(ars)}</span>
-                        ) : (
-                          <span class="text-xs font-medium text-slate-400">{p.texto}</span>
-                        )}
-                        {p.usd != null && !esAqua && <span class="block text-xs font-normal text-slate-400">US$ {p.usd}</span>}
-                      </p>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p class="mt-4 rounded-lg bg-emerald-50 px-3 py-2 text-center text-sm font-semibold text-emerald-700">
-                <span data-ahorro-de={sodapp} data-ahorro-usd={e.precios.aqua.usd}>{veces(sodapp / aqua)}</span> veces menos que Sodapp
-              </p>
-            </div>
-          );
-        })}
-      </div>
-      <p class="mx-auto mt-4 max-w-3xl text-center text-xs text-slate-400">
-        Precios por mes publicados por cada proveedor al 23/09/2026. Los montos en dólares se pasan a
-        pesos con el dólar blue del día. En Aquaenvio los mensajes de WhatsApp y la IA son opcionales y
-        se cobran aparte según lo que se use; los primeros 2 meses van bonificados.
-      </p>
-    </div>
-
     <!-- ── Funciones ──────────────────────────────────────────────────── -->
-    <h3 class="mt-20 text-center text-xl font-bold text-slate-900 sm:text-2xl" data-reveal>Funciones, una por una</h3>
+    <h3 class="text-center text-xl font-bold text-slate-900 sm:text-2xl" data-reveal>Funciones, una por una</h3>
     <div class="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm" data-reveal>
       <table class="w-full min-w-[920px] border-collapse text-sm">
         <thead>
@@ -240,22 +131,3 @@ const filasPrecio: { key: Fila; name: string }[] = [
   </div>
 </section>
 
-<script>
-  // Pasa los precios en dólares a pesos con el blue del día (como la calculadora).
-  fetch('https://dolarapi.com/v1/dolares/blue')
-    .then((r) => r.json())
-    .then((d) => {
-      const dolar = Number(d?.venta);
-      if (!Number.isFinite(dolar) || dolar <= 0) return;
-      const fmt = (n: number) => '$ ' + Math.round(n).toLocaleString('es-AR');
-      document.querySelectorAll<HTMLElement>('[data-precio-usd]').forEach((el) => {
-        const usd = Number(el.dataset.precioUsd);
-        el.textContent = fmt(Math.max(usd * dolar, Number(el.dataset.precioMin || 0)));
-      });
-      document.querySelectorAll<HTMLElement>('[data-ahorro-de]').forEach((el) => {
-        const aqua = Math.max(Number(el.dataset.ahorroUsd) * dolar, 15999);
-        el.textContent = String(Math.round((Number(el.dataset.ahorroDe) / aqua) * 10) / 10).replace('.', ',');
-      });
-    })
-    .catch(() => {});
-</script>
