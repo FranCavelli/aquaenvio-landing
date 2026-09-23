@@ -1,51 +1,180 @@
 ---
 import { whatsappUrl } from '../config';
 
-// Filas de la comparativa. true = sí, false = no, string = detalle.
-const features = [
-  { f: 'Pesos', aqua: true, yaku: 'En dólares (USD 48–96/mes)', gestion: 'No publica', app: 'Gratis (muy limitada)' },
-  { f: 'Prueba gratis sin tarjeta', aqua: '1 semana', yaku: '7 días', gestion: false, app: true },
-  { f: 'Sin costo de implementación', aqua: true, yaku: 'USD 50–100 aparte', gestion: false, app: true },
-  { f: 'App del repartidor (vende desde el celu)', aqua: true, yaku: true, gestion: true, app: true },
-  { f: 'Funciona sin señal en la calle', aqua: true, yaku: false, gestion: false, app: false },
-  { f: 'Control de envases / comodato', aqua: true, yaku: 'Plan medio+', gestion: true, app: true },
-  { f: 'Facturación AFIP integrada (CAE real)', aqua: true, yaku: false, gestion: false, app: false },
-  { f: 'Copiloto de IA por voz en el reparto', aqua: true, yaku: false, gestion: false, app: false },
-  { f: 'Mapas de clientes y repartidores', aqua: true, yaku: true, gestion: 'Parcial', app: 'Parcial' },
-  { f: 'Caja y gastos', aqua: true, yaku: true, gestion: true, app: true },
-  { f: 'Soporte humano por WhatsApp', aqua: true, yaku: 'Plan pro', gestion: true, app: 'Limitado en gratis' },
-  { f: 'Diseño moderno / mobile-first', aqua: true, yaku: true, gestion: false, app: 'Básico' },
-];
+/* Comparativa contra los demás sistemas del rubro.
+   REGLA: solo se afirma lo que cada proveedor publica en su web (relevado el
+   23/09/2026). Si no lo publica, va `null` ("no lo informa"), nunca `false`:
+   decir que otro no tiene algo que sí tiene nos expone. `false` solo cuando
+   el plan lo excluye explícitamente. */
+
+type Celda = true | false | null | string;
 
 const cols = [
   { key: 'aqua', name: 'Aquaenvio', highlight: true },
+  { key: 'sodapp', name: 'Sodapp' },
   { key: 'yaku', name: 'Yaku' },
+  { key: 'ada', name: 'App Delivery Agua' },
   { key: 'gestion', name: 'Gestión Aguas' },
-  { key: 'app', name: 'App Delivery Agua' },
+  { key: 'jr', name: 'JR-Software' },
+  { key: 'startapp', name: 'Reparto de Agua' },
+] as const;
+
+type Col = (typeof cols)[number]['key'];
+
+const features: ({ f: string } & Record<Col, Celda>)[] = [
+  { f: 'Precio publicado, en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: 'Gratis 1 usuario, si no a medida', gestion: 'No publica', jr: 'No publica', startapp: 'No publica' },
+  { f: 'Sin costo de implementación', aqua: true, sodapp: true, yaku: 'Solo en plan anual', ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Ventas y pedidos sin tope por mes', aqua: true, sodapp: '250 a 1.000, después $385 c/u', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
+  { f: 'Vende sin señal en la calle', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true },
+  { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true },
+  { f: 'Factura electrónica ARCA/AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: null, jr: null, startapp: true },
+  { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null },
+  { f: 'Navegación GPS con voz, paso a paso', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
+  { f: 'Página para que tus clientes pidan solos', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null },
+  { f: 'Cobro con QR de Mercado Pago', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Aviso al cliente "estamos por pasar"', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Abonos mensuales que se cobran solos', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true },
+  { f: 'Venta en mostrador / planta', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Copiloto de IA por voz en el reparto', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
+];
+
+/* ── Precios ──────────────────────────────────────────────────────────────
+   Aquaenvio: misma fórmula que la calculadora (src/scripts/calculator.ts).
+   Los montos en dólares se pasan a pesos en el navegador con el blue del
+   día (dolarapi), igual que la calculadora; DOLAR_REF es el respaldo. */
+const DOLAR_REF = 1560; // blue venta al 23/09/2026
+const MINIMO_ARS = 15999;
+const aquaUsd = (clientes: number, usuarios: number) => Math.ceil((3 + clientes * 0.005 + usuarios) * 1.5);
+
+type Precio = { ars?: number; usd?: number; texto?: string; nota?: string };
+type Fila = 'aqua' | 'sodapp' | 'yaku' | 'ada' | 'otros';
+
+const escenarios: { titulo: string; detalle: string; precios: Record<Fila, Precio> }[] = [
+  {
+    titulo: 'Sodería chica',
+    detalle: '1 repartidor + el dueño · 150 clientes',
+    precios: {
+      aqua: { usd: aquaUsd(150, 2) },
+      sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
+      yaku: { usd: 48, nota: 'Básico · el Lite corta en 100 clientes' },
+      ada: { texto: 'A medida', nota: 'El gratis es de 1 solo usuario' },
+      otros: { texto: 'No publican' },
+    },
+  },
+  {
+    titulo: 'Distribuidora mediana',
+    detalle: '3 repartidores + 1 administrativo · 600 clientes',
+    precios: {
+      aqua: { usd: aquaUsd(600, 4) },
+      sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
+      yaku: { usd: 48, nota: 'Básico · 4 usuarios' },
+      ada: { texto: 'A medida' },
+      otros: { texto: 'No publican' },
+    },
+  },
+  {
+    titulo: 'Distribuidora grande',
+    detalle: '8 repartidores + 2 administrativos · 2.000 clientes',
+    precios: {
+      aqua: { usd: aquaUsd(2000, 10) },
+      sodapp: { ars: 308000, nota: 'Business · 1.000 pedidos, después $230 c/u' },
+      yaku: { usd: 106, nota: 'Premium + 2 usuarios extra' },
+      ada: { texto: 'A medida' },
+      otros: { texto: 'No publican' },
+    },
+  },
+];
+
+const aArs = (p: Precio, min = 0) => (p.ars ?? (p.usd != null ? Math.max(p.usd * DOLAR_REF, min) : null));
+const fmt = (n: number) => '$ ' + Math.round(n).toLocaleString('es-AR');
+const veces = (n: number) => String(Math.round(n * 10) / 10).replace('.', ',');
+
+const filasPrecio: { key: Fila; name: string }[] = [
+  { key: 'aqua', name: 'Aquaenvio' },
+  { key: 'sodapp', name: 'Sodapp' },
+  { key: 'yaku', name: 'Yaku' },
+  { key: 'ada', name: 'App Delivery Agua' },
+  { key: 'otros', name: 'Gestión Aguas, JR-Software, Reparto de Agua' },
 ];
 ---
 
 <section id="comparativa" class="scroll-mt-24 bg-slate-50 py-16 sm:py-24">
-  <div class="mx-auto max-w-5xl px-4">
+  <div class="mx-auto max-w-6xl px-4">
     <div class="mx-auto max-w-2xl text-center" data-reveal>
       <span class="text-sm font-semibold text-cyan-600">Comparativa</span>
       <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
         Aquaenvio vs los demás sistemas
       </h2>
       <p class="mt-3 text-slate-500">
-        Cómo se compara con los principales software de reparto de agua de Argentina,
-        en lo que de verdad importa para una sodería o distribuidora.
+        Seis sistemas de reparto de agua que se usan en Argentina, comparados con lo que cada uno
+        publica en su propia web.
       </p>
     </div>
 
-    <!-- Tabla -->
-    <div class="mt-12 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm" data-reveal>
-      <table class="w-full min-w-[640px] border-collapse text-sm">
+    <!-- ── Precio ─────────────────────────────────────────────────────── -->
+    <div class="mt-12" data-reveal>
+      <h3 class="text-center text-xl font-bold text-slate-900 sm:text-2xl">¿Cuánto pagás por mes?</h3>
+      <p class="mt-1 text-center text-sm text-slate-500">
+        Tres distribuidoras de ejemplo, con el plan que les corresponde en cada sistema.
+      </p>
+
+      <div class="mt-8 grid gap-5 lg:grid-cols-3">
+        {escenarios.map((e) => {
+          const aqua = aArs(e.precios.aqua, MINIMO_ARS)!;
+          const sodapp = aArs(e.precios.sodapp)!;
+          return (
+            <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p class="font-bold text-slate-900">{e.titulo}</p>
+              <p class="text-xs text-slate-500">{e.detalle}</p>
+              <ul class="mt-4 flex-1 divide-y divide-slate-100 text-sm">
+                {filasPrecio.map((f) => {
+                  const p = e.precios[f.key];
+                  const esAqua = f.key === 'aqua';
+                  const ars = aArs(p, esAqua ? MINIMO_ARS : 0);
+                  return (
+                    <li class={`flex items-start justify-between gap-3 py-2.5 ${esAqua ? '-mx-2 rounded-lg bg-cyan-50 px-2' : ''}`}>
+                      <div class="min-w-0">
+                        <p class={esAqua ? 'font-bold text-aqua-900' : 'font-medium text-slate-700'}>{f.name}</p>
+                        {p.nota && <p class="text-xs text-slate-400">{p.nota}</p>}
+                      </div>
+                      <p class={`shrink-0 text-right tabular-nums ${esAqua ? 'text-lg font-extrabold text-aqua-900' : 'font-semibold text-slate-700'}`}>
+                        {ars != null ? (
+                          <span data-precio-usd={p.usd} data-precio-min={esAqua ? MINIMO_ARS : undefined}>{fmt(ars)}</span>
+                        ) : (
+                          <span class="text-xs font-medium text-slate-400">{p.texto}</span>
+                        )}
+                        {p.usd != null && !esAqua && <span class="block text-xs font-normal text-slate-400">US$ {p.usd}</span>}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p class="mt-4 rounded-lg bg-emerald-50 px-3 py-2 text-center text-sm font-semibold text-emerald-700">
+                <span data-ahorro-de={sodapp} data-ahorro-usd={e.precios.aqua.usd}>{veces(sodapp / aqua)}</span> veces menos que Sodapp
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      <p class="mx-auto mt-4 max-w-3xl text-center text-xs text-slate-400">
+        Precios por mes publicados por cada proveedor al 23/09/2026. Los montos en dólares se pasan a
+        pesos con el dólar blue del día. En Aquaenvio los mensajes de WhatsApp y la IA son opcionales y
+        se cobran aparte según lo que se use; los primeros 2 meses van bonificados.
+      </p>
+    </div>
+
+    <!-- ── Funciones ──────────────────────────────────────────────────── -->
+    <h3 class="mt-20 text-center text-xl font-bold text-slate-900 sm:text-2xl" data-reveal>Funciones, una por una</h3>
+    <div class="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm" data-reveal>
+      <table class="w-full min-w-[920px] border-collapse text-sm">
         <thead>
           <tr class="bg-slate-50">
-            <th class="px-4 py-4 text-left font-semibold text-slate-500">Característica</th>
+            <th class="sticky left-0 z-10 bg-slate-50 px-4 py-4 text-left font-semibold text-slate-500">Función</th>
             {cols.map((c) => (
-              <th class={`px-4 py-4 text-center font-bold ${c.highlight ? 'bg-aqua-700 text-white' : 'text-slate-700'}`}>
+              <th class={`px-3 py-4 text-center font-bold leading-tight ${c.highlight ? 'bg-aqua-700 text-white' : 'text-slate-700'}`}>
                 {c.name}
               </th>
             ))}
@@ -54,21 +183,23 @@ const cols = [
         <tbody>
           {features.map((row, i) => (
             <tr class={i % 2 ? 'bg-white' : 'bg-slate-50/40'}>
-              <td class="px-4 py-3 text-left font-medium text-slate-700">{row.f}</td>
+              <td class={`sticky left-0 z-10 max-w-[13rem] px-4 py-3 text-left font-medium text-slate-700 ${i % 2 ? 'bg-white' : 'bg-slate-50'}`}>{row.f}</td>
               {cols.map((c) => {
                 const v = row[c.key];
                 return (
-                  <td class={`px-4 py-3 text-center ${c.highlight ? 'bg-cyan-50/70 font-medium text-aqua-900' : 'text-slate-600'}`}>
+                  <td class={`px-3 py-3 text-center ${c.highlight ? 'bg-cyan-50/70 font-medium text-aqua-900' : 'text-slate-600'}`}>
                     {v === true ? (
-                      <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                      <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600" title="Sí">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                       </span>
                     ) : v === false ? (
-                      <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-slate-300">
+                      <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-slate-300" title="No">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
                       </span>
+                    ) : v === null ? (
+                      <span class="text-slate-300" title="No lo informa en su web">—</span>
                     ) : (
-                      <span class="text-xs">{v}</span>
+                      <span class="text-xs leading-tight">{v}</span>
                     )}
                   </td>
                 );
@@ -79,25 +210,35 @@ const cols = [
       </table>
     </div>
     <p class="mt-3 text-center text-xs text-slate-400">
-      Datos públicos de cada proveedor a junio 2026.
+      — = no lo informa en su web. Relevado de la web de cada proveedor el 23/09/2026.
     </p>
 
-    <!-- Lo que solo tenés en Aquaenvio -->
-    <div class="mt-14 grid gap-5 sm:grid-cols-3" data-reveal-group>
+    <!-- ── ¿Y una app de rutas común? ─────────────────────────────────── -->
+    <div class="mt-14 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" data-reveal>
+      <h3 class="text-lg font-bold text-slate-900">¿Y si uso una app de rutas común, como SimpliRoute o Spoke (ex Circuit)?</h3>
+      <p class="mt-2 text-sm text-slate-600">
+        Te ordenan las paradas, y ahí termina. No llevan cuántos bidones tiene prestados cada cliente,
+        cuánto te debe ni qué precio le hacés, y no te sacan la factura. Terminás con la app de rutas,
+        la planilla y el cuaderno. Aquaenvio es todo eso junto.
+      </p>
+    </div>
+
+    <!-- Lo que te llevás con Aquaenvio -->
+    <div class="mt-5 grid gap-5 sm:grid-cols-3" data-reveal-group>
       <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" data-reveal-item>
-        <div class="text-2xl">🧾</div>
-        <h3 class="mt-3 font-bold text-slate-800">Facturación AFIP de verdad</h3>
-        <p class="mt-1.5 text-sm text-slate-500">Emití comprobantes con CAE y QR desde el sistema. Ninguno de los otros lo tiene integrado.</p>
+        <div class="text-2xl">💸</div>
+        <h3 class="mt-3 font-bold text-slate-800">Pagás por tu tamaño</h3>
+        <p class="mt-1.5 text-sm text-slate-500">Sin planes que te cortan a los 250 pedidos ni cobro por venta extra. Crecés y el precio acompaña de a poco.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" data-reveal-item>
+        <div class="text-2xl">📲</div>
+        <h3 class="mt-3 font-bold text-slate-800">Cobro con QR en la puerta</h3>
+        <p class="mt-1.5 text-sm text-slate-500">El repartidor muestra el QR de Mercado Pago y la venta queda cobrada. Sin anotar transferencias a mano.</p>
       </div>
       <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" data-reveal-item>
         <div class="text-2xl">🎙️</div>
         <h3 class="mt-3 font-bold text-slate-800">Copiloto de IA por voz</h3>
-        <p class="mt-1.5 text-sm text-slate-500">Le dicta al repartidor a quién venderle más y qué clientes están flojos. Único en el rubro.</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" data-reveal-item>
-        <div class="text-2xl">📶</div>
-        <h3 class="mt-3 font-bold text-slate-800">Vende sin señal</h3>
-        <p class="mt-1.5 text-sm text-slate-500">El repartidor carga la venta aunque no haya internet y se sincroniza al volver la conexión.</p>
+        <p class="mt-1.5 text-sm text-slate-500">Le dice al repartidor a quién venderle más y qué clientes están flojos, mientras maneja.</p>
       </div>
     </div>
 
@@ -109,3 +250,23 @@ const cols = [
     </div>
   </div>
 </section>
+
+<script>
+  // Pasa los precios en dólares a pesos con el blue del día (como la calculadora).
+  fetch('https://dolarapi.com/v1/dolares/blue')
+    .then((r) => r.json())
+    .then((d) => {
+      const dolar = Number(d?.venta);
+      if (!Number.isFinite(dolar) || dolar <= 0) return;
+      const fmt = (n: number) => '$ ' + Math.round(n).toLocaleString('es-AR');
+      document.querySelectorAll<HTMLElement>('[data-precio-usd]').forEach((el) => {
+        const usd = Number(el.dataset.precioUsd);
+        el.textContent = fmt(Math.max(usd * dolar, Number(el.dataset.precioMin || 0)));
+      });
+      document.querySelectorAll<HTMLElement>('[data-ahorro-de]').forEach((el) => {
+        const aqua = Math.max(Number(el.dataset.ahorroUsd) * dolar, 15999);
+        el.textContent = String(Math.round((Number(el.dataset.ahorroDe) / aqua) * 10) / 10).replace('.', ',');
+      });
+    })
+    .catch(() => {});
+</script>
