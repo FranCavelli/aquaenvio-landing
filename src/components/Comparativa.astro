@@ -3,7 +3,7 @@ import { whatsappUrl } from '../config';
 
 /* Comparativa contra los demás sistemas del rubro.
    REGLA: solo se afirma lo que cada proveedor publica en su web (relevado el
-   23/09/2026). Si no lo publica, va `null` ("no lo informa"), nunca `false`:
+   23/09/2026). Si no lo publica, va `null` (X roja con la leyenda "no figura en su web"), nunca `false`:
    decir que otro no tiene algo que sí tiene nos expone. `false` solo cuando
    el plan lo excluye explícitamente. */
 
@@ -28,7 +28,7 @@ const features: ({ f: string } & Record<Col, Celda>)[] = [
   { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
   { f: 'Vende sin señal en la calle', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true },
   { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true },
-  { f: 'Factura electrónica ARCA/AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: null, jr: null, startapp: true },
+  { f: 'Factura electrónica ARCA/AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Factura, no aclara AFIP', jr: 'Factura, no aclara AFIP', startapp: true },
   { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null },
   { f: 'Navegación GPS con voz, paso a paso', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
@@ -189,7 +189,9 @@ const filasPrecio: { key: Fila; name: string }[] = [
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
                       </span>
                     ) : v === null ? (
-                      <span class="text-slate-300" title="No lo informa en su web">—</span>
+                      <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-red-500" title="No figura en su web">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                      </span>
                     ) : (
                       <span class="text-xs leading-tight">{v}</span>
                     )}
@@ -202,7 +204,7 @@ const filasPrecio: { key: Fila; name: string }[] = [
       </table>
     </div>
     <p class="mt-3 text-center text-xs text-slate-400">
-      — = no lo informa en su web. Relevado de la web de cada proveedor el 23/09/2026.
+      ✗ = no figura en la web del proveedor. Relevado de la web de cada proveedor el 23/09/2026.
     </p>
 
     <!-- ── ¿Y una app de rutas común? ─────────────────────────────────── -->
