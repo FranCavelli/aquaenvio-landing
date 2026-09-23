@@ -108,12 +108,8 @@ const filasPrecio: { key: Fila; name: string }[] = [
 
     <!-- ── Precio ─────────────────────────────────────────────────────── -->
     <div class="mt-12" data-reveal>
-      <h3 class="text-center text-xl font-bold text-slate-900 sm:text-2xl">¿Cuánto pagás por mes?</h3>
-      <p class="mt-1 text-center text-sm text-slate-500">
-        Tres distribuidoras de ejemplo, con el plan que les corresponde en cada sistema.
-      </p>
 
-      <div class="mt-8 grid gap-5 lg:grid-cols-3">
+      <div class="grid gap-5 lg:grid-cols-3">
         {escenarios.map((e) => {
           const aqua = aArs(e.precios.aqua, MINIMO_ARS)!;
           const sodapp = aArs(e.precios.sodapp)!;
