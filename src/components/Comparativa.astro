@@ -22,22 +22,21 @@ const cols = [
 type Col = (typeof cols)[number]['key'];
 
 const features: ({ f: string } & Record<Col, Celda>)[] = [
-  { f: 'Precio publicado, en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Sin costo de implementación', aqua: true, sodapp: true, yaku: 'Solo en plan anual', ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Ventas y pedidos sin tope por mes', aqua: true, sodapp: '250 a 1.000, después $385 c/u', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Precio en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
-  { f: 'Vende sin señal en la calle', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true },
+  { f: 'Funciona sin señal', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true },
   { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true },
-  { f: 'Factura electrónica ARCA/AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Factura, no aclara AFIP', jr: 'Factura, no aclara AFIP', startapp: true },
+  { f: 'Factura AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Sin aclarar', jr: 'Sin aclarar', startapp: true },
   { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null },
-  { f: 'Navegación GPS con voz, paso a paso', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Navegación GPS asistida', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
-  { f: 'Página para que tus clientes pidan solos', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null },
-  { f: 'Cobro con QR de Mercado Pago', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Aviso al cliente "estamos por pasar"', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Abonos mensuales que se cobran solos', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true },
-  { f: 'Venta en mostrador / planta', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Copiloto de IA por voz en el reparto', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Página para tus clientes', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null },
+  { f: 'Cobro con QR', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Abonos mensuales', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true },
+  { f: 'Venta en mostrador', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
+  { f: 'Copiloto de IA por voz', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
 ];
 
