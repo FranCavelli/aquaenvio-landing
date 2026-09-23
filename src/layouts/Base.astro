@@ -67,11 +67,18 @@ const jsonLd = {
         availableLanguage: ['es-AR'],
       },
     },
+    /* El nombre que Google muestra arriba de cada resultado ("Aquaenvio" en vez
+       de "aquaenvio.com") sale de ACÁ. Dos condiciones que pide Google y que
+       antes no se cumplían:
+         - `url` tiene que ser EXACTAMENTE la canónica de la home, con la barra
+           final (sin barra no coincidía y Google mostraba el dominio);
+         - `alternateName` con las otras formas del nombre, por si elige otra. */
     {
       '@type': 'WebSite',
       '@id': WEB_ID,
       name: 'Aquaenvio',
-      url: SITE,
+      alternateName: ['AquaEnvio', 'Aqua Envio', 'aquaenvio.com'],
+      url: SITE + '/',
       inLanguage: 'es-AR',
       publisher: { '@id': ORG_ID },
     },
