@@ -22,7 +22,6 @@ const cols = [
 type Col = (typeof cols)[number]['key'];
 
 const features: ({ f: string } & Record<Col, Celda>)[] = [
-  { f: 'Precio en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
