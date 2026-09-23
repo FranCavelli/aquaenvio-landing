@@ -22,7 +22,7 @@ const cols = [
 type Col = (typeof cols)[number]['key'];
 
 const features: ({ f: string } & Record<Col, Celda>)[] = [
-  { f: 'Precio publicado, en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: 'Gratis 1 usuario, si no a medida', gestion: 'No publica', jr: 'No publica', startapp: 'No publica' },
+  { f: 'Precio publicado, en pesos', aqua: true, sodapp: true, yaku: 'En dólares', ada: 'Gratis 1 usuario, si no oculto', gestion: 'Oculto', jr: 'Oculto', startapp: 'Oculto' },
   { f: 'Sin costo de implementación', aqua: true, sodapp: true, yaku: 'Solo en plan anual', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'Ventas y pedidos sin tope por mes', aqua: true, sodapp: '250 a 1.000, después $385 c/u', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
   { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
@@ -60,8 +60,8 @@ const escenarios: { titulo: string; detalle: string; precios: Record<Fila, Preci
       aqua: { usd: aquaUsd(150, 2) },
       sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
       yaku: { usd: 48, nota: 'Básico · el Lite corta en 100 clientes' },
-      ada: { texto: 'A medida', nota: 'El gratis es de 1 solo usuario' },
-      otros: { texto: 'No publican' },
+      ada: { texto: 'Precio oculto', nota: 'Pedís cotización · el gratis es de 1 solo usuario' },
+      otros: { texto: 'Precio oculto', nota: 'Pedís cotización o demo' },
     },
   },
   {
@@ -71,8 +71,8 @@ const escenarios: { titulo: string; detalle: string; precios: Record<Fila, Preci
       aqua: { usd: aquaUsd(600, 4) },
       sodapp: { ars: 54000, nota: 'Starter · 250 pedidos, después $385 c/u' },
       yaku: { usd: 48, nota: 'Básico · 4 usuarios' },
-      ada: { texto: 'A medida' },
-      otros: { texto: 'No publican' },
+      ada: { texto: 'Precio oculto', nota: 'Pedís cotización' },
+      otros: { texto: 'Precio oculto', nota: 'Pedís cotización o demo' },
     },
   },
   {
@@ -82,8 +82,8 @@ const escenarios: { titulo: string; detalle: string; precios: Record<Fila, Preci
       aqua: { usd: aquaUsd(2000, 10) },
       sodapp: { ars: 308000, nota: 'Business · 1.000 pedidos, después $230 c/u' },
       yaku: { usd: 106, nota: 'Premium + 2 usuarios extra' },
-      ada: { texto: 'A medida' },
-      otros: { texto: 'No publican' },
+      ada: { texto: 'Precio oculto', nota: 'Pedís cotización' },
+      otros: { texto: 'Precio oculto', nota: 'Pedís cotización o demo' },
     },
   },
 ];
@@ -158,6 +158,11 @@ const filasPrecio: { key: Fila; name: string }[] = [
             </div>
           );
         })}
+      </div>
+      <div class="mx-auto mt-6 max-w-3xl rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-center text-sm text-amber-900">
+        <strong>4 de los 6 no te dicen cuánto cuestan.</strong> Para saberlo tenés que pedir cotización, una llamada
+        o una demo. En Aquaenvio ves el precio exacto antes de hablar con nadie:
+        <a href="/precio/" class="font-semibold underline underline-offset-2">calculalo acá</a>.
       </div>
       <p class="mx-auto mt-4 max-w-3xl text-center text-xs text-slate-400">
         Precios por mes publicados por cada proveedor al 23/09/2026. Los montos en dólares se pasan a
