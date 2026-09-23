@@ -29,7 +29,11 @@ const ventas = [
         Aquaenvio · Gestión para distribuidoras de agua
       </span>
 
+      <!-- La marca va DENTRO del h1 (oculta a la vista, la lee Google y el lector
+           de pantalla): buscando "aquaenvio" la home no aparecía y sí /comparativa,
+           cuyo h1 dice "Aquaenvio". Visualmente la marca ya está en la etiqueta de arriba. -->
       <h1 class="hero-item mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+        <span class="sr-only">Aquaenvio: software para distribuidoras de agua. </span>
         Tu distribuidora,<br />
         <span class="bg-gradient-to-r from-cyan-200 via-cyan-100 to-white bg-clip-text text-transparent">
           ordenada y en tu mano.
