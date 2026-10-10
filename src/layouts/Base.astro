@@ -228,6 +228,9 @@ const jsonLd = {
             var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
             if (!a) return;
             var h = a.getAttribute('href') || '';
+            // Tocar WhatsApp queda registrado con el anuncio de la visita (utm): el panel
+            // Comercial empareja ese toque con el mensaje que entra minutos después, sin
+            // tocar el texto del mensaje (Francisco no quiere nada visible ahí).
             if (h.indexOf('wa.me') >= 0 || h.indexOf('whatsapp') >= 0) ev('contacto', 'whatsapp');
             else if (h.indexOf('mailto:') === 0) ev('contacto', 'mail');
           }, true);
