@@ -214,6 +214,20 @@ const jsonLd = {
             document.querySelectorAll('section[id]').forEach(function (el) { io.observe(el); });
           }
 
+          // Hasta dónde bajó (25/50/75/100% del largo de la página), una vez cada marca.
+          var hondo = 0;
+          var marcasScroll = [25, 50, 75, 100];
+          function medirScroll() {
+            var alto = document.documentElement.scrollHeight - window.innerHeight;
+            var pct = alto > 0 ? Math.round((window.scrollY / alto) * 100) : 100;
+            marcasScroll.forEach(function (m) { if (pct >= m && hondo < m) { hondo = m; ev('scroll', String(m)); } });
+          }
+          var esperaScroll = null;
+          window.addEventListener('scroll', function () {
+            if (esperaScroll) return;
+            esperaScroll = setTimeout(function () { esperaScroll = null; medirScroll(); }, 400);
+          }, { passive: true });
+
           // Tiempo en la página (solo cuenta mientras la pestaña está visible).
           var seg = 0;
           var marcas = [15, 30, 60, 120];
