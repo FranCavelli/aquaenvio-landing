@@ -181,5 +181,67 @@ const jsonLd = {
         } catch (e) {}
       })();
     </script>
+
+    <!-- Embudo: qué hace la visita ADENTRO (secciones que ve, cuánto se queda,
+         si toca WhatsApp/Mail) → panel Visitas de la app. Sesión = id al azar
+         de esta pestaña; los utm del anuncio se guardan de la URL de llegada.
+         El server deja una fila por (sesión, paso): repetir no suma. -->
+    <script is:inline>
+      (function () {
+        try {
+          var URL_EV = 'https://aquaenvio.sbs/api/cotizar/evento';
+          var ss = window.sessionStorage;
+          var s = ss.getItem('aq_s');
+          var nueva = !s;
+          if (!s) { s = Math.random().toString(36).slice(2) + Date.now().toString(36); ss.setItem('aq_s', s); }
+          var q = new URLSearchParams(location.search);
+          if (q.get('utm_source')) {
+            ss.setItem('aq_utm', JSON.stringify({ us: q.get('utm_source'), uc: q.get('utm_campaign') || '', ut: q.get('utm_content') || '' }));
+          }
+          var utm = JSON.parse(ss.getItem('aq_utm') || '{}');
+          function ev(t, d) {
+            var p = new URLSearchParams({ s: s, t: t, d: d || '', us: utm.us || '', uc: utm.uc || '', ut: utm.ut || '' });
+            if (navigator.sendBeacon) navigator.sendBeacon(URL_EV, p);
+            else fetch(URL_EV, { method: 'POST', body: p, mode: 'no-cors', keepalive: true }).catch(function () {});
+          }
+          if (nueva) ev('entrada');
+
+          // Secciones vistas (al menos un 40% en pantalla).
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (es) {
+              es.forEach(function (e) { if (e.isIntersecting) { ev('seccion', e.target.id); io.unobserve(e.target); } });
+            }, { threshold: 0.4 });
+            document.querySelectorAll('section[id]').forEach(function (el) { io.observe(el); });
+          }
+
+          // Tiempo en la página (solo cuenta mientras la pestaña está visible).
+          var seg = 0;
+          var marcas = [15, 30, 60, 120];
+          setInterval(function () {
+            if (document.visibilityState !== 'visible') return;
+            seg++;
+            if (marcas.indexOf(seg) >= 0) ev('tiempo', String(seg));
+          }, 1000);
+
+          // El momento clave: tocar WhatsApp o Mail.
+          document.addEventListener('click', function (e) {
+            var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+            if (!a) return;
+            var h = a.getAttribute('href') || '';
+            if (h.indexOf('wa.me') >= 0 || h.indexOf('whatsapp') >= 0) ev('contacto', 'whatsapp');
+            else if (h.indexOf('mailto:') === 0) ev('contacto', 'mail');
+          }, true);
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Microsoft Clarity: grabaciones anónimas y mapas de calor (proyecto "Aquaenvio landing"). -->
+    <script is:inline>
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "yvoagvgr5p");
+    </script>
   </body>
 </html>
