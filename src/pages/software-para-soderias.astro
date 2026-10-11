@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PaginaTema from '../components/PaginaTema.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Software para soderías y distribuidoras de agua | Aquaenvio';
+const description =
+  'Sistema de gestión para soderías: clientes, repartos, ventas, cobros con Mercado Pago, envases, deudas y caja desde el celular. Anda sin señal. Probalo gratis 1 semana.';
+
+const bloques = [
+  {
+    titulo: 'Todo lo de la sodería en un solo lugar',
+    texto:
+      'Aquaenvio reemplaza el cuaderno, la planilla y los papelitos del reparto. Cargás tus clientes una vez y desde ahí el sistema lleva solo las ventas, lo que te deben, los bidones que tiene cada uno y lo que cobró cada repartidor en el día.',
+    puntos: [
+      'Ficha de cada cliente con su saldo, precios e historial',
+      'Repartos ordenados por la ruta más corta',
+      'Ventas y cobros cargados en la calle, con un toque',
+      'Caja diaria y gastos con cierre',
+      'Control de bidones prestados y vacíos',
+      'Reportes de lo vendido y cobrado por día y por mes',
+    ],
+  },
+  {
+    titulo: 'Pensado para el que reparte, no para una oficina',
+    texto:
+      'El repartidor usa la app en su celular durante el recorrido: ve a quién le toca, vende, cobra y anota los envases sin escribir nada. Si en una zona no hay señal, sigue funcionando y sincroniza cuando vuelve la conexión.',
+  },
+  {
+    titulo: 'Sabés quién te debe y quién dejó de comprar',
+    texto:
+      'Cada venta queda en la cuenta del cliente. Ves al instante quién debe y cuánto, quién hace tiempo que no compra y le podés mandar el resumen de cuenta por WhatsApp. La plata que se pierde por olvidos en el cuaderno deja de perderse.',
+  },
+  {
+    titulo: 'Cobros y pedidos como los pide la gente hoy',
+    texto:
+      'Tus clientes te pagan con Mercado Pago o transferencia, y la venta queda cobrada sola. Y pueden pedirte por WhatsApp o desde un link: el pedido cae en el reparto del día.',
+  },
+];
+
+const preguntas = [
+  { p: '¿Sirve para una sodería chica?', r: 'Sí. Hay distribuidoras de un solo repartidor y de más de diez. El precio se ajusta al tamaño: menos clientes y usuarios, menos pagás.' },
+  { p: '¿Tengo que cargar los clientes a mano?', r: 'No. Pasanos tu lista como la tengas (un Excel o una foto del cuaderno) y te dejamos la cuenta armada con tus clientes y precios.' },
+  { p: '¿Funciona sin internet?', r: 'Sí. El reparto se puede hacer sin señal: las ventas quedan guardadas en el celular y se suben solas cuando vuelve la conexión.' },
+  { p: '¿Cuánto cuesta?', r: 'Es una suscripción mensual en pesos, desde $15.999, según la cantidad de clientes y usuarios. La primera semana es gratis.' },
+];
+---
+
+<Base title={title} description={description} path="/software-para-soderias">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Software para soderías"
+      title="El sistema para manejar tu sodería desde el celular"
+      subtitle="Clientes, repartos, cobros, envases y deudas en un solo lugar. Sin cuaderno y sin planillas."
+    />
+    <PaginaTema bloques={bloques} preguntas={preguntas} actual="/software-para-soderias/" />
+  </main>
+  <Footer />
+</Base>

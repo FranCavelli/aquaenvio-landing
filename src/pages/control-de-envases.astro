@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PaginaTema from '../components/PaginaTema.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Control de envases y bidones para soderías | Aquaenvio';
+const description =
+  'Sabé cuántos bidones y sifones tiene cada cliente, cuántos vacíos volvieron y cuántos faltan. Control de envases prestados, carga del camión y retorno, desde el celular.';
+
+const bloques = [
+  {
+    titulo: 'Cuántos bidones tiene cada cliente',
+    texto:
+      'Cada vez que el repartidor deja llenos y retira vacíos, la app lo anota en la ficha del cliente. Sabés en todo momento cuántos envases tiene cada uno y quién se está quedando con más de los que le corresponden.',
+    puntos: [
+      'Envases por cliente, actualizados en cada venta',
+      'Bidones prestados (comodato) aparte de los que compra',
+      'Quién debe envases y cuántos',
+      'Historial de lo que dejó y retiró',
+    ],
+  },
+  {
+    titulo: 'La carga del camión y lo que vuelve',
+    texto:
+      'Al salir se registra la carga del camión; al volver, lo vendido y los vacíos que retornan. El cierre muestra la diferencia, así ves enseguida si falta algo. Y si al repartidor se le está terminando el agua, la app avisa.',
+  },
+  {
+    titulo: 'Los envases también son plata',
+    texto:
+      'Una sodería mediana tiene cientos o miles de bidones en la calle. Sin control, se pierden de a poco y nadie sabe dónde quedaron. Con el conteo por cliente, los podés reclamar a tiempo.',
+  },
+];
+
+const preguntas = [
+  { p: '¿Distingue los bidones prestados de los vendidos?', r: 'Sí. Se lleva el conteo de envases de cada cliente y, aparte, lo que tiene en comodato o debe devolver.' },
+  { p: '¿El repartidor tiene que anotar los envases a mano?', r: 'No. Al vender toca cuántos deja y cuántos retira, y queda registrado solo en la cuenta del cliente.' },
+  { p: '¿Puedo ver el total de envases en la calle?', r: 'Sí, el resumen muestra cuántos bidones hay en manos de los clientes y el detalle por cliente.' },
+  { p: '¿Se puede probar gratis?', r: 'Sí, la primera semana es gratis, con tus clientes ya cargados.' },
+];
+---
+
+<Base title={title} description={description} path="/control-de-envases">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Control de envases"
+      title="Control de envases y bidones, sin cuaderno"
+      subtitle="Cuántos tiene cada cliente, cuántos volvieron y cuántos faltan, anotado solo en cada venta."
+    />
+    <PaginaTema bloques={bloques} preguntas={preguntas} actual="/control-de-envases/" />
+  </main>
+  <Footer />
+</Base>

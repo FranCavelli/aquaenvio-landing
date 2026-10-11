@@ -27,6 +27,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://aquaenvio.com/software-para-soderias/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aquaenvio.com/app-reparto-de-agua/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aquaenvio.com/control-de-envases/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aquaenvio.com/cobros-y-pedidos-por-whatsapp/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://aquaenvio.com/privacidad/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

@@ -1,0 +1,87 @@
+---
+// Página temática para SEO: una por búsqueda ("software para soderías", "app de
+// reparto de agua"…). Texto propio por página (Google castiga el contenido
+// repetido), preguntas frecuentes con su JSON-LD FAQPage y links a las otras
+// páginas temáticas para que se refuercen entre sí. Todo lo que se afirma tiene
+// que ser algo que la app hace HOY (ver Features.astro).
+import { whatsappUrl } from '../config';
+
+interface Bloque { titulo: string; texto: string; puntos?: string[] }
+interface Pregunta { p: string; r: string }
+interface Props {
+  bloques: Bloque[];
+  preguntas: Pregunta[];
+  /** Ruta de esta página, para no linkearse a sí misma. */
+  actual: string;
+}
+const { bloques, preguntas, actual } = Astro.props;
+
+const TEMAS = [
+  { href: '/software-para-soderias/', t: 'Software para soderías' },
+  { href: '/app-reparto-de-agua/', t: 'App para el reparto de agua' },
+  { href: '/control-de-envases/', t: 'Control de envases y bidones' },
+  { href: '/cobros-y-pedidos-por-whatsapp/', t: 'Cobros y pedidos por WhatsApp' },
+].filter((x) => x.href !== actual);
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: preguntas.map((x) => ({ '@type': 'Question', name: x.p, acceptedAnswer: { '@type': 'Answer', text: x.r } })),
+};
+---
+
+<section class="mx-auto max-w-4xl px-4 py-14 sm:py-20">
+  <div class="space-y-12">
+    {bloques.map((b) => (
+      <div data-reveal>
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{b.titulo}</h2>
+        <p class="mt-3 text-lg leading-relaxed text-slate-600">{b.texto}</p>
+        {b.puntos && (
+          <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+            {b.puntos.map((pt) => (
+              <li class="flex gap-2 rounded-xl bg-white p-3 text-slate-700 shadow-sm ring-1 ring-slate-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-cyan-600"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>{pt}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-12 flex flex-col items-center gap-3 rounded-2xl bg-aqua-900 p-8 text-center text-white" data-reveal>
+    <p class="text-xl font-bold">Probalo gratis la primera semana</p>
+    <p class="text-cyan-100/85">Te armamos la cuenta con tus clientes y empezás a usarla en el próximo reparto.</p>
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-600">
+      Escribinos por WhatsApp
+    </a>
+  </div>
+
+  <div class="mt-14" data-reveal>
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900">Preguntas frecuentes</h2>
+    <div class="mt-4 divide-y divide-slate-200 rounded-2xl bg-white ring-1 ring-slate-100">
+      {preguntas.map((x) => (
+        <details class="group p-5">
+          <summary class="cursor-pointer list-none font-semibold text-slate-800 marker:hidden">
+            <span class="flex items-center justify-between gap-3">{x.p}<span class="text-cyan-600 transition group-open:rotate-45">+</span></span>
+          </summary>
+          <p class="mt-2 text-slate-600">{x.r}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <nav class="mt-12 border-t border-slate-200 pt-8" aria-label="Más sobre Aquaenvio">
+    <p class="text-sm font-semibold uppercase tracking-wide text-slate-400">Seguí leyendo</p>
+    <div class="mt-3 flex flex-wrap gap-2">
+      {TEMAS.map((x) => (
+        <a href={x.href} class="rounded-xl bg-cyan-50 px-4 py-2 text-sm font-medium text-cyan-800 transition hover:bg-cyan-100">{x.t}</a>
+      ))}
+      <a href="/funciones/" class="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Todas las funciones</a>
+      <a href="/precio/" class="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Precio</a>
+    </div>
+  </nav>
+</section>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(faqLd)} />

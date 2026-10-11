@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PaginaTema from '../components/PaginaTema.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'App para el reparto de agua y soda | Aquaenvio';
+const description =
+  'App de reparto para soderías: recorrido por la ruta más corta con navegación por voz, venta con un toque, cobro con QR de Mercado Pago y control de bidones. Anda sin señal.';
+
+const bloques = [
+  {
+    titulo: 'El recorrido del día, ordenado',
+    texto:
+      'El repartidor abre la app y ve la lista de clientes del reparto ordenada por la ruta más corta. Puede ponerla en modo navegación: mapa a pantalla completa, con voz que le dice dónde doblar, y la lista encima para vender sin salir del mapa.',
+    puntos: [
+      'Orden por la ruta más corta',
+      'Navegación con voz, tipo GPS',
+      'Pedidos del día marcados aparte',
+      'Mapa con clientes y repartidores en vivo',
+    ],
+  },
+  {
+    titulo: 'Vender es un toque',
+    texto:
+      'En cada cliente toca los productos que le deja y listo: la venta, el precio de ese cliente, los bidones que deja y los vacíos que retira quedan registrados. Si el cliente no estaba, lo pasa para mañana.',
+  },
+  {
+    titulo: 'Cobrar en la calle sin efectivo',
+    texto:
+      'Si el cliente paga con Mercado Pago, el repartidor le muestra un QR y la venta queda cobrada sola. También registra transferencias, efectivo o pago mixto, y al final del día el dueño ve cuánto cobró cada repartidor.',
+  },
+  {
+    titulo: 'Sin señal, igual funciona',
+    texto:
+      'En los barrios o pueblos donde no hay señal, la app sigue andando: las ventas se guardan en el celular y se suben solas cuando vuelve la conexión. No se pierde ninguna.',
+  },
+];
+
+const preguntas = [
+  { p: '¿Qué celular necesita el repartidor?', r: 'Cualquier celular con Android o iPhone y un navegador actualizado. No hace falta instalar nada raro: se usa desde el navegador y se puede agregar a la pantalla de inicio.' },
+  { p: '¿Puede tener varios repartidores?', r: 'Sí. Cada repartidor tiene su usuario y su reparto, y el dueño ve todo junto: qué vendió y cobró cada uno.' },
+  { p: '¿Cómo le aviso al cliente que estamos llegando?', r: 'Desde el reparto, con un toque, le llega un aviso por WhatsApp de que están por pasar.' },
+  { p: '¿Se puede probar antes de pagar?', r: 'Sí, la primera semana es gratis. Te armamos la cuenta con tus clientes para que la uses en el próximo reparto.' },
+];
+---
+
+<Base title={title} description={description} path="/app-reparto-de-agua">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="App de reparto"
+      title="La app para el reparto de agua y soda"
+      subtitle="Recorrido ordenado, venta con un toque, cobro con QR y control de bidones, desde el celular del repartidor."
+    />
+    <PaginaTema bloques={bloques} preguntas={preguntas} actual="/app-reparto-de-agua/" />
+  </main>
+  <Footer />
+</Base>

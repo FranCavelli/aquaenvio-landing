@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PaginaTema from '../components/PaginaTema.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Cobros con Mercado Pago y pedidos por WhatsApp para soderías | Aquaenvio';
+const description =
+  'Cobrá con QR de Mercado Pago o transferencia y que la venta quede cobrada sola. Recibí pedidos por WhatsApp o desde un link, directo al reparto del día.';
+
+const bloques = [
+  {
+    titulo: 'Cobrar con Mercado Pago en la puerta',
+    texto:
+      'El repartidor muestra un QR desde su celular, el cliente paga con Mercado Pago y la venta queda cobrada sola en el sistema. No hay que anotar nada ni revisar después si el pago entró.',
+    puntos: [
+      'QR de Mercado Pago desde el reparto',
+      'La venta se marca cobrada sola',
+      'Efectivo, transferencia, Mercado Pago o pago mixto',
+      'Lo cobrado por cada repartidor, al instante',
+    ],
+  },
+  {
+    titulo: 'Las transferencias, sin perseguirlas',
+    texto:
+      'Cuando el cliente te transfiere, el pago se registra en su cuenta y deja de figurar como deuda. Se terminan los capturas de pantalla perdidas en el chat y el "¿ya te pagué?".',
+  },
+  {
+    titulo: 'Pedidos por WhatsApp y desde un link',
+    texto:
+      'Tus clientes te piden agua por WhatsApp o desde un link propio de tu sodería, sin llamarte. El pedido entra solo al reparto del día y le avisa al repartidor. Y al cliente le podés mandar con un toque el aviso de que están por pasar o el resumen de lo que debe.',
+  },
+];
+
+const preguntas = [
+  { p: '¿Necesito una cuenta especial de Mercado Pago?', r: 'No. Conectás tu propia cuenta de Mercado Pago con un botón y los cobros te llegan a vos, como siempre.' },
+  { p: '¿Los pedidos por WhatsApp llegan a mi número?', r: 'Sí. Los clientes te escriben a tu WhatsApp de siempre; lo conectás con un botón y seguís usándolo normalmente en el celular.' },
+  { p: '¿Qué pasa si el cliente paga en efectivo?', r: 'Se registra igual. La venta puede ser en efectivo, transferencia, Mercado Pago o una mezcla de las tres.' },
+  { p: '¿Cuánto cuesta?', r: 'Desde $15.999 por mes, según el tamaño de tu sodería. La primera semana es gratis.' },
+];
+---
+
+<Base title={title} description={description} path="/cobros-y-pedidos-por-whatsapp">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Cobros y pedidos"
+      title="Cobrá con Mercado Pago y recibí pedidos por WhatsApp"
+      subtitle="La venta queda cobrada sola y los pedidos caen directo en el reparto del día."
+    />
+    <PaginaTema bloques={bloques} preguntas={preguntas} actual="/cobros-y-pedidos-por-whatsapp/" />
+  </main>
+  <Footer />
+</Base>
