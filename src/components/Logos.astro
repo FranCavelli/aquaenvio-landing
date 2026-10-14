@@ -6,7 +6,11 @@
  * cada fila lleva la lista DUPLICADA y se anima el contenedor un -50%, así el
  * corte cae justo donde vuelve a empezar la copia y no se nota.
  * Los PNG (fondo transparente) están en /images/logos/.
+ *
+ * Los logos se tocan mucho (Clarity: 21% de los toques en el celular, sin
+ * respuesta): ahora todo el carrusel lleva a WhatsApp.
  */
+import { whatsappUrl } from '../config';
 
 // ancho: el ancho real del PNG (alto 152) — va en el <img> para que no salte el layout.
 type Logo = { slug: string; nombre: string; ancho: number; doble?: boolean };
@@ -56,7 +60,7 @@ const fila2: Logo[] = [
     </p>
   </div>
 
-  <div class="carrusel mt-10 space-y-6">
+  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Escribinos por WhatsApp" class="carrusel mt-10 block space-y-6">
     {[fila1, fila2].map((fila, i) => (
       <div class="fila" data-sentido={i === 0 ? 'izq' : 'der'}>
         <div class="cinta" style={`--dur:${i === 0 ? 64 : 78}s`}>
@@ -80,7 +84,8 @@ const fila2: Logo[] = [
         </div>
       </div>
     ))}
-  </div>
+  </a>
+  <p class="mt-4 text-center text-sm text-slate-500"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 hover:underline">¿Querés sumarte? Escribinos →</a></p>
 </section>
 
 <style>
