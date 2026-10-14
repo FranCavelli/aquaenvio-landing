@@ -12,6 +12,7 @@ export const CONTACTO = {
 // "Aquaenvio" el perfil y "Aquaenvio" el dominio son la misma entidad.
 export const REDES = {
   instagram: 'https://www.instagram.com/aquaenvio/',
+  facebook: 'https://www.facebook.com/61594567089105/',
 };
 
 export const whatsappUrl = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(CONTACTO.whatsappMsg)}`;
