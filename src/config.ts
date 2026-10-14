@@ -17,3 +17,6 @@ export const REDES = {
 
 export const whatsappUrl = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(CONTACTO.whatsappMsg)}`;
 export const mailtoUrl = `mailto:${CONTACTO.email}?subject=${encodeURIComponent(CONTACTO.emailSubject)}`;
+
+// Piso de la suscripción en ARS: lo usan la calculadora y el cartel de precio del video.
+export const PRECIO_MINIMO_ARS = 15999;

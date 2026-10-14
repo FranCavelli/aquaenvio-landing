@@ -1,4 +1,6 @@
 ---
+import { PRECIO_MINIMO_ARS } from '../config';
+const piso = '$' + PRECIO_MINIMO_ARS.toLocaleString('es-AR');
 /**
  * Sección de video de introducción.
  * El archivo va en /public/videos/intro.mp4 (poster en /public/images/intro-poster.jpg).
@@ -52,6 +54,17 @@
         </span>
       </button>
     </div>
+  </div>
+
+  <!-- El precio pegado al video: es lo que más nos separa (pedido de Francisco 14/10/2026).
+       Sale del mismo piso que la calculadora, así no queda desactualizado. -->
+  <div class="mt-8 flex flex-col items-center gap-4 rounded-3xl bg-gradient-to-br from-aqua-800 to-aqua-900 px-6 py-7 text-center text-white sm:flex-row sm:justify-between sm:text-left" data-reveal>
+    <div>
+      <p class="text-sm font-medium text-cyan-200">Nunca fue tan accesible ordenar tu reparto</p>
+      <p class="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">Todo incluido desde {piso}<span class="text-lg font-semibold text-cyan-100"> /mes</span></p>
+      <p class="mt-1 text-sm text-cyan-100/80">Sin costo de alta, sin límite de productos. La primera semana es gratis.</p>
+    </div>
+    <a href="#calculadora" class="shrink-0 rounded-full bg-white px-6 py-3 text-sm font-semibold text-aqua-900 shadow-lg transition hover:-translate-y-0.5">Calculá tu precio</a>
   </div>
 </section>
 

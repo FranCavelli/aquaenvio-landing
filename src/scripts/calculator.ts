@@ -3,6 +3,7 @@
  * Ajustá TARIFAS acá si cambian los precios.
  */
 import { gsap } from 'gsap';
+import { PRECIO_MINIMO_ARS } from '../config';
 
 const TARIFAS = {
   baseUsd: 3, // base del plan (USD/mes)
@@ -10,7 +11,7 @@ const TARIFAS = {
   porUsuarioUsd: 1.0, // USD/mes por usuario
   margenPct: 50, // ganancia (%)
   dolarTipo: 'blue',
-  minimoArs: 15999, // piso en ARS
+  minimoArs: PRECIO_MINIMO_ARS, // piso en ARS (config.ts)
   mesesBonificacion: 2, // los primeros N meses van al costo (con el mismo piso)
 };
 
