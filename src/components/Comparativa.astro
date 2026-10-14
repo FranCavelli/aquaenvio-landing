@@ -17,26 +17,27 @@ const cols = [
   { key: 'gestion', name: 'Gestión Aguas' },
   { key: 'jr', name: 'JR-Software' },
   { key: 'startapp', name: 'Reparto de Agua' },
+  { key: 'rcloud', name: 'reparto.cloud' },
 ] as const;
 
 type Col = (typeof cols)[number]['key'];
 
 const features: ({ f: string } & Record<Col, Celda>)[] = [
-  { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true },
-  { f: 'Funciona sin señal', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true },
-  { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true },
-  { f: 'Factura AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Sin aclarar', jr: 'Sin aclarar', startapp: true },
-  { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null },
-  { f: 'Navegación GPS asistida', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
-  { f: 'Página para tus clientes', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null },
-  { f: 'Cobro con QR', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Abonos mensuales', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true },
-  { f: 'Venta en mostrador', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Copiloto de IA por voz', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null },
-  { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null },
+  { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true, rcloud: true },
+  { f: 'Funciona sin señal', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true, rcloud: null },
+  { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true, rcloud: true },
+  { f: 'Factura AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Sin aclarar', jr: 'Sin aclarar', startapp: true, rcloud: null },
+  { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null, rcloud: true },
+  { f: 'Navegación GPS asistida', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: true },
+  { f: 'Página para tus clientes', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null, rcloud: 'Pedidos por QR' },
+  { f: 'Cobro con QR', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'Abonos mensuales', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true, rcloud: null },
+  { f: 'Venta en mostrador', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'Copiloto de IA por voz', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
+  { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: 'Caja por reparto' },
 ];
 
 ---
@@ -49,7 +50,7 @@ const features: ({ f: string } & Record<Col, Celda>)[] = [
       <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Funciones, una por una</h2>
     </div>
     <div class="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm" data-reveal>
-      <table class="w-full min-w-[920px] border-collapse text-sm">
+      <table class="w-full min-w-[1020px] border-collapse text-sm">
         <thead>
           <tr class="bg-slate-50">
             <th class="sticky left-0 z-10 bg-slate-50 px-4 py-4 text-left font-semibold text-slate-500">Función</th>
@@ -92,7 +93,7 @@ const features: ({ f: string } & Record<Col, Celda>)[] = [
       </table>
     </div>
     <p class="mt-3 text-center text-xs text-slate-400">
-      ✗ = no figura en la web del proveedor. Relevado de la web de cada proveedor el 23/09/2026.
+      ✗ = no figura en la web del proveedor. Relevado de la web de cada proveedor el 23/09/2026 (reparto.cloud, el 14/10/2026).
     </p>
 
     <!-- ── ¿Y una app de rutas común? ─────────────────────────────────── -->
