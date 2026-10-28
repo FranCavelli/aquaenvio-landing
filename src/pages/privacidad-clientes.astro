@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+
+// Política de la app Aquaenvio Clientes (App Store / Google Play): la de
+// /privacidad es la del sistema para distribuidoras y no cubre la app de clientes.
+const title = 'Privacidad de Aquaenvio Clientes | Aquaenvio';
+const description =
+  'Qué datos usa la app Aquaenvio Clientes, para qué, con quién se comparten y cómo borrar tu cuenta.';
+---
+
+<Base title={title} description={description} path="/privacidad-clientes">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Legal"
+      title="Privacidad de Aquaenvio Clientes"
+      subtitle="Última actualización: 28 de octubre de 2026"
+    />
+
+    <section class="bg-white py-14 sm:py-16">
+      <article class="privacidad mx-auto max-w-3xl px-4 text-slate-600">
+        <p>
+          Aquaenvio Clientes es la app para que los clientes de las distribuidoras de agua que usan
+          Aquaenvio vean su saldo, sus envases y el seguimiento de su pedido, hagan pedidos, reclamos y
+          pagos. Esta política explica qué datos usa la app, para qué y cómo podés borrarlos.
+        </p>
+
+        <h2>1. Quién trata los datos</h2>
+        <p>
+          El responsable de la app es <strong>Francisco Tomás Cavelli Montini</strong>, CUIT
+          20-43099711-5, con domicilio en Río Negro 757, Lincoln, provincia de Buenos Aires, Argentina.
+          Los datos de tu cuenta corriente (saldo, envases, entregas) los carga la distribuidora que te
+          reparte el agua: ella es la responsable de esos datos y Aquaenvio los trata por su cuenta y orden.
+        </p>
+
+        <h2>2. Qué datos usa la app</h2>
+        <ul>
+          <li><strong>Tu cuenta:</strong> nombre, email y contraseña (guardada cifrada). Si entrás con Apple o con Google, recibimos el email y el nombre que esos servicios comparten; no recibimos tu contraseña de Apple ni de Google.</li>
+          <li><strong>Teléfono (opcional):</strong> si lo cargás, se usa para confirmar que la cuenta de la distribuidora que vinculás es tuya.</li>
+          <li><strong>Lo que hacés en la app:</strong> pedidos, reclamos (con la foto que elijas adjuntar), avisos de «no voy a estar», pedidos de mudanza con la dirección nueva y avisos de transferencias.</li>
+          <li><strong>Datos de tu distribuidora:</strong> saldo, movimientos, envases y estado de tus pedidos, que la app muestra pero no genera.</li>
+          <li><strong>Notificaciones:</strong> un identificador del teléfono para mandarte avisos (pedido en camino, cerca, entregado) y para actualizar el seguimiento en la pantalla bloqueada.</li>
+        </ul>
+        <p>
+          <strong>Ubicación:</strong> la app no pide ni usa la ubicación de tu teléfono. El mapa del
+          seguimiento muestra la ubicación aproximada del repartidor, que manda la distribuidora, y la
+          dirección de entrega que la distribuidora tiene cargada.
+        </p>
+
+        <h2>3. Para qué se usan</h2>
+        <p>
+          Solo para que la app funcione: identificarte, mostrarte tu cuenta, hacerle llegar tus pedidos y
+          reclamos a tu distribuidora y avisarte cómo viene tu pedido. No usamos tus datos para
+          publicidad, no los vendemos y no te rastreamos entre apps ni sitios de otros.
+        </p>
+
+        <h2>4. Con quién se comparten</h2>
+        <ul>
+          <li><strong>Tu distribuidora</strong>, solo la que vos vinculaste: recibe tus pedidos, reclamos, avisos y tus datos de contacto para atenderte.</li>
+          <li><strong>Proveedores que hacen andar el servicio:</strong> el servidor (Amazon Web Services, en Estados Unidos), Cloudflare (seguridad y entrega), Apple (notificaciones e «Iniciar sesión con Apple») y Google («Continuar con Google»).</li>
+          <li><strong>Mercado Pago</strong>, si pagás con Mercado Pago: el pago lo procesa Mercado Pago en sus sistemas; la app no ve ni guarda datos de tarjetas.</li>
+        </ul>
+
+        <h2>5. Cuánto tiempo se guardan</h2>
+        <p>
+          Mientras tengas la cuenta. Al eliminarla se borran tu cuenta, tus sesiones y tus vínculos. Lo
+          que tu distribuidora necesita conservar por su propia actividad (ventas, saldo) queda en su
+          sistema, bajo su responsabilidad.
+        </p>
+
+        <h2 id="eliminar-cuenta">6. Cómo borrar tu cuenta</h2>
+        <p>
+          Desde la app: <strong>Mi cuenta → Eliminar mi cuenta</strong>. También podés pedirlo escribiendo a
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a> desde el email con el que te registraste.
+        </p>
+
+        <h2>7. Tus derechos</h2>
+        <p>
+          Podés pedir acceso, rectificación y supresión de tus datos en los términos de la Ley 25.326 de
+          Protección de Datos Personales. La Agencia de Acceso a la Información Pública, órgano de
+          control de esa ley, atiende las denuncias y reclamos por su incumplimiento.
+        </p>
+
+        <h2>8. Menores</h2>
+        <p>La app está pensada para los titulares de una cuenta con una distribuidora, que son personas adultas.</p>
+
+        <h2>9. Cambios y contacto</h2>
+        <p>
+          Los cambios se publican en esta misma página, con la fecha nueva. Consultas:
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a> o por
+          <a href="https://wa.me/5492355514603">WhatsApp</a>.
+        </p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Tipografía del texto legal (no hay plugin typography: se estila a mano). */
+  .privacidad h2 {
+    margin-top: 2.25rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-slate-800, #1e293b);
+  }
+  .privacidad h2:first-child {
+    margin-top: 0;
+  }
+  .privacidad p {
+    margin-top: 0.75rem;
+    line-height: 1.75;
+  }
+  .privacidad ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  /* La de los pasos para pedir el borrado: sin esto sale sin números. */
+  .privacidad ol {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: decimal;
+  }
+  /* El link de Meta entra por #eliminar-datos: que el título no quede tapado
+     por la barra de arriba al saltar. */
+  .privacidad h2[id] {
+    scroll-margin-top: 5rem;
+  }
+  .privacidad li {
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+  .privacidad strong {
+    color: var(--color-slate-800, #1e293b);
+    font-weight: 600;
+  }
+  .privacidad a {
+    color: var(--color-cyan-700, #0e7490);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
