@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+
+// Política de la app Aquaenvio para empleados de las distribuidoras (App Store /
+// Google Play). Datos sacados del código del sistema el 28/10/2026 (lado Windows):
+// si la app empieza a usar algo nuevo, actualizar acá antes de publicarla.
+const title = 'Privacidad de la app Aquaenvio | Aquaenvio';
+const description =
+  'Qué datos usa la app Aquaenvio para empleados de las distribuidoras, para qué, con quién se comparten y cómo se borra una cuenta.';
+---
+
+<Base title={title} description={description} path="/privacidad-empleados">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Legal"
+      title="Privacidad de la app Aquaenvio"
+      subtitle="Última actualización: 28 de octubre de 2026"
+    />
+
+    <section class="bg-white py-14 sm:py-16">
+      <article class="privacidad mx-auto max-w-3xl px-4 text-slate-600">
+        <p>
+          Aquaenvio es la app que usan los empleados de las distribuidoras de agua (administradores,
+          repartidores y personal de depósito) para manejar clientes, ventas, cobros, envases, pedidos y
+          repartos. Esta política explica qué datos usa la app, para qué y cómo se borra una cuenta.
+        </p>
+
+        <h2>1. Quién trata los datos</h2>
+        <p>
+          El responsable de la app es <strong>Francisco Tomás Cavelli Montini</strong>, CUIT
+          20-43099711-5, con domicilio en Río Negro 757, Lincoln, provincia de Buenos Aires, Argentina.
+          Los datos de los clientes de cada distribuidora los carga la propia empresa: ella es la
+          responsable de esos datos y Aquaenvio los trata por su cuenta y orden.
+        </p>
+
+        <h2>2. Qué datos usa la app</h2>
+        <ul>
+          <li><strong>Tu cuenta:</strong> nombre de usuario, contraseña (guardada cifrada, nunca en texto), CUIT si lo cargás, tu rol y las empresas en las que trabajás. Las cuentas las crea el administrador de tu empresa.</li>
+          <li><strong>Datos del negocio:</strong> lo que carga la empresa para trabajar: clientes (nombre, dirección, teléfono y ubicación en el mapa), ventas, cobros, saldos, envases, pedidos, caja, gastos y repartos.</li>
+          <li><strong>Fotos que subís:</strong> de cheques, comprobantes y gastos. La lectura automática del cheque se hace en el teléfono, pero la foto se guarda en el servidor junto con la operación.</li>
+          <li><strong>Seguridad:</strong> los inicios de sesión, con la dirección IP, el dispositivo o navegador y una ubicación aproximada que se deduce de la IP, y un historial de las acciones hechas en el sistema.</li>
+          <li><strong>Diagnóstico:</strong> los errores de la app, para poder corregirlos.</li>
+          <li><strong>Notificaciones:</strong> un identificador del teléfono para mandarte avisos (pedidos nuevos, por ejemplo).</li>
+          <li><strong>Biometría:</strong> si prendés «Entrar con biometría», tus datos biométricos <strong>nunca salen del teléfono</strong>: los verifica el propio teléfono. El servidor solo guarda un identificador al azar de ese teléfono y una clave cifrada para reconocerlo.</li>
+        </ul>
+        <p>
+          <strong>Ubicación:</strong> la app de iPhone no pide ni usa la ubicación del teléfono. En
+          Android, solo para repartidores y con su permiso, la app manda la ubicación del teléfono
+          (también en segundo plano) mientras el reparto está activo, para que la empresa vea por dónde
+          va el reparto y avise a sus clientes.
+        </p>
+
+        <h2>3. Para qué se usan</h2>
+        <p>
+          Solo para que el sistema funcione: identificarte, que tu empresa maneje su reparto, sus ventas
+          y sus cobros, avisarte lo que tenés que atender y cuidar la seguridad de las cuentas. No hay
+          publicidad en la app, no vendemos datos y no te rastreamos entre apps ni sitios de otros.
+        </p>
+
+        <h2>4. Con quién se comparten</h2>
+        <ul>
+          <li><strong>Tu empresa:</strong> los administradores de tu distribuidora ven lo que hacés en el sistema de esa empresa.</li>
+          <li><strong>Proveedores que hacen andar el servicio:</strong> el servidor (Amazon Web Services, en Estados Unidos), Cloudflare (seguridad y entrega), Google Firebase (notificaciones en Android) y Apple (notificaciones en iPhone).</li>
+          <li><strong>Servicios que la empresa conecta, si los conecta:</strong> WhatsApp Business de Meta (mensajes a sus clientes) y Mercado Pago (cobros; no guardamos datos de tarjetas).</li>
+          <li><strong>Inteligencia artificial, solo en las funciones que la empresa prende:</strong> Anthropic (Claude), DeepSeek y Groq, para interpretar pedidos que llegan por WhatsApp, transcribir audios, armar resúmenes y responder en el asistente, y ElevenLabs para la voz del asistente.</li>
+          <li><strong>Mapas y direcciones:</strong> OpenStreetMap, el servicio de normalización de direcciones del Gobierno argentino (georef) y Google, para buscar direcciones y armar recorridos. A esos servicios solo se manda la dirección o el punto que se busca.</li>
+        </ul>
+
+        <h2>5. Cuánto tiempo se guardan</h2>
+        <p>
+          Mientras la empresa use el servicio. La empresa o la persona pueden pedir la baja de sus datos
+          en cualquier momento (ver abajo).
+        </p>
+
+        <h2 id="eliminar-cuenta">6. Cómo borrar una cuenta</h2>
+        <p>
+          El administrador de tu empresa elimina las cuentas desde la app, en <strong>Usuarios</strong>.
+          También podés pedirlo escribiendo a
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a>.
+        </p>
+
+        <h2>7. Tus derechos</h2>
+        <p>
+          Podés pedir acceso, rectificación y supresión de tus datos en los términos de la Ley 25.326 de
+          Protección de Datos Personales. La Agencia de Acceso a la Información Pública, órgano de
+          control de esa ley, atiende las denuncias y reclamos por su incumplimiento.
+        </p>
+
+        <h2>8. Menores</h2>
+        <p>La app es para el personal de las distribuidoras, que son personas adultas.</p>
+
+        <h2>9. Cambios y contacto</h2>
+        <p>
+          Los cambios se publican en esta misma página, con la fecha nueva. Consultas:
+          <a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a> o por
+          <a href="https://wa.me/5492355514603">WhatsApp</a>.
+        </p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Tipografía del texto legal (igual que privacidad-clientes). */
+  .privacidad h2 {
+    margin-top: 2.25rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-slate-800, #1e293b);
+  }
+  .privacidad h2:first-child {
+    margin-top: 0;
+  }
+  .privacidad p {
+    margin-top: 0.75rem;
+    line-height: 1.75;
+  }
+  .privacidad ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .privacidad h2[id] {
+    scroll-margin-top: 5rem;
+  }
+  .privacidad li {
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+  .privacidad strong {
+    color: var(--color-slate-800, #1e293b);
+    font-weight: 600;
+  }
+  .privacidad a {
+    color: var(--color-cyan-700, #0e7490);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
