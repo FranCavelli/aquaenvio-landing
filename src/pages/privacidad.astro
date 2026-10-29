@@ -15,7 +15,7 @@ const description =
     <PageHeader
       badge="Legal"
       title="Política de privacidad"
-      subtitle="Última actualización: 10 de octubre de 2026"
+      subtitle="Última actualización: 29 de octubre de 2026"
     />
 
     <section class="bg-white py-14 sm:py-16">
@@ -56,25 +56,49 @@ const description =
         <ul>
           <li><strong>Meta (WhatsApp Business Platform):</strong> para enviar y recibir los avisos de pedidos.</li>
           <li><strong>Mercado Pago:</strong> para procesar los cobros.</li>
-          <li><strong>OpenAI y Anthropic:</strong> para las funciones de inteligencia artificial (interpretar pedidos, sugerir recorridos). Se les envía el texto necesario para esa función puntual, no la base de clientes.</li>
+          <li><strong>Servicios de procesamiento automático:</strong> para funciones puntuales, como interpretar los pedidos y las notas de voz que llegan por WhatsApp, leer la foto de un comprobante o sugerir recorridos. Reciben solo los datos necesarios para esa función y no pueden usarlos para ningún otro fin.</li>
           <li><strong>Amazon Web Services:</strong> alojamiento del servidor, en Estados Unidos.</li>
           <li><strong>Cloudflare:</strong> seguridad y entrega del sitio.</li>
           <li><strong>Google (Places):</strong> para sugerir y ubicar en el mapa las direcciones que se escriben en la app. Se le envía solo el texto de la dirección.</li>
-          <li><strong>Microsoft Clarity:</strong> medición anónima de cómo se navega este sitio (aquaenvio.com), ver punto 6.</li>
+          <li><strong>Microsoft Clarity:</strong> medición anónima de cómo se navega este sitio (aquaenvio.com), ver punto 8.</li>
         </ul>
         <p>
-          Como el servidor está en Estados Unidos, los datos se transfieren fuera de la Argentina.
-          Esa transferencia se hace para poder prestar el servicio contratado.
+          El servidor está en Estados Unidos y algunos de estos proveedores procesan datos en otros
+          países, así que los datos se transfieren fuera de la Argentina. Esa transferencia se hace
+          solo para poder prestar el servicio contratado, y cada proveedor queda limitado a la
+          función para la que lo usamos.
         </p>
 
-        <h2>5. Cuánto se conservan</h2>
+        <h2>5. Confidencialidad</h2>
+        <p>
+          Tratamos los datos de cada distribuidora como confidenciales. Quienes trabajamos en
+          Aquaenvio solo accedemos a ellos para dar soporte, resolver una falla o cuando la
+          distribuidora lo pide, y estamos obligados a guardar secreto sobre ellos, también después
+          de que termine la relación (artículo 10 de la Ley 25.326).
+        </p>
+
+        <h2>6. Cómo se protegen</h2>
+        <ul>
+          <li><strong>Cada distribuidora ve solo lo suyo:</strong> el sistema separa los datos por empresa, y ninguna puede ver los de otra.</li>
+          <li><strong>Acceso por usuario y rol:</strong> cada persona entra con su propio usuario y ve solo lo que le permite su rol dentro de la empresa.</li>
+          <li><strong>Conexión cifrada:</strong> todo viaja por HTTPS, entre la app y el servidor.</li>
+          <li><strong>Contraseñas protegidas:</strong> no se guardan en texto legible, y las sesiones vencen solas.</li>
+          <li><strong>Copias de seguridad:</strong> automáticas, varias veces por día, para que una falla no haga perder información.</li>
+          <li><strong>Revisiones de seguridad</strong> periódicas del sistema.</li>
+        </ul>
+
+        <h2>7. Cuánto se conservan</h2>
         <p>
           Mientras la distribuidora mantenga su cuenta activa y, después, por el plazo que exijan
           las obligaciones fiscales y contables. Los pedidos web que no se confirman se dan de baja
           automáticamente a las 24 horas.
         </p>
+        <p>
+          Las copias de seguridad se renuevan solas: lo que se borra del sistema desaparece también
+          de las copias en un plazo de 7 días.
+        </p>
 
-        <h2>6. Cookies y almacenamiento local</h2>
+        <h2>8. Cookies y almacenamiento local</h2>
         <p>
           No usamos cookies de publicidad. En la app, el navegador guarda un token de sesión para
           mantener la cuenta abierta y los datos cargados en la página de pedidos.
@@ -86,7 +110,7 @@ const description =
           registrar lo que se escribe en formularios. No usamos esos datos para identificar a nadie.
         </p>
 
-        <h2>7. Tus derechos</h2>
+        <h2>9. Tus derechos</h2>
         <p>
           Por la Ley 25.326 de Protección de los Datos Personales podés pedir el acceso,
           la rectificación, la actualización o la supresión de tus datos escribiendo a
@@ -99,7 +123,7 @@ const description =
           relación al incumplimiento de las normas sobre protección de datos personales.
         </p>
 
-        <h2 id="eliminar-datos">8. Cómo pedir que borremos tus datos</h2>
+        <h2 id="eliminar-datos">10. Cómo pedir que borremos tus datos</h2>
         <p>
           Podés pedir que borremos todo lo que tenemos tuyo, sin tener que dar explicaciones.
           Se hace así:
@@ -133,7 +157,7 @@ const description =
           directamente a ella: es la responsable de los datos de sus propios clientes.
         </p>
 
-        <h2>9. Cambios en esta política</h2>
+        <h2>11. Cambios en esta política</h2>
         <p>
           Los cambios se publican en esta misma página, con la fecha de actualización nueva. Si el
           cambio es importante, además lo avisamos dentro de la aplicación.
