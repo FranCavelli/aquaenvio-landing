@@ -1,7 +1,7 @@
 // Datos de contacto (mismos que la landing /cotizar de la app).
 // AR móvil en WhatsApp lleva el 9 después del 54.
 export const CONTACTO = {
-  whatsapp: '5492355514603',
+  whatsapp: '5491128065517',
   whatsappMsg: 'Hola, quiero información de Aquaenvio.',
   email: 'francavelli2@gmail.com',
   emailSubject: 'Consulta sobre Aquaenvio',
