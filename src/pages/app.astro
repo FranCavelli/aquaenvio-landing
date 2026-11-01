@@ -10,6 +10,10 @@ import Footer from '../components/Footer.astro';
 // (AppClientesAvisameController en el backend).
 const APP_STORE = 'https://apps.apple.com/ar/app/aquaenvio-clientes/id6828128307';
 const APK = '/descargas/aquaenvio-clientes.apk';
+// Logo oficial de Apple (simple-icons, CC0). Android y Google Play van como imagen.
+const APPLE =
+  'M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701';
+const insignia = 'flex h-14 items-center gap-3 rounded-xl bg-black px-4 text-white ring-1 ring-black/10 transition-colors hover:bg-slate-800';
 const title = 'Aquaenvio Clientes: la app de tu distribuidora de agua | Aquaenvio';
 const description =
   'Bajate Aquaenvio Clientes para iPhone o Android: mirá tu saldo y tus envases, pedí lo de siempre y pagá desde el celular.';
@@ -34,22 +38,26 @@ const description =
             <li class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500"></span><span><b>Sabé cuándo llegan</b>: avisos del reparto y el seguimiento en vivo.</span></li>
           </ul>
 
-          <div class="mt-8 grid gap-3 sm:grid-cols-2">
-            <a href={APP_STORE} target="_blank" rel="noopener noreferrer"
-               class="inline-flex h-12 items-center justify-center rounded-xl bg-slate-900 px-5 font-semibold text-white hover:bg-slate-800">
-              Descargar en el App Store
+          <div class="mt-8 grid gap-3 sm:grid-cols-3">
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" class={insignia}>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-7 w-7 shrink-0"><path d={APPLE} /></svg>
+              <span class="leading-tight"><span class="block text-[11px] text-white/75">Descargala en el</span><span class="block text-base font-semibold">App Store</span></span>
             </a>
-            <a href={APK} download
-               class="inline-flex h-12 items-center justify-center rounded-xl bg-aqua-700 px-5 font-semibold text-white hover:bg-aqua-800">
-              Descargar para Android
+            <a href={APK} download class={insignia}>
+              <img src="/images/logos/android.webp" alt="" width="81" height="96" class="h-7 w-auto shrink-0" />
+              <span class="leading-tight"><span class="block text-[11px] text-white/75">Descargala para</span><span class="block text-base font-semibold">Android</span></span>
+            </a>
+            <a href="#avisame-caja" class={insignia}>
+              <img src="/images/logos/google-play.webp" alt="" width="86" height="96" class="h-7 w-auto shrink-0" />
+              <span class="leading-tight"><span class="block text-[11px] text-white/75">Muy pronto en</span><span class="block text-base font-semibold">Google Play</span></span>
             </a>
           </div>
           <p class="mt-3 text-sm text-slate-500">
             En Android, al instalarla te va a pedir permiso para instalar apps de fuera de Google Play: es normal mientras no está en la tienda.
           </p>
 
-          <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-            <p class="font-semibold text-slate-800">Google Play: muy pronto</p>
+          <div id="avisame-caja" class="mt-8 scroll-mt-28 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="flex items-center gap-2 font-semibold text-slate-800"><img src="/images/logos/google-play.webp" alt="" width="86" height="96" class="h-5 w-auto" />Google Play: muy pronto</p>
             <p class="mt-1 text-sm text-slate-600">
               La estamos probando con un grupo chico. Dejanos el mail de tu cuenta de Google y te sumamos para que la bajes desde Play.
             </p>
@@ -70,9 +78,9 @@ const description =
         </div>
 
         <div class="mx-auto flex gap-4">
-          <img src="/images/app-clientes/saldo.webp" alt="La app: saldo, última visita y envases" width="540" height="1100" loading="lazy"
+          <img src="/images/app-clientes/saldo.webp" alt="La app: saldo, última visita y envases" width="540" height="983" loading="lazy"
                class="w-44 rounded-[1.75rem] border-[6px] border-slate-900 shadow-2xl sm:w-52" />
-          <img src="/images/app-clientes/pedir.webp" alt="La app: pedir lo de siempre" width="540" height="1169" loading="lazy"
+          <img src="/images/app-clientes/pedir.webp" alt="La app: pedir lo de siempre" width="540" height="983" loading="lazy"
                class="mt-10 hidden w-44 rounded-[1.75rem] border-[6px] border-slate-900 shadow-2xl sm:block sm:w-52" />
         </div>
       </div>
