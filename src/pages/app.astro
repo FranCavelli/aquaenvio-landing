@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+
+// Página para compartir la app de clientes (31/10/2026). Es el ÚNICO link que
+// se pasa: todo lo que se descarga vive en aquaenvio.com, nunca en el panel.
+// El "avisame en Google Play" reenvía el mail a Fran y no se guarda
+// (AppClientesAvisameController en el backend).
+const APP_STORE = 'https://apps.apple.com/ar/app/aquaenvio-clientes/id6828128307';
+const APK = '/descargas/aquaenvio-clientes.apk';
+const title = 'Aquaenvio Clientes: la app de tu distribuidora de agua | Aquaenvio';
+const description =
+  'Bajate Aquaenvio Clientes para iPhone o Android: mirá tu saldo y tus envases, pedí lo de siempre y pagá desde el celular.';
+---
+
+<Base title={title} description={description} path="/app">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Nuevo"
+      title="Aquaenvio Clientes"
+      subtitle="La app para los clientes de las distribuidoras de agua que usan Aquaenvio: tu saldo, tus envases y tus pedidos en el celular."
+    />
+
+    <section id="descargar" class="bg-white py-14 sm:py-20">
+      <div class="mx-auto grid max-w-5xl items-center gap-12 px-4 md:grid-cols-[1fr_auto]">
+        <div>
+          <ul class="space-y-4 text-slate-700">
+            <li class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500"></span><span><b>Pedí lo de siempre</b> con un toque, con los precios de tu cuenta.</span></li>
+            <li class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500"></span><span><b>Mirá tu saldo y tus envases</b>: lo que te dejaron, lo que pagaste y lo que tenés en tu casa.</span></li>
+            <li class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500"></span><span><b>Pagá desde la app</b> con Mercado Pago o transferencia, si tu distribuidora lo tiene.</span></li>
+            <li class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500"></span><span><b>Sabé cuándo llegan</b>: avisos del reparto y el seguimiento en vivo.</span></li>
+          </ul>
+
+          <div class="mt-8 grid gap-3 sm:grid-cols-2">
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer"
+               class="inline-flex h-12 items-center justify-center rounded-xl bg-slate-900 px-5 font-semibold text-white hover:bg-slate-800">
+              Descargar en el App Store
+            </a>
+            <a href={APK} download
+               class="inline-flex h-12 items-center justify-center rounded-xl bg-aqua-700 px-5 font-semibold text-white hover:bg-aqua-800">
+              Descargar para Android
+            </a>
+          </div>
+          <p class="mt-3 text-sm text-slate-500">
+            En Android, al instalarla te va a pedir permiso para instalar apps de fuera de Google Play: es normal mientras no está en la tienda.
+          </p>
+
+          <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <p class="font-semibold text-slate-800">Google Play: muy pronto</p>
+            <p class="mt-1 text-sm text-slate-600">
+              La estamos probando con un grupo chico. Dejanos el mail de tu cuenta de Google y te sumamos para que la bajes desde Play.
+            </p>
+            <form id="avisame" class="mt-3 flex flex-col gap-2 sm:flex-row">
+              <input type="text" name="web" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+              <input type="email" name="email" required placeholder="tu-mail@gmail.com" autocomplete="email"
+                     class="h-11 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-slate-800 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" />
+              <button type="submit" class="h-11 rounded-lg bg-cyan-600 px-5 font-semibold text-white hover:bg-cyan-700 disabled:opacity-60">Avisame</button>
+            </form>
+            <p id="avisame-estado" class="mt-2 text-sm" role="status"></p>
+            <p class="mt-1 text-xs text-slate-400">Solo lo usamos para sumarte a la prueba.</p>
+          </div>
+
+          <p class="mt-8 text-sm text-slate-500">
+            Para ver tu cuenta, tu distribuidora tiene que usar Aquaenvio: creás tu cuenta en la app y le pasás el código que te da para vincularla.
+            ¿Tenés una distribuidora? <a href="/" class="font-medium text-aqua-700 underline">Conocé Aquaenvio</a>.
+          </p>
+        </div>
+
+        <div class="mx-auto flex gap-4">
+          <img src="/images/app-clientes/saldo.webp" alt="La app: saldo, última visita y envases" width="540" height="1100" loading="lazy"
+               class="w-44 rounded-[1.75rem] border-[6px] border-slate-900 shadow-2xl sm:w-52" />
+          <img src="/images/app-clientes/pedir.webp" alt="La app: pedir lo de siempre" width="540" height="1169" loading="lazy"
+               class="mt-10 hidden w-44 rounded-[1.75rem] border-[6px] border-slate-900 shadow-2xl sm:block sm:w-52" />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<script is:inline>
+  (function () {
+    var f = document.getElementById('avisame');
+    var est = document.getElementById('avisame-estado');
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var b = f.querySelector('button');
+      b.disabled = true;
+      est.className = 'mt-2 text-sm text-slate-500';
+      est.textContent = 'Enviando…';
+      fetch('https://aquaenvio.sbs/api/app-clientes/avisame', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ email: f.email.value, web: f.web.value, origen: 'landing' }),
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error();
+          f.remove();
+          est.className = 'mt-2 text-sm text-emerald-700';
+          est.textContent = 'Listo, te avisamos a ese mail.';
+        })
+        .catch(function () {
+          b.disabled = false;
+          est.className = 'mt-2 text-sm text-red-600';
+          est.textContent = 'No se pudo enviar. Probá de nuevo en un rato.';
+        });
+    });
+  })();
+</script>
