@@ -18,7 +18,7 @@ const {
   <head>
     <SeoHead title={title} description={description} path={path} ogImage={ogImage} />
     <!-- Lo primero que se ve: la portada del panel en la notebook (mejora el LCP). -->
-    <link rel="preload" as="image" href="/portada/dashboard.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/portada/dashboard.webp" imagesrcset="/portada/dashboard-640.webp 640w, /portada/dashboard.webp 1000w" imagesizes="(max-width: 760px) 96vw, 780px" fetchpriority="high" />
   </head>
   <body>
     <slot />

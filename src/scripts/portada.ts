@@ -17,13 +17,30 @@
     revs.forEach((el) => io.observe(el));
   }
 
+  // Videos del hero: arrancan recién cuando la página terminó de cargar, así lo
+  // primero que se pinta es la imagen de portada (liviana) y no 2 MB de video. En
+  // el celular el del panel baja en una versión chica (data-src-cel).
+  const heroes = document.querySelectorAll('video[data-hero]');
+  const arrancarHero = () => heroes.forEach((v) => {
+    v.src = v.dataset.srcCel && window.innerWidth < 760 ? v.dataset.srcCel : v.dataset.src;
+    v.preload = 'auto';
+    v.addEventListener('playing', () => v.classList.add('andando'), { once: true });
+    v.play().catch(() => {});
+  });
+  if (document.readyState === 'complete') setTimeout(arrancarHero, 400);
+  else window.addEventListener('load', () => setTimeout(arrancarHero, 400), { once: true });
+
   // Videos de las funciones: se reproducen solo cuando están en pantalla
   const vids = document.querySelectorAll('video[data-auto]');
   if ('IntersectionObserver' in window) {
     const vio = new IntersectionObserver((ents) => {
       ents.forEach((e) => {
         const v = e.target;
-        if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(() => {}); } else { v.pause(); }
+        if (e.isIntersecting) {
+          // Los que traen data-src (el panel) eligen la versión chica en el celular.
+          if (v.dataset.src && !v.getAttribute('src')) v.src = v.dataset.srcCel && window.innerWidth < 760 ? v.dataset.srcCel : v.dataset.src;
+          v.preload = 'auto'; v.play().catch(() => {});
+        } else { v.pause(); }
       });
     }, { threshold: 0.35 });
     vids.forEach((v) => vio.observe(v));
