@@ -111,6 +111,16 @@
   const v = document.getElementById('video45'), b = document.getElementById('video45-play');
   if (!v || !b) return;
   b.addEventListener('click', () => { v.controls = true; b.closest('.video45__marco').classList.add('sonando'); v.play().catch(() => {}); v.focus(); });
+  // Al terminar: «¿Te gustó?» con el botón de WhatsApp (y la opción de verlo de nuevo).
+  const fin = document.getElementById('video45-fin'), otra = document.getElementById('video45-otra');
+  if (!fin || !otra) return;
+  v.addEventListener('ended', () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    v.controls = false; fin.hidden = false;
+    fin.querySelector('a')?.focus({ preventScroll: true });
+  });
+  v.addEventListener('play', () => { fin.hidden = true; });
+  otra.addEventListener('click', () => { fin.hidden = true; v.controls = true; v.currentTime = 0; v.play().catch(() => {}); v.focus(); });
 })();
 
 // Scroll suave al tocar los links del menú (y cualquier link a una sección), aunque el

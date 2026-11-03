@@ -53,7 +53,7 @@ import Portada from '../layouts/Portada.astro';
     <div class="hero-c__escena" aria-label="El panel del dueño en la PC y la app del repartidor en el celular">
       <div class="pantalla__marco"><video src="/portada/dashboard.mp4" poster="/portada/dashboard.webp" autoplay muted loop playsinline aria-label="El panel de Aquaenvio con lo cobrado, lo vendido y los gastos"></video></div>
       <div class="celu">
-        <video src="/portada/mobile-reparto.mp4" poster="/portada/mobile-reparto.webp" autoplay muted loop playsinline aria-label="El repartidor elige a Agustina Molina en la ruta, marca 2 bidones, cobra y carga la venta"></video>
+        <video src="/portada/navegacion-3d.mp4" poster="/portada/navegacion-3d-inicio.webp" autoplay muted loop playsinline aria-label="El repartidor toca Navegar y la app lo lleva en 3D, con el camión avanzando y avisando dónde doblar"></video>
       </div>
       <div class="tarjeta tarjeta--venta flota entra" style="--d:420ms"><span class="tarjeta__ico tarjeta__ico--verde"><svg class="icono"><use href="#i-check"/></svg></span><p><b>Venta registrada</b><span>Agustina Molina · 2 bidones</span></p></div>
     </div>
@@ -82,11 +82,19 @@ import Portada from '../layouts/Portada.astro';
       <h2 class="titulo-l" id="h-video">Miralo en acción.</h2>
     </div>
     <div class="video45__marco revela">
-      <video id="video45" src="/portada/presentacion.mp4" poster="/portada/presentacion-poster.webp" playsinline preload="metadata" aria-label="Video de presentación de Aquaenvio, un minuto"></video>
+      <video id="video45" src="/portada/presentacion-v2.mp4" poster="/portada/presentacion-poster.webp" playsinline preload="metadata" aria-label="Video de presentación de Aquaenvio, un minuto"></video>
       <button class="video45__play" id="video45-play" type="button" aria-label="Ver el video de Aquaenvio, 1 minuto">
         <span class="video45__circulo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5Z"/></svg></span>
         <span class="video45__etiqueta">Ver el video · 1 min</span>
       </button>
+      <div class="video45__fin" id="video45-fin" hidden>
+        <p class="video45__pregunta">¿Te gustó?</p>
+        <p class="video45__sub">Escribinos y te dejamos la cuenta armada con tus clientes. 7 días gratis, sin tarjeta.</p>
+        <div class="video45__acciones">
+          <a class="btn btn--wa" href="https://wa.me/5491128065517?text=Hola%2C%20vi%20el%20video%20de%20Aquaenvio%20y%20me%20gust%C3%B3.%20Quiero%20informaci%C3%B3n." target="_blank" rel="noopener"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg>Escribir por WhatsApp</a>
+          <button class="video45__otra" id="video45-otra" type="button">Verlo de nuevo</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -132,7 +140,7 @@ import Portada from '../layouts/Portada.astro';
     </div>
     <div class="pantalla revela">
       <div class="pantalla__marco"><video src="/portada/dashboard.mp4" poster="/portada/dashboard.webp" autoplay muted loop playsinline aria-label="El panel de Aquaenvio con lo cobrado, lo vendido y los gastos del mes"></video></div>
-      <div class="pantalla__celu celu"><video src="/portada/navegacion-cel.mp4" poster="/portada/navegacion-cel.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación 3D del reparto en el celular: el camión avanza y la app avisa dónde doblar"></video></div>
+      <div class="pantalla__celu celu"><video src="/portada/navegacion-3d.mp4" poster="/portada/navegacion-3d.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación 3D del reparto en el celular: el camión avanza y la app avisa dónde doblar"></video></div>
       <div class="tarjeta pantalla__chip"><span class="tarjeta__ico tarjeta__ico--verde"><svg class="icono"><use href="#i-camion"/></svg></span><p><b>En vivo</b><span>Se actualiza solo</span></p></div>
     </div>
   </div>
@@ -148,7 +156,7 @@ import Portada from '../layouts/Portada.astro';
     </div>
     <div class="bento">
       <article class="caja caja--video revela">
-        <div class="caja__escena"><div class="celu"><video src="/portada/navegacion-cel.mp4" poster="/portada/navegacion-cel.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación paso a paso en el celular del repartidor"></video></div></div>
+        <div class="caja__escena"><div class="celu"><video src="/portada/navegacion-3d.mp4" poster="/portada/navegacion-3d.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación 3D paso a paso en el celular del repartidor"></video></div></div>
         <div class="caja__txt"><h3>Repartos con navegación</h3><p>Ordena por la ruta más corta y te lleva con GPS por voz, con la lista de clientes encima para vender con un toque.</p></div>
       </article>
       <article class="caja revela"><span class="caja__ico caja__ico--logo"><img src="/portada/mercadopago.webp" alt="Mercado Pago" width="866" height="650"></span><h3>Cobro con QR de Mercado Pago</h3><p>El repartidor muestra el QR de Mercado Pago y la venta queda cobrada sola.</p></article>
