@@ -1,5 +1,5 @@
 ---
-import { PRECIO_MINIMO_ARS } from '../config';
+import { PRECIO_MINIMO_ARS, whatsappUrl } from '../config';
 const piso = '$' + PRECIO_MINIMO_ARS.toLocaleString('es-AR');
 // Ventas que "entran" animadas alrededor de la gota (efecto de actividad en vivo).
 const ventas = [
@@ -49,11 +49,15 @@ const ventas = [
       </p>
 
       <div class="hero-item mt-8 flex flex-wrap gap-3">
+        <!-- Botón verde de WhatsApp en vez de «Calculá tu precio» (pedido de Francisco 02/11/2026). -->
         <a
-          href="#calculadora"
-          class="rounded-full bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:-translate-y-0.5 hover:bg-blue-700"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#25D366]/30 transition hover:-translate-y-0.5 hover:bg-[#1ebe5a]"
         >
-          Calculá tu precio
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          Escribir por WhatsApp
         </a>
         <a
           href="#funciones"
