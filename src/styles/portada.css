@@ -568,3 +568,5 @@ section[id] { scroll-margin-top: 92px; }
 .pie__legales a { text-decoration: underline; text-underline-offset: 3px; }
 .hero-c__barra { max-width: 660px; }
 .hero-c__barra .btn { white-space: nowrap; flex: none; }
+/* El triángulo ya está centrado por su peso visual (centroide en x=12 del viewBox): sin corrimiento. */
+.video45__circulo svg { margin-left: 0; }
