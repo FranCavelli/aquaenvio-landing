@@ -580,3 +580,8 @@ section[id] { scroll-margin-top: 92px; }
 .video45__acciones .btn { white-space: nowrap; }
 .video45__otra { border: 0; background: none; color: #fff; font: 700 16px/1 var(--texto); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 10px 6px; }
 @media (max-width: 640px) { .video45__fin { gap: 8px; padding: 14px; } .video45__sub { display: none; } }
+/* Los videos del celular empiezan debajo del notch, como una app de verdad: arriba
+   queda una franja oscura (la barra de la hora) y el notch ya no tapa el cartel de
+   giro ni nada de la pantalla. El celular es un poco más alto para no recortar. */
+.celu { aspect-ratio: 258 / 562; }
+.celu video { padding-top: 11.5%; background: #0b1220; object-fit: cover; object-position: top; }
