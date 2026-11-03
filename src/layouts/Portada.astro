@@ -1,0 +1,30 @@
+---
+/* Layout de la portada nueva: el mismo <head> de SEO y el mismo seguimiento que Base.astro,
+   pero con su propio CSS (sin Tailwind ni GSAP: la portada no los usa y así carga menos). */
+import '../styles/portada.css';
+import SeoHead from '../components/SeoHead.astro';
+import Seguimiento from '../components/Seguimiento.astro';
+
+interface Props { title?: string; description?: string; path?: string; ogImage?: string }
+const {
+  title = 'Aquaenvio · App para repartos a domicilio, soderías y distribuidoras de agua',
+  description = 'La app para cualquier reparto a domicilio y la gestión de tu empresa: ruta con navegación GPS por voz, ventas en dos toques sin señal, cobro con QR de Mercado Pago, pedidos por WhatsApp, envases, caja y factura electrónica. Desde $15.999 por mes, 1 semana gratis.',
+  path = '/',
+  ogImage = 'https://aquaenvio.com/images/og.jpg',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <SeoHead title={title} description={description} path={path} ogImage={ogImage} />
+    <!-- Lo primero que se ve: la portada del panel en la notebook (mejora el LCP). -->
+    <link rel="preload" as="image" href="/portada/dashboard.webp" fetchpriority="high" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      import '../scripts/portada.ts';
+    </script>
+    <Seguimiento />
+  </body>
+</html>

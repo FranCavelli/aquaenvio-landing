@@ -1,0 +1,152 @@
+---
+/* El <head> de SEO de todas las páginas (canonical con barra, Open Graph, datos
+   estructurados, fuentes, título). Lo usan Base.astro y Portada.astro. */
+import { REDES, CONTACTO } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string; // ruta para el canonical, ej: "/comparativa"
+  ogImage?: string;
+}
+
+const {
+  title = 'Aquaenvio · Software para soderías, distribuidoras de agua y repartos a domicilio',
+  description = 'Sistema para distribuidoras de agua y soda: repartos con navegación GPS por voz, pedidos por WhatsApp, cobro con QR, envases, caja y facturación electrónica desde el celular del repartidor (anda sin señal). Probalo gratis 1 semana.',
+  path = '/',
+  ogImage = 'https://aquaenvio.com/images/og.jpg',
+} = Astro.props;
+
+const SITE = 'https://aquaenvio.com';
+
+// El canonical SIEMPRE termina en barra. GitHub Pages sirve la pagina en
+// /funciones/ y responde 301 en /funciones; si el canonical apunta a la version
+// sin barra, Google llega a la pagina, lee un canonical que lleva a una
+// redireccion y NO la indexa. Paso de verdad: de 4 paginas quedaba indexada
+// solo la home, que es la unica donde la URL ya coincide consigo misma.
+const canonical = SITE + (path.endsWith('/') ? path : path + '/');
+
+// Datos estructurados para Google.
+//
+// Van los TRES tipos juntos en un @graph, no solo el software:
+//   - Organization + WebSite le dicen a Google que la marca "Aquaenvio" ES este
+//     dominio. Sin eso, buscando "aquaenvio" a secas Google no sabe que el
+//     dominio es el sitio oficial y rankea antes los posteos de Instagram.
+//   - sameAs cierra el circuito con los perfiles: el perfil ya enlaza al sitio,
+//     ahora el sitio enlaza al perfil. Google usa ese ida y vuelta para
+//     confirmar la identidad de la marca.
+// Los @id son anclas internas del grafo (no son URLs que haya que crear).
+const ORG_ID = SITE + '/#organizacion';
+const WEB_ID = SITE + '/#sitio';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': ORG_ID,
+      name: 'Aquaenvio',
+      alternateName: ['AquaEnvio', 'Aqua Envio'],
+      url: SITE,
+      logo: {
+        '@type': 'ImageObject',
+        url: SITE + '/images/apple-touch-icon.png',
+        width: 180,
+        height: 180,
+      },
+      image: ogImage,
+      description:
+        'Sistema de gestión para soderías y distribuidoras de agua, y para cualquier reparto a domicilio (gas, bebidas, hielo): repartos, clientes, envases, caja y cobros.',
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+      sameAs: [REDES.instagram, REDES.facebook],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        telephone: '+' + CONTACTO.whatsapp,
+        email: CONTACTO.email,
+        areaServed: 'AR',
+        availableLanguage: ['es-AR'],
+      },
+    },
+    /* El nombre que Google muestra arriba de cada resultado ("Aquaenvio" en vez
+       de "aquaenvio.com") sale de ACÁ. Dos condiciones que pide Google y que
+       antes no se cumplían:
+         - `url` tiene que ser EXACTAMENTE la canónica de la home, con la barra
+           final (sin barra no coincidía y Google mostraba el dominio);
+         - `alternateName` con las otras formas del nombre, por si elige otra. */
+    {
+      '@type': 'WebSite',
+      '@id': WEB_ID,
+      name: 'Aquaenvio',
+      alternateName: ['AquaEnvio', 'Aqua Envio'],
+      url: SITE + '/',
+      inLanguage: 'es-AR',
+      publisher: { '@id': ORG_ID },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Aquaenvio',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web, Android, iOS',
+      description,
+      url: SITE,
+      inLanguage: 'es-AR',
+      publisher: { '@id': ORG_ID },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'ARS',
+        description: 'Suscripción mensual en pesos. 1 semana de prueba gratis sin tarjeta.',
+      },
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+      audience: {
+        '@type': 'BusinessAudience',
+        name: 'Soderías, distribuidoras de agua, gas, bebidas y repartos a domicilio',
+      },
+    },
+  ],
+};
+---
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="software reparto a domicilio, software distribuidora de gas, software distribuidora de bebidas, software reparto de agua, sistema para sodería, app reparto de agua, gestión distribuidora de agua, software soda y agua, control de envases, facturación AFIP sodería, reparto de agua Argentina" />
+    <meta name="theme-color" content="#0a2e4d" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <!-- Open Graph (preview en WhatsApp / redes) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aquaenvio" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Datos estructurados para Google -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Fuente Inter (carga no bloqueante) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Archivo:wdth,wght@75..125,400..900&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Archivo:wdth,wght@75..125,400..900&display=swap"
+      />
+    </noscript>
+
+    <title>{title}</title>

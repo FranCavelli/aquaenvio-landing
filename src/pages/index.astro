@@ -1,36 +1,314 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Logos from '../components/Logos.astro';
-import IntroVideo from '../components/IntroVideo.astro';
-import DiaReparto from '../components/DiaReparto.astro';
-import Showcase from '../components/Showcase.astro';
-import Comparativa from '../components/Comparativa.astro';
-import Features from '../components/Features.astro';
-import Calculadora from '../components/Calculadora.astro';
-import Diferenciales from '../components/Diferenciales.astro';
-import CTA from '../components/CTA.astro';
-import Footer from '../components/Footer.astro';
-import WhatsAppFijo from '../components/WhatsAppFijo.astro';
-import NovedadAppClientes from '../components/NovedadAppClientes.astro';
+/* Portada de aquaenvio.com (versión C de las propuestas del 03/11/2026, elegida por Fran).
+   El <head> de SEO y el seguimiento son los mismos de siempre (SeoHead + Seguimiento, vía Portada.astro);
+   las imágenes van optimizadas en /public/portada (WebP al ancho justo). */
+import Portada from '../layouts/Portada.astro';
 ---
+<Portada>
+<!-- Íconos (Lucide) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-wa-logo" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-gota" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-abajo" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+  <symbol id="i-ruta" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></symbol>
+  <symbol id="i-sinsenal" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="i-envases" viewBox="0 0 24 24"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></symbol>
+  <symbol id="i-factura" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+  <symbol id="i-camion" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-local" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2 2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+</svg>
 
-<Base>
-  <Nav />
-  <main>
-    <Hero />
-    <IntroVideo />
-    <Logos />
-    <Showcase />
-    <NovedadAppClientes />
-    <DiaReparto />
-    <Comparativa />
-    <Features />
-    <Calculadora />
-    <Diferenciales />
-    <CTA />
-  </main>
-  <Footer />
-  <WhatsAppFijo />
-</Base>
+<a class="skip" href="#como">Saltar al contenido</a>
+
+<header class="nav">
+  <a class="nav__marca" href="#inicio" aria-label="Aquaenvio, inicio"><img src="/favicon.svg" alt="" width="34" height="34">Aquaenvio</a>
+  <nav class="nav__links" aria-label="Secciones">
+    <a href="#como">Cómo funciona</a>
+    <a href="#funciones">Funciones</a>
+    <a href="#precio">Precio</a>
+    <a href="#preguntas">Preguntas</a>
+  </nav>
+  <a class="btn btn--wa btn--sm" href="https://wa.me/5491128065517?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Aquaenvio." target="_blank" rel="noopener"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg>Escribir por WhatsApp</a>
+</header>
+
+<main>
+<!-- ============ Hero C (estilo Ramp): oscuro, la PC y el celular juntos ============ -->
+<section class="hero-c" id="inicio" aria-labelledby="titulo">
+  <div class="envoltura hero-c__grid">
+    <div>
+      <p class="etiqueta entra"><span class="etiqueta__punto"><svg class="icono"><use href="#i-gota"/></svg></span>La app para cualquier reparto a domicilio</p>
+      <h1 id="titulo" class="entra" style="--d:80ms;margin-top:22px"><span class="sr-only">Aquaenvio: software de reparto a domicilio y gestión para distribuidoras. </span>Vender es un toque. <span>Cobrar, también.</span></h1>
+      <p class="hero-c__bajada entra" style="--d:160ms">El repartidor lleva la ruta, las ventas y los cobros en el celular. Vos ves todo en vivo, en tiempo real, sin sumar nada.</p>
+      <div class="hero-c__barra entra" style="--d:240ms" id="hero-cta">
+        <p>Desde <b>$15.999 por mes</b><br><b>7 días gratis</b>, sin tarjeta</p>
+        <a class="btn btn--wa" href="https://wa.me/5491128065517?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Aquaenvio." target="_blank" rel="noopener"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg>Escribir por WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-c__escena" aria-label="El panel del dueño en la PC y la app del repartidor en el celular">
+      <div class="pantalla__marco"><video src="/portada/dashboard.mp4" poster="/portada/dashboard.webp" autoplay muted loop playsinline aria-label="El panel de Aquaenvio con lo cobrado, lo vendido y los gastos"></video></div>
+      <div class="celu">
+        <video src="/portada/mobile-reparto.mp4" poster="/portada/mobile-reparto.webp" autoplay muted loop playsinline aria-label="El repartidor abre el mapa de la ruta, elige a Agustina Molina, marca 2 bidones y carga la venta"></video>
+      </div>
+      <div class="tarjeta tarjeta--venta flota entra" style="--d:420ms"><span class="tarjeta__ico tarjeta__ico--verde"><svg class="icono"><use href="#i-check"/></svg></span><p><b>Venta registrada</b><span>Agustina Molina · 2 bidones</span></p></div>
+    </div>
+  </div>
+  <div class="envoltura">
+    <div class="hero-c__datos">
+      <div><b>Sin permanencia</b><span>ni costo de alta</span></div>
+      <div><b>Sin tope</b><span>de ventas</span></div>
+      <div><b>Sin señal</b><span>la venta se guarda igual</span></div>
+      <div><b>Sin tope</b><span>de repartidores</span></div>
+    </div>
+  </div>
+  <div class="cinta" aria-label="Funciones">
+    <div class="cinta__pista">
+      <ul><li>Repartos con GPS</li><li>Cobro con QR</li><li>Envases y comodato</li><li>Factura electrónica</li><li>Pedidos por WhatsApp</li><li>Caja diaria</li><li>Abonos mensuales</li><li>Funciona sin señal</li><li>App para tus clientes</li></ul>
+      <ul aria-hidden="true"><li>Repartos con GPS</li><li>Cobro con QR</li><li>Envases y comodato</li><li>Factura electrónica</li><li>Pedidos por WhatsApp</li><li>Caja diaria</li><li>Abonos mensuales</li><li>Funciona sin señal</li><li>App para tus clientes</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Aquaenvio en un minuto ============ -->
+<section class="seccion video45" id="video" aria-labelledby="h-video">
+  <div class="envoltura">
+    <div class="centro revela">
+      <span class="antetitulo">Aquaenvio en un minuto</span>
+      <h2 class="titulo-l" id="h-video">Miralo en acción.</h2>
+    </div>
+    <div class="video45__marco revela">
+      <video id="video45" src="/portada/presentacion.mp4" poster="/portada/presentacion-poster.webp" playsinline preload="metadata" aria-label="Video de presentación de Aquaenvio, un minuto"></video>
+      <button class="video45__play" id="video45-play" type="button" aria-label="Ver el video de Aquaenvio, 1 minuto">
+        <span class="video45__circulo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5Z"/></svg></span>
+        <span class="video45__etiqueta">Ver el video · 1 min</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Cómo funciona: 3 pasos ============ -->
+<section class="seccion" id="como" aria-labelledby="h-como">
+  <div class="envoltura">
+    <div class="centro revela">
+      <span class="antetitulo">Cómo funciona</span>
+      <h2 class="titulo-xl" id="h-como">De las hojas al celular.</h2>
+      <p class="bajada">Empezás en el próximo reparto. No tenés que cargar nada a mano.</p>
+    </div>
+    <div class="pasos">
+      <article class="paso revela">
+        <div class="paso__img"><img src="/portada/lista.webp" alt="Una hoja de cuaderno con el reparto escrito a mano y una planilla de Excel con los mismos clientes" loading="lazy" width="1200" height="900"></div>
+        <div class="paso__cuerpo"><span class="paso__num">1</span><h3>Nos pasás tu lista</h3><p>Un Excel o una foto del cuaderno. Te dejamos la cuenta armada con tus clientes y tus precios.</p></div>
+      </article>
+      <article class="paso revela">
+        <div class="paso__img"><img src="/portada/foto-repartidor.webp" alt="Un repartidor en la calle, con el celular en la mano" loading="lazy" width="1200" height="896"></div>
+        <div class="paso__cuerpo"><span class="paso__num">2</span><h3>El repartidor sale con el celular</h3><p>La ruta ya viene ordenada. En cada casa toca, marca los bidones y cobra: efectivo, transferencia o QR.</p></div>
+      </article>
+      <article class="paso revela">
+        <div class="paso__img"><img src="/portada/foto-dueno.webp" alt="El dueño de la distribuidora mira el celular con el mate" loading="lazy" width="1200" height="896"></div>
+        <div class="paso__cuerpo"><span class="paso__num">3</span><h3>Vos mirás todo en vivo</h3><p>Cuánto se vendió, cuánto se cobró, cuántos bidones salieron y dónde está cada camión.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Para el dueño: el panel de verdad ============ -->
+<section class="seccion dueno" aria-labelledby="h-dueno">
+  <div class="envoltura dueno__grid">
+    <div class="revela">
+      <span class="antetitulo">Para vos, el dueño</span>
+      <h2 class="titulo-l" id="h-dueno">Con el mate, sin sumar nada.</h2>
+      <p class="bajada">Las cuentas que antes te llevaban la noche ya están hechas cuando vuelve el camión.</p>
+      <ul class="lista-ok">
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Cobrado, vendido y gastos, del día y del mes</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Cada camión en el mapa, en tiempo real</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Quién te debe y cuántos bidones tiene cada cliente</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Caja diaria con cierre, sin planillas</li>
+      </ul>
+    </div>
+    <div class="pantalla revela">
+      <div class="pantalla__marco"><video src="/portada/dashboard.mp4" poster="/portada/dashboard.webp" autoplay muted loop playsinline aria-label="El panel de Aquaenvio con lo cobrado, lo vendido y los gastos del mes"></video></div>
+      <div class="pantalla__celu celu"><video src="/portada/navegacion-cel.mp4" poster="/portada/navegacion-cel.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación del reparto en el celular del repartidor"></video></div>
+      <div class="tarjeta pantalla__chip"><span class="tarjeta__ico tarjeta__ico--verde"><svg class="icono"><use href="#i-camion"/></svg></span><p><b>En vivo</b><span>Se actualiza solo</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Funciones ============ -->
+<section class="seccion" id="funciones" aria-labelledby="h-funciones">
+  <div class="envoltura">
+    <div class="centro revela">
+      <span class="antetitulo">Todo en una sola app</span>
+      <h2 class="titulo-xl" id="h-funciones">Lo que hace Aquaenvio.</h2>
+      <p class="bajada">Sirve para cualquier reparto a domicilio, y también para la gestión de tu empresa: ventas, caja, gastos, facturación y usuarios, todo en un lugar. Sin instalar nada: entra desde el navegador o se instala como app.</p>
+    </div>
+    <div class="bento">
+      <article class="caja caja--video revela">
+        <div class="caja__escena"><div class="celu"><video src="/portada/navegacion-cel.mp4" poster="/portada/navegacion-cel.webp" muted loop playsinline preload="none" data-auto aria-label="La navegación paso a paso en el celular del repartidor"></video></div></div>
+        <div class="caja__txt"><h3>Repartos con navegación</h3><p>Ordena por la ruta más corta y te lleva con GPS por voz, con la lista de clientes encima para vender con un toque.</p></div>
+      </article>
+      <article class="caja revela"><span class="caja__ico caja__ico--logo"><img src="/portada/mercadopago.webp" alt="Mercado Pago" width="866" height="650"></span><h3>Cobro con QR de Mercado Pago</h3><p>El repartidor muestra el QR de Mercado Pago y la venta queda cobrada sola.</p></article>
+      <article class="caja caja--osc revela"><span class="caja__ico"><svg class="icono"><use href="#i-sinsenal"/></svg></span><h3>Funciona sin señal</h3><p>Guarda la venta en el celular y la sube sola cuando vuelve la conexión.</p></article>
+
+      <article class="caja caja--video revela">
+        <video src="/portada/clientes.mp4" poster="/portada/clientes.webp" muted loop playsinline preload="none" data-auto aria-label="La ficha de clientes en Aquaenvio"></video>
+        <div class="caja__txt"><h3>Clientes y saldos</h3><p>Ficha, saldo, precios por cliente e historial. La dirección se autocompleta o se marca en el mapa.</p></div>
+      </article>
+      <article class="caja revela"><span class="caja__ico"><svg class="icono"><use href="#i-envases"/></svg></span><h3>Envases y comodato</h3><p>Cuántos bidones tiene prestados cada cliente, con remito de envases.</p></article>
+      <article class="caja revela"><span class="caja__ico caja__ico--wa" aria-label="WhatsApp"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg></span><h3>Pedidos por WhatsApp</h3><p>El cliente pide por WhatsApp o desde un link, y el pedido cae en el reparto del día.</p></article>
+
+      <article class="caja caja--video revela">
+        <video src="/portada/caja.mp4" poster="/portada/caja.webp" muted loop playsinline preload="none" data-auto aria-label="La caja diaria en Aquaenvio"></video>
+        <div class="caja__txt"><h3>Caja y gastos</h3><p>Caja diaria con cierre, y los gastos del mes a la vista. Efectivo, transferencia, Mercado Pago o pago mixto.</p></div>
+      </article>
+      <article class="caja revela"><span class="caja__ico caja__ico--arca" aria-label="ARCA">ARCA</span><h3>Factura electrónica</h3><p>Comprobantes con CAE de ARCA (ex AFIP), con PDF y QR, sueltos o por lote.</p></article>
+      <article class="caja revela"><span class="caja__ico"><svg class="icono"><use href="#i-camion"/></svg></span><h3>Carga y descarga</h3><p>Carga del camión, cierre, control de vacíos y aviso cuando se queda sin agua.</p></article>
+    </div>
+    <div class="extras revela">
+      <span class="extras__tit">Y además:</span>
+      <span>Venta en mostrador</span><span>Abonos mensuales</span><span>«¿Pasamos hoy?» por WhatsApp</span><span>Copiloto de IA por voz</span><span>Resumen con IA (Beta)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ App de clientes ============ -->
+<section class="seccion clientes-app" aria-labelledby="h-app">
+  <div class="envoltura clientes-app__grid">
+    <div class="revela">
+      <div class="app-marca"><img src="/portada/aquaenvio-clientes.webp" alt="" width="96" height="96"><div><b>Aquaenvio Clientes</b><span class="antetitulo">Nuevo · Ya en el App Store</span></div></div>
+      <h2 class="titulo-l" id="h-app">Tus clientes, con su propia app.</h2>
+      <p class="bajada">Con Aquaenvio Clientes, cada cliente ve su saldo y sus envases, te pide lo de siempre y te paga desde el celular, sin mandarte un WhatsApp.</p>
+      <ul class="lista-ok">
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Pide lo de siempre con un toque</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Ve su saldo y cuántos bidones tiene en casa</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Paga con Mercado Pago o transferencia</li>
+      </ul>
+      <div class="tiendas">
+        <a class="tienda" href="https://apps.apple.com/ar/app/aquaenvio-clientes/id6828128307" target="_blank" rel="noopener"><svg class="icono"><use href="#i-apple"/></svg><span><small>Descargala en el</small><b>App Store</b></span></a>
+        <a class="tienda" href="https://aquaenvio.com/descargas/aquaenvio-clientes.apk"><img src="/portada/android.webp" alt="" width="81" height="96"><span><small>Descargala para</small><b>Android</b></span></a>
+      </div>
+    </div>
+    <div class="dos-celus revela" aria-hidden="true">
+      <div class="celu"><img src="/portada/saldo.webp" alt="" loading="lazy" width="540" height="983"></div>
+      <div class="celu"><img src="/portada/pedir.webp" alt="" loading="lazy" width="540" height="983"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Precio ============ -->
+<section class="seccion" id="precio" aria-labelledby="h-precio">
+  <div class="envoltura precio__grid">
+    <div class="revela">
+      <span class="antetitulo">Precio</span>
+      <h2 class="titulo-l" id="h-precio">Un precio claro, que crece con vos.</h2>
+      <ul class="lista-ok">
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Desde $15.999 finales por mes</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Una semana de prueba gratis, sin tarjeta</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Sin costo de alta, sin tope de ventas y sin permanencia</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Los primeros 2 meses van bonificados, al costo</li>
+      </ul>
+    </div>
+    <div class="calc revela" aria-labelledby="calc-tit">
+      <h3 id="calc-tit" style="font-size:26px;margin-bottom:22px">Calculá tu precio</h3>
+      <div class="calc__campo">
+        <label class="calc__fila" for="c-usuarios">Repartidores y usuarios <span class="calc__valor" id="v-usuarios">2</span></label>
+        <input type="range" id="c-usuarios" min="1" max="30" step="1" value="2">
+      </div>
+      <div class="calc__campo">
+        <label class="calc__fila" for="c-clientes">Clientes <span class="calc__valor" id="v-clientes">300</span></label>
+        <input type="range" id="c-clientes" min="0" max="3000" step="50" value="300">
+      </div>
+      <div class="calc__total" aria-live="polite">
+        <small>Tu precio por mes</small>
+        <p class="calc__monto" id="t-precio">desde $15.999</p>
+        <p class="calc__bonif" id="t-bonif">Los 2 primeros meses, bonificados al costo.</p>
+      </div>
+      <p class="calc__nota" id="t-nota">Precio final en pesos, al dólar blue del día. Es un estimado: te lo confirmamos por WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Preguntas ============ -->
+<section class="seccion" id="preguntas" aria-labelledby="h-faq" style="padding-top:0">
+  <div class="envoltura">
+    <div class="centro revela"><span class="antetitulo">Preguntas</span><h2 class="titulo-l" id="h-faq">Lo que todos preguntan.</h2></div>
+    <div class="faq">
+      <details><summary>¿Cuánto cuesta?</summary><p>Desde $15.999 finales por mes, según cuántos clientes y usuarios tengas. Sin costo de alta, sin tope de ventas y sin permanencia. La calculadora te da tu número.</p></details>
+      <details><summary>¿Se puede probar gratis?</summary><p>Sí, la primera semana es gratis y sin tarjeta. Te armamos la cuenta con tus clientes para que la uses en el próximo reparto.</p></details>
+      <details><summary>¿Tengo que cargar los clientes a mano?</summary><p>No. Pasanos tu lista como la tengas, un Excel o una foto del cuaderno, y te dejamos la cuenta armada con tus clientes y tus precios.</p></details>
+      <details><summary>¿Funciona sin internet?</summary><p>Sí. Las ventas quedan guardadas en el celular y se suben solas cuando vuelve la conexión.</p></details>
+      <details><summary>¿Qué celular necesita el repartidor?</summary><p>Cualquier Android o iPhone con un navegador actualizado. Se usa desde el navegador o se agrega a la pantalla de inicio como una app.</p></details>
+      <details><summary>¿Necesito una cuenta especial de Mercado Pago?</summary><p>No. Conectás tu propia cuenta con un botón y los cobros con QR te llegan a vos, como siempre.</p></details>
+      <details><summary>¿Puedo tener varios repartidores?</summary><p>Sí, los que vos quieras. Cada uno tiene su usuario y su reparto, y vos ves todo junto: qué vendió y qué cobró cada uno.</p></details>
+      <details><summary>¿Con quién hablo?</summary><p>Con Francisco, el dueño de Aquaenvio. Le escribís por WhatsApp y te responde él, de persona a persona. Te ayuda a pasar tus clientes, te explica lo que haga falta y lo tenés a un mensaje cuando necesites algo.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Contacto: formulario que arma el mensaje y lo manda por WhatsApp ============ -->
+<section class="seccion contacto" id="contacto" aria-labelledby="h-contacto">
+  <div class="envoltura contacto__grid">
+    <div class="revela">
+      <span class="antetitulo">Contacto</span>
+      <h2 class="titulo-l" id="h-contacto">Contanos de tu distribuidora.</h2>
+      <p class="bajada">Completá lo que quieras y tocá «Enviar por WhatsApp»: se abre tu WhatsApp con el mensaje listo para mandar. Te responde Francisco, el dueño de Aquaenvio.</p>
+      <ul class="lista-ok">
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Te armamos la cuenta con tus clientes</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Una semana gratis, sin tarjeta</li>
+        <li><span class="ok"><svg class="icono"><use href="#i-check"/></svg></span>Lo usás en el próximo reparto</li>
+      </ul>
+      <p class="contacto__directo">¿Preferís escribir directo? <a href="https://wa.me/5491128065517?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Aquaenvio." target="_blank" rel="noopener">WhatsApp 11 2806-5517</a></p>
+    </div>
+    <form class="form revela" id="cierre-cta" novalidate>
+      <div class="form__fila">
+        <label class="campo"><span>Tu nombre</span><input name="nombre" autocomplete="name" placeholder="Ej.: Marcelo"></label>
+        <label class="campo"><span>Tu distribuidora</span><input name="empresa" autocomplete="organization" placeholder="Ej.: Aguas del Molino"></label>
+      </div>
+      <div class="form__fila">
+        <label class="campo"><span>Localidad</span><input name="localidad" autocomplete="address-level2" placeholder="Ej.: Pilar"></label>
+        <label class="campo"><span>¿Qué usás hoy?</span>
+          <select name="hoy"><option value="">Elegí una opción</option><option>Cuaderno u hojas</option><option>Planilla de Excel</option><option>Otra app</option><option>Recién arranco</option></select>
+        </label>
+      </div>
+      <div class="form__fila">
+        <label class="campo"><span>¿Cuántos clientes?</span>
+          <select name="clientes"><option value="">Elegí una opción</option><option>Menos de 100</option><option>Entre 100 y 300</option><option>Entre 300 y 1.000</option><option>Más de 1.000</option></select>
+        </label>
+        <label class="campo"><span>¿Cuántos repartidores?</span>
+          <select name="repartidores"><option value="">Elegí una opción</option><option>1</option><option>2 o 3</option><option>De 4 a 10</option><option>Más de 10</option></select>
+        </label>
+      </div>
+      <label class="campo"><span>¿Algo más que quieras contarnos? <em>(opcional)</em></span><textarea name="mensaje" rows="3" placeholder="Ej.: quiero cobrar con QR y llevar los envases"></textarea></label>
+      <div class="form__botones">
+        <button class="btn btn--wa" type="submit" data-via="wa"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg>Enviar por WhatsApp</button>
+        <button class="btn btn--linea" type="submit" data-via="mail">Enviar por mail</button>
+      </div>
+      <p class="form__nota">No guardamos nada en esta página: el mensaje sale desde tu WhatsApp o tu mail.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <div class="pie__cols">
+      <div><b>Aquaenvio</b><p>La app para repartos a domicilio y la gestión de tu empresa: agua, soda, gas, almacén y más.</p></div>
+      <div><b>Secciones</b><ul><li><a href="#como">Cómo funciona</a></li><li><a href="#funciones">Funciones</a></li><li><a href="#precio">Precio</a></li><li><a href="#preguntas">Preguntas</a></li></ul></div>
+      <div><b>Contacto</b><ul><li><a href="https://wa.me/5491128065517?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Aquaenvio." target="_blank" rel="noopener">WhatsApp 11 2806-5517</a></li><li><a href="mailto:francavelli2@gmail.com">francavelli2@gmail.com</a></li></ul></div>
+      <div><b>Más sobre Aquaenvio</b><ul><li><a href="/funciones/">Todas las funciones</a></li><li><a href="/precio/">Precio</a></li><li><a href="/software-para-soderias/">Software para soderías</a></li><li><a href="/app-reparto-de-agua/">App de reparto de agua</a></li><li><a href="/control-de-envases/">Control de envases</a></li><li><a href="/cobros-y-pedidos-por-whatsapp/">Cobros y pedidos por WhatsApp</a></li><li><a href="/app/">App para tus clientes</a></li></ul></div>
+      <div><b>Apps</b><ul><li><a href="https://apps.apple.com/ar/app/aquaenvio-clientes/id6828128307" target="_blank" rel="noopener">Aquaenvio Clientes en el App Store</a></li><li><a href="https://aquaenvio.com/descargas/aquaenvio-clientes.apk">Aquaenvio Clientes para Android</a></li></ul></div>
+    </div>
+    <p class="pie__legales"><a href="/privacidad/">Privacidad</a> · <a href="/terminos/">Términos</a></p>
+    <p class="pie__legal">© 2026 Aquaenvio. Todos los derechos reservados.</p>
+    <p class="pie__marca" aria-hidden="true">Aquaenvio</p>
+  </div>
+</footer>
+
+<div class="wa-fijo" data-oculto>
+  <a class="btn btn--wa" href="https://wa.me/5491128065517?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Aquaenvio." target="_blank" rel="noopener"><svg class="wa-logo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa-logo"/></svg>Escribir por WhatsApp</a>
+</div>
+</Portada>
