@@ -585,7 +585,7 @@ section[id] { scroll-margin-top: 92px; }
 /* Hero: la imagen del panel es lo primero que se pinta (es el LCP) y el video
    aparece encima recién cuando ya se está reproduciendo. */
 .pantalla__vista { position: relative; }
-.pantalla__foto { display: block; width: 100%; aspect-ratio: 1000 / 626; object-fit: cover; border-radius: 10px; background: #fff; }
+.pantalla__portada { display: block; width: 100%; aspect-ratio: 1000 / 626; object-fit: cover; border-radius: 10px; background: #fff; }
 .pantalla__vista video { position: absolute; inset: 0; height: 100%; opacity: 0; transition: opacity .4s; }
 .pantalla__vista video.andando { opacity: 1; }
 
