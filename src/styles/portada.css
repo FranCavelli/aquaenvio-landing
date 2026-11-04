@@ -619,3 +619,17 @@ section[id] { scroll-margin-top: 92px; }
   .video45__tiempo { min-width: 0; font-size: 12px; padding: 0 2px; }
   .video45__avance { margin: 0 6px; }
 }
+/* Volumen: se despliega al lado del parlante al pasar el mouse (o con el teclado).
+   En pantallas táctiles no va: el iPhone no deja cambiarlo desde la página. */
+.video45__vol { display: flex; align-items: center; flex: none; }
+.video45__volumen { --p: 100%; width: 0; height: 28px; margin: 0; opacity: 0; background: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none; transition: width .2s ease, opacity .2s ease, margin .2s ease; }
+.video45__vol:hover .video45__volumen, .video45__vol:focus-within .video45__volumen { width: 84px; opacity: 1; margin: 0 8px 0 2px; }
+.video45__volumen::-webkit-slider-runnable-track { height: 4px; border-radius: 2px;
+  background: linear-gradient(to right, #fff var(--p), rgba(255, 255, 255, .28) var(--p)); }
+.video45__volumen::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .28); }
+.video45__volumen::-moz-range-progress { height: 4px; border-radius: 2px; background: #fff; }
+.video45__volumen::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -4px; border-radius: 50%; background: #fff; border: 0; }
+.video45__volumen::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 0; }
+.video45__volumen:focus-visible { outline: 2px solid var(--cian-vivo); outline-offset: 2px; }
+@media (hover: none), (pointer: coarse) { .video45__volumen { display: none; } }

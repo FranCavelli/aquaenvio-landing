@@ -176,7 +176,28 @@
 
   b.addEventListener('click', () => arrancar());
   btnPlay.addEventListener('click', alternar);
-  btnSonido.addEventListener('click', () => { v.muted = !v.muted; mostrar(); });
+  // Volumen (en compu: en el iPhone el volumen es el de los botones del teléfono).
+  const volumen = barra.querySelector<HTMLInputElement>('.video45__volumen');
+  const pintarVolumen = () => {
+    if (!volumen) return;
+    const n = v.muted ? 0 : Math.round(v.volume * 100);
+    volumen.value = String(n);
+    volumen.style.setProperty('--p', `${n}%`);
+    volumen.setAttribute('aria-valuetext', v.muted ? 'Silenciado' : `${n} %`);
+  };
+  const ponerVolumen = (n: number) => {
+    n = Math.min(100, Math.max(0, n));
+    v.volume = n / 100;
+    v.muted = n === 0;
+    pintarVolumen(); estado(); mostrar();
+  };
+  volumen?.addEventListener('input', () => ponerVolumen(+volumen.value));
+  // Al sacar el silencio con el volumen en cero, vuelve a un volumen que se oiga.
+  btnSonido.addEventListener('click', () => {
+    if (v.muted && v.volume === 0) v.volume = 0.6;
+    v.muted = !v.muted;
+    pintarVolumen(); estado(); mostrar();
+  });
 
   // Pantalla completa del marco entero (así la barra sigue siendo la nuestra).
   // En el iPhone no existe para un <div>: ahí se abre la del video, con la del sistema.
@@ -216,7 +237,11 @@
     if (!marco.classList.contains('sonando') || (e.target as HTMLElement).tagName === 'A') return;
     const k = e.key.toLowerCase();
     if ((k === ' ' && e.target !== avance && (e.target as HTMLElement).tagName !== 'BUTTON') || k === 'k') { e.preventDefault(); alternar(); }
-    else if (k === 'm') { v.muted = !v.muted; mostrar(); }
+    else if (k === 'm') btnSonido.click();
+    else if ((k === 'arrowup' || k === 'arrowdown') && e.target !== avance && e.target !== volumen) {
+      e.preventDefault();
+      ponerVolumen((v.muted ? 0 : Math.round(v.volume * 100)) + (k === 'arrowup' ? 10 : -10));
+    }
     else if (k === 'f') btnPantalla.click();
   });
 
@@ -224,7 +249,7 @@
   v.addEventListener('loadedmetadata', pintar);
   v.addEventListener('play', () => { if (fin) fin.hidden = true; estado(); mostrar(); });
   v.addEventListener('pause', () => { estado(); marco.classList.remove('quieto'); });
-  v.addEventListener('volumechange', estado);
+  v.addEventListener('volumechange', () => { estado(); pintarVolumen(); });
 
   // Al terminar: «¿Te gustó?» con el botón de WhatsApp (y la opción de verlo de nuevo).
   v.addEventListener('ended', () => {
@@ -233,7 +258,7 @@
     if (fin) { fin.hidden = false; fin.querySelector('a')?.focus({ preventScroll: true }); }
   });
   otra?.addEventListener('click', () => arrancar(true));
-  estado(); pintar();
+  estado(); pintar(); pintarVolumen();
 })();
 
 // Scroll suave al tocar los links del menú (y cualquier link a una sección), aunque el
