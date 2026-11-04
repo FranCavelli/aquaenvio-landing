@@ -123,21 +123,117 @@
     .catch(() => {});
 })();
 
-// Video «sellado»: al tocar el play se sacan el botón, aparecen los controles y arranca.
+// Video «sellado»: al tocar el play se saca el botón y arranca con NUESTRA barra
+// (play/pausa, tiempo, avance, sonido y pantalla completa), no la del navegador.
 (() => {
-  const v = document.getElementById('video45'), b = document.getElementById('video45-play');
-  if (!v || !b) return;
-  b.addEventListener('click', () => { v.controls = true; b.closest('.video45__marco').classList.add('sonando'); v.play().catch(() => {}); v.focus(); });
-  // Al terminar: «¿Te gustó?» con el botón de WhatsApp (y la opción de verlo de nuevo).
+  const v = document.getElementById('video45') as HTMLVideoElement | null;
+  const b = document.getElementById('video45-play');
+  const barra = document.getElementById('video45-barra');
+  const marco = v?.closest('.video45__marco') as HTMLElement | null;
+  if (!v || !b || !barra || !marco) return;
   const fin = document.getElementById('video45-fin'), otra = document.getElementById('video45-otra');
-  if (!fin || !otra) return;
+  const btnPlay = barra.querySelector<HTMLButtonElement>('[data-accion="play"]')!;
+  const btnSonido = barra.querySelector<HTMLButtonElement>('[data-accion="sonido"]')!;
+  const btnPantalla = barra.querySelector<HTMLButtonElement>('[data-accion="pantalla"]')!;
+  const avance = barra.querySelector<HTMLInputElement>('.video45__avance')!;
+  const tActual = barra.querySelector('[data-t="actual"]')!, tTotal = barra.querySelector('[data-t="total"]')!;
+  const mmss = (s: number) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+  let arrastrando = false;
+
+  const pintar = () => {
+    const d = v.duration || 0;
+    if (!arrastrando && d) avance.value = String(Math.round((v.currentTime / d) * 1000));
+    avance.style.setProperty('--p', `${(+avance.value / 10).toFixed(2)}%`);
+    avance.setAttribute('aria-valuetext', `${mmss(v.currentTime)} de ${mmss(d)}`);
+    tActual.textContent = mmss(v.currentTime);
+    if (d) tTotal.textContent = mmss(d);
+  };
+  const estado = () => {
+    marco.classList.toggle('pausado', v.paused);
+    btnPlay.setAttribute('aria-label', v.paused ? 'Reproducir' : 'Pausar');
+    marco.classList.toggle('mudo', v.muted);
+    btnSonido.setAttribute('aria-label', v.muted ? 'Activar el sonido' : 'Silenciar');
+  };
+
+  // La barra se esconde sola a los 2,5 s mientras se reproduce; vuelve al mover el mouse o tocar.
+  let reloj = 0;
+  const mostrar = () => {
+    marco.classList.remove('quieto');
+    clearTimeout(reloj);
+    reloj = window.setTimeout(() => { if (!v.paused && !arrastrando) marco.classList.add('quieto'); }, 2500);
+  };
+
+  const arrancar = (desdeCero = false) => {
+    marco.classList.add('sonando');
+    barra.hidden = false;
+    if (fin) fin.hidden = true;
+    if (desdeCero) v.currentTime = 0;
+    v.play().catch(() => {});
+    mostrar();
+    btnPlay.focus({ preventScroll: true });
+  };
+  const alternar = () => { if (v.paused) v.play().catch(() => {}); else v.pause(); mostrar(); };
+
+  b.addEventListener('click', () => arrancar());
+  btnPlay.addEventListener('click', alternar);
+  btnSonido.addEventListener('click', () => { v.muted = !v.muted; mostrar(); });
+
+  // Pantalla completa del marco entero (así la barra sigue siendo la nuestra).
+  // En el iPhone no existe para un <div>: ahí se abre la del video, con la del sistema.
+  const enGrande = () => document.fullscreenElement === marco;
+  btnPantalla.addEventListener('click', () => {
+    if (enGrande()) { document.exitFullscreen().catch(() => {}); return; }
+    if (marco.requestFullscreen) marco.requestFullscreen().catch(() => {});
+    else (v as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
+    mostrar();
+  });
+  document.addEventListener('fullscreenchange', () => {
+    marco.classList.toggle('grande', enGrande());
+    btnPantalla.setAttribute('aria-label', enGrande() ? 'Salir de pantalla completa' : 'Pantalla completa');
+  });
+
+  // Tocar el video: con el mouse pausa/sigue; en el celular, si la barra estaba
+  // escondida, el primer toque solo la muestra (como en cualquier reproductor).
+  v.addEventListener('pointerup', (e) => {
+    if (!marco.classList.contains('sonando')) return;
+    if (e.pointerType !== 'mouse' && marco.classList.contains('quieto')) { mostrar(); return; }
+    alternar();
+  });
+  marco.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') mostrar(); });
+  barra.addEventListener('focusin', mostrar);
+
+  // El avance: se puede arrastrar o usar con las flechas del teclado.
+  avance.addEventListener('pointerdown', () => { arrastrando = true; });
+  avance.addEventListener('input', () => {
+    if (v.duration) v.currentTime = (+avance.value / 1000) * v.duration;
+    pintar(); mostrar();
+  });
+  avance.addEventListener('change', () => { arrastrando = false; mostrar(); });
+  window.addEventListener('pointerup', () => { arrastrando = false; });
+
+  // Espacio y K pausan; M silencia; F pantalla completa (con el foco en el video o la barra).
+  marco.addEventListener('keydown', (e) => {
+    if (!marco.classList.contains('sonando') || (e.target as HTMLElement).tagName === 'A') return;
+    const k = e.key.toLowerCase();
+    if ((k === ' ' && e.target !== avance && (e.target as HTMLElement).tagName !== 'BUTTON') || k === 'k') { e.preventDefault(); alternar(); }
+    else if (k === 'm') { v.muted = !v.muted; mostrar(); }
+    else if (k === 'f') btnPantalla.click();
+  });
+
+  v.addEventListener('timeupdate', pintar);
+  v.addEventListener('loadedmetadata', pintar);
+  v.addEventListener('play', () => { if (fin) fin.hidden = true; estado(); mostrar(); });
+  v.addEventListener('pause', () => { estado(); marco.classList.remove('quieto'); });
+  v.addEventListener('volumechange', estado);
+
+  // Al terminar: «¿Te gustó?» con el botón de WhatsApp (y la opción de verlo de nuevo).
   v.addEventListener('ended', () => {
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-    v.controls = false; fin.hidden = false;
-    fin.querySelector('a')?.focus({ preventScroll: true });
+    barra.hidden = true;
+    if (fin) { fin.hidden = false; fin.querySelector('a')?.focus({ preventScroll: true }); }
   });
-  v.addEventListener('play', () => { fin.hidden = true; });
-  otra.addEventListener('click', () => { fin.hidden = true; v.controls = true; v.currentTime = 0; v.play().catch(() => {}); v.focus(); });
+  otra?.addEventListener('click', () => arrancar(true));
+  estado(); pintar();
 })();
 
 // Scroll suave al tocar los links del menú (y cualquier link a una sección), aunque el

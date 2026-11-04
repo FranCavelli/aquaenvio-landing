@@ -577,3 +577,45 @@ section[id] { scroll-margin-top: 92px; }
 .pantalla__vista video { position: absolute; inset: 0; height: 100%; opacity: 0; transition: opacity .4s; }
 .pantalla__vista video.andando { opacity: 1; }
 
+
+/* Barra propia del video de un minuto (en vez de la del navegador): play/pausa,
+   tiempo, avance, sonido y pantalla completa, con los colores de la página. */
+.video45__barra { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 3; display: flex; align-items: center; gap: 4px;
+  padding: 6px 10px 6px 6px; border-radius: 10px; background: rgba(7, 34, 58, .86); color: #fff;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: opacity .25s ease, translate .25s ease; }
+.video45__barra[hidden] { display: none; }
+.video45__marco.quieto .video45__barra { opacity: 0; translate: 0 8px; pointer-events: none; }
+.video45__marco.quieto video { cursor: none; }
+.video45__marco.sonando video { cursor: pointer; }
+.video45__btn { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border: 0; border-radius: 8px; background: none; color: #fff; cursor: pointer; padding: 0; }
+@media (hover: hover) { .video45__btn:hover { background: rgba(255, 255, 255, .12); } }
+.video45__btn:focus-visible, .video45__avance:focus-visible { outline: 2px solid var(--cian-vivo); outline-offset: 2px; }
+.video45__btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.video45__btn svg .lleno, .video45__ico-play, .video45__ico-pausa { fill: currentColor; stroke: none; }
+.video45__ico-play, .video45__marco.pausado .video45__ico-pausa,
+.video45__ico-mudo, .video45__marco.mudo .video45__ico-sonido,
+.video45__ico-chica, .video45__marco.grande .video45__ico-grande { display: none; }
+.video45__marco.pausado .video45__ico-play, .video45__marco.mudo .video45__ico-mudo, .video45__marco.grande .video45__ico-chica { display: block; }
+.video45__tiempo { flex: none; min-width: 84px; padding: 0 8px 0 4px; font: 600 14px/1 var(--texto); font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, .9); }
+/* El avance: línea fina celeste sobre gris, que engorda al pasar el mouse. */
+.video45__avance { --p: 0%; flex: 1; min-width: 0; height: 28px; margin: 0 8px; background: none; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.video45__avance::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; transition: height .15s;
+  background: linear-gradient(to right, var(--cian-vivo) var(--p), rgba(255, 255, 255, .28) var(--p)); }
+.video45__avance::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .28); }
+.video45__avance::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--cian-vivo); }
+.video45__avance::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: #fff; border: 0; transition: margin-top .15s; }
+.video45__avance::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 0; }
+.video45__avance:hover::-webkit-slider-runnable-track { height: 6px; }
+.video45__avance:hover::-webkit-slider-thumb { margin-top: -4px; }
+/* Pantalla completa: el video entero, sin bordes. */
+.video45__marco.grande, .video45__marco:fullscreen { max-width: none; width: 100vw; height: 100vh; margin: 0; border-radius: 0; display: flex; align-items: center; background: #000; }
+.video45__marco:fullscreen video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; }
+.video45__marco:fullscreen .video45__barra { left: 50%; right: auto; width: min(960px, calc(100% - 32px)); translate: -50% 0; bottom: 24px; }
+.video45__marco:fullscreen.quieto .video45__barra { translate: -50% 8px; }
+@media (max-width: 640px) {
+  .video45__barra { left: 6px; right: 6px; bottom: 6px; padding: 2px 6px 2px 2px; gap: 0; border-radius: 8px; }
+  .video45__btn { width: 38px; height: 38px; }
+  .video45__btn svg { width: 20px; height: 20px; }
+  .video45__tiempo { min-width: 0; font-size: 12px; padding: 0 2px; }
+  .video45__avance { margin: 0 6px; }
+}

@@ -87,6 +87,22 @@ import Portada from '../layouts/Portada.astro';
         <span class="video45__circulo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5Z"/></svg></span>
         <span class="video45__etiqueta">Ver el video · 1 min</span>
       </button>
+      <div class="video45__barra" id="video45-barra" hidden>
+        <button class="video45__btn" type="button" data-accion="play" aria-label="Pausar">
+          <svg class="video45__ico-pausa" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg class="video45__ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5Z"/></svg>
+        </button>
+        <span class="video45__tiempo" aria-hidden="true"><span data-t="actual">0:00</span> / <span data-t="total">1:04</span></span>
+        <input class="video45__avance" type="range" min="0" max="1000" step="1" value="0" aria-label="Avance del video">
+        <button class="video45__btn" type="button" data-accion="sonido" aria-label="Silenciar">
+          <svg class="video45__ico-sonido" viewBox="0 0 24 24" aria-hidden="true"><path class="lleno" d="M11 4.7 6.3 8.5H3.5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.8l4.7 3.8a.6.6 0 0 0 1-.5V5.2a.6.6 0 0 0-1-.5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/></svg>
+          <svg class="video45__ico-mudo" viewBox="0 0 24 24" aria-hidden="true"><path class="lleno" d="M11 4.7 6.3 8.5H3.5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.8l4.7 3.8a.6.6 0 0 0 1-.5V5.2a.6.6 0 0 0-1-.5Z"/><path d="m16 9.5 5 5"/><path d="m21 9.5-5 5"/></svg>
+        </button>
+        <button class="video45__btn" type="button" data-accion="pantalla" aria-label="Pantalla completa">
+          <svg class="video45__ico-grande" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          <svg class="video45__ico-chica" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+        </button>
+      </div>
       <div class="video45__fin" id="video45-fin" hidden>
         <p class="video45__pregunta">¿Te gustó?</p>
         <p class="video45__sub">Escribinos y te dejamos la cuenta armada con tus clientes. 7 días gratis, sin tarjeta.</p>
