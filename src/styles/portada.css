@@ -619,12 +619,18 @@ section[id] { scroll-margin-top: 92px; }
   .video45__tiempo { min-width: 0; font-size: 12px; padding: 0 2px; }
   .video45__avance { margin: 0 6px; }
 }
-/* Volumen: se despliega al lado del parlante al pasar el mouse (o con el teclado).
+/* Volumen: una cajita que sale PARA ARRIBA del parlante al pasar el mouse (o con
+   el teclado), con la barra vertical. La caja arranca pegada al botón (el padding
+   de abajo es el puente) para que el mouse no la pierda al subir.
    En pantallas táctiles no va: el iPhone no deja cambiarlo desde la página. */
-.video45__vol { display: flex; align-items: center; flex: none; }
-.video45__volumen { --p: 100%; width: 0; height: 28px; margin: 0; opacity: 0; background: none; cursor: pointer;
-  -webkit-appearance: none; appearance: none; transition: width .2s ease, opacity .2s ease, margin .2s ease; }
-.video45__vol:hover .video45__volumen, .video45__vol:focus-within .video45__volumen { width: 84px; opacity: 1; margin: 0 8px 0 2px; }
+.video45__vol { position: relative; display: flex; align-items: center; flex: none; }
+.video45__volumen-caja { position: absolute; left: 50%; bottom: 100%; padding-bottom: 8px; translate: -50% 6px;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, translate .18s ease; }
+.video45__vol:hover .video45__volumen-caja, .video45__vol:has(:focus-visible) .video45__volumen-caja { opacity: 1; translate: -50% 0; pointer-events: auto; }
+.video45__volumen-panel { position: relative; width: 42px; height: 124px; border-radius: 10px;
+  background: rgba(7, 34, 58, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+/* La barra es horizontal girada 90°: así se ve y se arrastra igual en todos los navegadores. */
+.video45__volumen { --p: 100%; position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 96px; height: 28px; margin: 0; rotate: -90deg; background: none; cursor: pointer; -webkit-appearance: none; appearance: none; }
 .video45__volumen::-webkit-slider-runnable-track { height: 4px; border-radius: 2px;
   background: linear-gradient(to right, #fff var(--p), rgba(255, 255, 255, .28) var(--p)); }
 .video45__volumen::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .28); }
@@ -632,4 +638,4 @@ section[id] { scroll-margin-top: 92px; }
 .video45__volumen::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -4px; border-radius: 50%; background: #fff; border: 0; }
 .video45__volumen::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 0; }
 .video45__volumen:focus-visible { outline: 2px solid var(--cian-vivo); outline-offset: 2px; }
-@media (hover: none), (pointer: coarse) { .video45__volumen { display: none; } }
+@media (hover: none), (pointer: coarse) { .video45__volumen-caja { display: none; } }
