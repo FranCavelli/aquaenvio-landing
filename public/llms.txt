@@ -1,0 +1,44 @@
+# Aquaenvio
+
+> Aquaenvio es un sistema de gestión para soderías y distribuidoras de agua en bidones y soda en sifones de Argentina. El dueño ve todo desde la PC o el celular, y el repartidor lleva la ruta, las ventas y los cobros en su celular, aun sin señal. También sirve para cualquier reparto a domicilio (gas, hielo, bebidas). Suscripción mensual en pesos, desde $15.999 por mes según usuarios y clientes, sin costo de alta ni permanencia, y la primera semana gratis sin tarjeta.
+
+## Para quién es
+
+- Soderías y distribuidoras de agua, de un solo repartidor o de más de diez.
+- Las que fabrican su propia soda o llenan sus bidones (tiene registro de llenado en planta, stock del camión y venta en mostrador) y las que compran el producto ya envasado y solo distribuyen.
+- No hace falta cargar nada a mano: el cliente pasa su lista (Excel o foto del cuaderno) y le dejan la cuenta armada con sus clientes y precios.
+
+## Qué hace
+
+- Clientes: ficha con datos, domicilio en el mapa, precios por cliente, historial y cuenta corriente (lo que pagó y lo que debe). Resumen de cuenta por WhatsApp.
+- Repartos: orden por la ruta más corta y navegación GPS por voz, en 2D o 3D, con la lista de clientes para vender con un toque. Ubicación de los repartidores en vivo.
+- Ventas en la calle con dos toques, aun sin señal: se guardan en el celular y se sincronizan al volver la conexión.
+- Envases: sifones, bidones y envases retornables prestados a cada cliente (comodato) y control de vacíos.
+- Carga y descarga del camión: qué salió, cuánto le queda en vivo y, al cerrar, los vacíos, lo vendido y lo que volvió.
+- Llenado en planta: cuántas unidades se llenaron para cada repartidor o revendedor, con responsable y fecha.
+- Venta en mostrador con cierre de turno.
+- Cobros: efectivo, transferencia (con verificación de transferencias) y QR de Mercado Pago en la puerta; la venta queda cobrada sola.
+- Pedidos por WhatsApp y por una página propia para los clientes; el pedido cae en el reparto del día.
+- Abonos mensuales.
+- Factura electrónica con CAE de ARCA (ex AFIP), desde la venta, con PDF y QR, suelta o por lote.
+- Caja diaria y gastos con cierre.
+- Usuarios con roles Administrador, Oficina, Repartidor y Depósito; cada uno ve solo lo suyo. Control de revendedores.
+- Reportes: vendido, cobrado y gastos por día y por mes, ranking de repartidores, mapa de calor de ventas, clientes que dejaron de comprar y deudores para exportar.
+- Asistente con IA que manda resúmenes del negocio por WhatsApp o mail (beta).
+- Web, Android e iOS. No hace falta instalar nada: entra desde el navegador o se instala como app.
+
+## Páginas
+
+- [Inicio](https://aquaenvio.com/): qué es y cómo funciona.
+- [Software para soderías](https://aquaenvio.com/software-para-soderias/): el sistema pensado para una sodería, con preguntas frecuentes.
+- [Funciones](https://aquaenvio.com/funciones/): todos los módulos.
+- [Comparativa](https://aquaenvio.com/comparativa/): Aquaenvio frente a otros sistemas del rubro, función por función.
+- [Precio](https://aquaenvio.com/precio/): calculadora del plan en pesos.
+- [App para el reparto de agua](https://aquaenvio.com/app-reparto-de-agua/)
+- [Control de envases](https://aquaenvio.com/control-de-envases/)
+- [Cobros y pedidos por WhatsApp](https://aquaenvio.com/cobros-y-pedidos-por-whatsapp/)
+
+## Contacto
+
+- WhatsApp: +54 9 11 2806-5517 (https://wa.me/5491128065517)
+- Instagram: https://www.instagram.com/aquaenvio/

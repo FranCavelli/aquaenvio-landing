@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 
 const title = 'Software para soderías y distribuidoras de agua | Aquaenvio';
 const description =
-  'Sistema de gestión para soderías: clientes, repartos, ventas, cobros con Mercado Pago, envases, deudas y caja desde el celular. Anda sin señal. Probalo gratis 1 semana.';
+  'Sistema de gestión para soderías: clientes con cuenta corriente, repartos, sifones y bidones prestados, stock del camión, llenado en planta, cobros con Mercado Pago, factura electrónica ARCA y caja desde el celular. Anda sin señal. Probalo gratis 1 semana.';
 
 const bloques = [
   {
@@ -19,7 +19,8 @@ const bloques = [
       'Repartos ordenados por la ruta más corta',
       'Ventas y cobros cargados en la calle, con un toque',
       'Caja diaria y gastos con cierre',
-      'Control de bidones prestados y vacíos',
+      'Control de sifones y bidones prestados (comodato) y de los vacíos',
+      'Factura electrónica de ARCA (ex AFIP) desde la venta',
       'Reportes de lo vendido y cobrado por día y por mes',
     ],
   },
@@ -34,6 +35,17 @@ const bloques = [
       'Cada venta queda en la cuenta del cliente. Ves al instante quién debe y cuánto, quién hace tiempo que no compra y le podés mandar el resumen de cuenta por WhatsApp. La plata que se pierde por olvidos en el cuaderno deja de perderse.',
   },
   {
+    titulo: 'Si tenés planta, también la ordena',
+    texto:
+      'Registrás cuántos sifones y bidones se llenaron para cada repartidor, ves qué salió en cada camión y cuánto le queda, y al cerrar el día quedan los vacíos, lo vendido y lo que volvió. Si vendés en la planta, el mostrador tiene su propio cierre de turno.',
+    puntos: [
+      'Llenado en planta por repartidor o revendedor, con responsable',
+      'Carga y stock del camión en vivo',
+      'Venta en mostrador',
+      'Usuarios Administrador, Oficina, Repartidor y Depósito, cada uno con lo suyo',
+    ],
+  },
+  {
     titulo: 'Cobros y pedidos como los pide la gente hoy',
     texto:
       'Tus clientes te pagan con Mercado Pago o transferencia, y la venta queda cobrada sola. Y pueden pedirte por WhatsApp o desde un link: el pedido cae en el reparto del día.',
@@ -44,6 +56,9 @@ const preguntas = [
   { p: '¿Sirve para una sodería chica?', r: 'Sí. Hay distribuidoras de un solo repartidor y de más de diez. El precio se ajusta al tamaño: menos clientes y usuarios, menos pagás.' },
   { p: '¿Tengo que cargar los clientes a mano?', r: 'No. Pasanos tu lista como la tengas (un Excel o una foto del cuaderno) y te dejamos la cuenta armada con tus clientes y precios.' },
   { p: '¿Funciona sin internet?', r: 'Sí. El reparto se puede hacer sin señal: las ventas quedan guardadas en el celular y se suben solas cuando vuelve la conexión.' },
+  { p: '¿Sirve si fabrico mi propia soda?', r: 'Sí. Además del reparto, registra el llenado en planta para cada repartidor o revendedor, la carga y lo que le queda a cada camión, los vacíos que vuelven y la venta en mostrador. Si comprás la soda ya envasada, esa parte se deja apagada.' },
+  { p: '¿Lleva la cuenta corriente de cada cliente?', r: 'Sí. Cada venta queda en su cuenta con lo que pagó y lo que quedó debiendo. Ves quién debe y cuánto, y le mandás el resumen de cuenta por WhatsApp.' },
+  { p: '¿Hace factura electrónica?', r: 'Sí, con CAE de ARCA (ex AFIP), desde la misma venta, con PDF y QR, suelta o por lote.' },
   { p: '¿Cuánto cuesta?', r: 'Es una suscripción mensual en pesos, desde $15.999, según la cantidad de clientes y usuarios. La primera semana es gratis.' },
 ];
 ---
