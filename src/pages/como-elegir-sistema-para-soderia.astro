@@ -1,0 +1,92 @@
+---
+/* Guía «cómo elegir un sistema para tu sodería» (04/11/2026). La búsqueda que
+   más se repite en Bing para el rubro la gana un artículo de este tipo (de
+   TrackMyVend), y ChatGPT arma su primera respuesta con esos resultados.
+   Los precios de otros son los que publica cada uno en su web al 04/11/2026
+   (relevamiento en la comparativa); si cambian, actualizar la fecha. */
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PaginaTema from '../components/PaginaTema.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Cómo elegir un sistema para tu sodería y cuánto cuesta (2026) | Aquaenvio';
+const description =
+  'Guía para elegir el sistema de gestión de tu sodería o distribuidora de agua: qué tiene que tener (envases, cuenta corriente, reparto sin señal, stock del camión, factura ARCA), cuánto cuesta en Argentina en 2026 y qué preguntar antes de contratar.';
+
+const bloques = [
+  {
+    titulo: 'Primero: ¿necesitás un sistema de gestión o una app de rutas?',
+    texto:
+      'Una app de rutas te ordena las paradas y ahí termina. Una sodería necesita más: saber cuántos sifones y bidones tiene prestados cada cliente, cuánto te debe, qué precio le hacés, qué cargó y qué devolvió cada camión, y sacar la factura. Si el sistema no lleva todo eso junto, terminás con la app, la planilla y el cuaderno.',
+  },
+  {
+    titulo: 'Lo que tiene que tener sí o sí',
+    texto:
+      'Estas son las funciones que separan a un sistema para sodería de un programa de facturación o de una app de rutas común. Si falta alguna, la vas a seguir haciendo a mano.',
+    puntos: [
+      'Clientes con cuenta corriente: lo que pagó y lo que debe cada uno',
+      'Sifones, bidones y envases prestados por cliente (comodato)',
+      'App para el repartidor que funcione sin señal',
+      'Ruta ordenada y, si se puede, navegación por voz',
+      'Carga y stock del camión: qué salió, qué volvió y los vacíos',
+      'Cobro en efectivo, transferencia y QR de Mercado Pago',
+      'Factura electrónica de ARCA (ex AFIP) desde la venta',
+      'Caja diaria y gastos',
+      'Usuarios con permisos: que el repartidor no vea las cuentas del negocio',
+    ],
+  },
+  {
+    titulo: 'Si fabricás tu propia soda',
+    texto:
+      'Si llenás tus sifones o bidones, sumá dos cosas a la lista: el registro de llenado en planta (cuánto se llenó para cada repartidor y quién lo hizo) y la venta en mostrador, si atendés al público. Si comprás la soda ya envasada y solo distribuís, no te hacen falta y no deberías pagarlas.',
+  },
+  {
+    titulo: 'Cuánto cuesta un sistema para sodería en Argentina',
+    texto:
+      'Precios por mes publicados en la web de cada sistema al 4 de noviembre de 2026. Ojo con lo que incluye cada plan: en varios, la factura electrónica, el cobro con QR o el control de envases están solo en los planes más caros.',
+    puntos: [
+      'Aquaenvio: desde $15.999, según usuarios y clientes, con todas las funciones',
+      'Centra: $15.000 por módulo (Planta o Reparto), $21.000 los dos',
+      'Repartix: $29.900 (1 chofer, hasta 300 clientes), precio de lanzamiento',
+      'Repartito: $44.900, plan único',
+      'Nexo Repartos: $45.000 (1 administrador y 1 repartidor)',
+      'Reparto by TrackMyVend: desde $105.000 + IVA',
+      'Yaku: en dólares; el plan con módulo de producción, USD 96',
+    ],
+  },
+  {
+    titulo: 'Qué preguntar antes de contratar',
+    texto:
+      'Antes de pagar, probalo con tus clientes reales y preguntá esto. Las respuestas cambian mucho de un sistema a otro.',
+    puntos: [
+      '¿Me cargan los clientes desde mi Excel o mi cuaderno?',
+      '¿Funciona sin señal en toda la ruta?',
+      '¿La factura de ARCA está en mi plan o en uno más caro?',
+      '¿Hay tope de clientes, ventas o repartidores?',
+      '¿Hay costo de alta o permanencia mínima?',
+      '¿Cobra en pesos o en dólares?',
+    ],
+  },
+];
+
+const preguntas = [
+  { p: '¿Cuál es el mejor sistema para una sodería?', r: 'Depende de cómo trabajes. Si solo repartís, priorizá la app del repartidor sin señal, los envases por cliente y la cuenta corriente. Si además fabricás, sumá el llenado en planta y el stock del camión. Probá dos o tres con tus clientes reales antes de decidir.' },
+  { p: '¿Cuánto cuesta un software para sodería?', r: 'En noviembre de 2026, los sistemas para soderías en Argentina van de unos $15.000 a más de $100.000 por mes, según el tamaño y lo que incluye cada plan. Aquaenvio arranca en $15.999 con todas las funciones.' },
+  { p: '¿Hay sistemas para sodería gratis?', r: 'Hay pruebas gratis (Aquaenvio da una semana sin tarjeta) y algunos planes gratuitos de sistemas genéricos, pero sin las funciones del rubro, como los envases por cliente o el reparto sin señal.' },
+  { p: '¿Puedo seguir usando mi cuaderno mientras pruebo?', r: 'Sí. Lo normal es probar una semana en paralelo con el cuaderno. Con Aquaenvio te dejan la cuenta armada con tus clientes y precios, así que empezás en el próximo reparto.' },
+];
+---
+
+<Base title={title} description={description} path="/como-elegir-sistema-para-soderia">
+  <Nav base="/" />
+  <main>
+    <PageHeader
+      badge="Guía 2026"
+      title="Cómo elegir un sistema para tu sodería"
+      subtitle="Qué tiene que tener, cuánto cuesta en Argentina y qué preguntar antes de contratar."
+    />
+    <PaginaTema bloques={bloques} preguntas={preguntas} actual="/como-elegir-sistema-para-soderia/" />
+  </main>
+  <Footer />
+</Base>

@@ -31,6 +31,7 @@
 
 - [Inicio](https://aquaenvio.com/): qué es y cómo funciona.
 - [Software para soderías](https://aquaenvio.com/software-para-soderias/): el sistema pensado para una sodería, con preguntas frecuentes.
+- [Cómo elegir un sistema para tu sodería](https://aquaenvio.com/como-elegir-sistema-para-soderia/): qué tiene que tener, cuánto cuesta en 2026 y qué preguntar antes de contratar.
 - [Funciones](https://aquaenvio.com/funciones/): todos los módulos.
 - [Comparativa](https://aquaenvio.com/comparativa/): Aquaenvio frente a otros sistemas del rubro, función por función.
 - [Precio](https://aquaenvio.com/precio/): calculadora del plan en pesos.

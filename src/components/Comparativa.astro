@@ -3,9 +3,12 @@ import { whatsappUrl } from '../config';
 
 /* Comparativa contra los demás sistemas del rubro.
    REGLA: solo se afirma lo que cada proveedor publica en su web (relevado el
-   23/09/2026). Si no lo publica, va `null` (X roja con la leyenda "no figura en su web"), nunca `false`:
+   23/09/2026; Nexo Repartos, TrackMyVend, Centra, Repartito y Repartix, y las
+   filas de planta, stock, roles y reportes, el 04/11/2026). Si no lo publica,
+   va `null` (X roja con la leyenda "no figura en su web"), nunca `false`:
    decir que otro no tiene algo que sí tiene nos expone. `false` solo cuando
-   el plan lo excluye explícitamente. */
+   el plan lo excluye explícitamente. DistriCentral y Adiasoft no van: son
+   sistemas genéricos para distribuidoras, no del rubro. */
 
 type Celda = true | false | null | string;
 
@@ -18,26 +21,35 @@ const cols = [
   { key: 'jr', name: 'JR-Software' },
   { key: 'startapp', name: 'Reparto de Agua' },
   { key: 'rcloud', name: 'reparto.cloud' },
+  { key: 'nexo', name: 'Nexo Repartos' },
+  { key: 'tmv', name: 'TrackMyVend' },
+  { key: 'centra', name: 'Centra' },
+  { key: 'repartito', name: 'Repartito' },
+  { key: 'repartix', name: 'Repartix' },
 ] as const;
 
 type Col = (typeof cols)[number]['key'];
 
 const features: ({ f: string } & Record<Col, Celda>)[] = [
-  { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true, rcloud: true },
-  { f: 'Funciona sin señal', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true, rcloud: null },
-  { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true, rcloud: true },
-  { f: 'Factura AFIP', aqua: true, sodapp: true, yaku: null, ada: 'Plan pago', gestion: 'Sin aclarar', jr: 'Sin aclarar', startapp: true, rcloud: null },
-  { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null, rcloud: true },
-  { f: 'Navegación GPS asistida', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: true },
-  { f: 'Página para tus clientes', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null, rcloud: 'Pedidos por QR' },
-  { f: 'Cobro con QR', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'Abonos mensuales', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true, rcloud: null },
-  { f: 'Venta en mostrador', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'Copiloto de IA por voz', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null },
-  { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: 'Caja por reparto' },
+  { f: 'Sin costo de alta', aqua: true, sodapp: true, yaku: 'Solo anual', ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: null },
+  { f: 'Sin tope de ventas', aqua: true, sodapp: 'Con tope', yaku: 'Lite: 250', ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: 'Hasta 300 clientes', centra: null, repartito: true, repartix: 'Hasta 300 clientes' },
+  { f: 'App del repartidor', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: true, rcloud: true, nexo: true, tmv: true, centra: true, repartito: true, repartix: true },
+  { f: 'Funciona sin señal', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: true, startapp: true, rcloud: null, nexo: true, tmv: true, centra: true, repartito: true, repartix: true },
+  { f: 'Envases y comodato', aqua: true, sodapp: true, yaku: true, ada: 'Plan pago', gestion: null, jr: true, startapp: true, rcloud: true, nexo: true, tmv: 'Plan Scale', centra: 'Solo envases', repartito: 'Solo envases', repartix: true },
+  { f: 'Factura AFIP', aqua: true, sodapp: true, yaku: 'Desde Básico', ada: 'Plan pago', gestion: 'Sin aclarar', jr: 'Sin aclarar', startapp: true, rcloud: null, nexo: null, tmv: 'En desarrollo', centra: null, repartito: null, repartix: 'Todavía no' },
+  { f: 'Ruta optimizada', aqua: true, sodapp: true, yaku: true, ada: true, gestion: true, jr: true, startapp: null, rcloud: true, nexo: 'Por cercanía', tmv: true, centra: true, repartito: true, repartix: true },
+  { f: 'Navegación GPS asistida', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: null },
+  { f: 'Pedidos por WhatsApp', aqua: true, sodapp: true, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: true, nexo: null, tmv: true, centra: null, repartito: 'Próximamente', repartix: null },
+  { f: 'Página para tus clientes', aqua: true, sodapp: null, yaku: true, ada: null, gestion: null, jr: true, startapp: null, rcloud: 'Pedidos por QR', nexo: true, tmv: 'Plan Pro', centra: null, repartito: 'Pedidos por QR', repartix: null },
+  { f: 'Cobro con QR', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: 'Plan Pro', centra: null, repartito: null, repartix: null },
+  { f: 'Abonos mensuales', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: true, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: null },
+  { f: 'Venta en mostrador', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: null },
+  { f: 'Llenado o producción en planta', aqua: true, sodapp: null, yaku: 'Premium', ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: 'Plan Distribuidora' },
+  { f: 'Stock del camión', aqua: true, sodapp: true, yaku: true, ada: null, gestion: null, jr: true, startapp: true, rcloud: 'Solo envases', nexo: true, tmv: true, centra: true, repartito: 'Solo envases', repartix: true },
+  { f: 'Roles y permisos', aqua: '4 roles', sodapp: 'Admin y repartidor', yaku: '5 roles', ada: 'Plan Empresa', gestion: null, jr: 'Admin y repartidor', startapp: null, rcloud: 'Admin y repartidor', nexo: 'Admin y repartidor', tmv: null, centra: 'Oficina y planta', repartito: null, repartix: 'Oficina y chofer' },
+  { f: 'Reportes por repartidor', aqua: true, sodapp: 'Avanzados: Business', yaku: true, ada: 'Plan Empresa', gestion: true, jr: true, startapp: true, rcloud: true, nexo: true, tmv: true, centra: true, repartito: true, repartix: true },
+  { f: 'Copiloto de IA por voz', aqua: true, sodapp: null, yaku: null, ada: null, gestion: null, jr: null, startapp: null, rcloud: null, nexo: null, tmv: null, centra: null, repartito: null, repartix: null },
+  { f: 'Caja y gastos', aqua: true, sodapp: null, yaku: null, ada: true, gestion: null, jr: null, startapp: null, rcloud: 'Caja por reparto', nexo: true, tmv: 'Plan Pro', centra: 'Caja por repartidor', repartito: null, repartix: true },
 ];
 
 ---
@@ -50,7 +62,7 @@ const features: ({ f: string } & Record<Col, Celda>)[] = [
       <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Funciones, una por una</h2>
     </div>
     <div class="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm" data-reveal>
-      <table class="w-full min-w-[1020px] border-collapse text-sm">
+      <table class="w-full min-w-[1560px] border-collapse text-sm">
         <thead>
           <tr class="bg-slate-50">
             <th class="sticky left-0 z-10 bg-slate-50 px-4 py-4 text-left font-semibold text-slate-500">Función</th>
