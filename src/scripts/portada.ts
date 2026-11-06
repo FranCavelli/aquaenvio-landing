@@ -88,13 +88,29 @@
   const uIn = $('c-usuarios'), cIn = $('c-clientes');
   if (!uIn || !cIn) return;
   const PISO = 15999;
+  const PISO_USD = 10;
   const pesos = (n) => '$' + Math.ceil(n).toLocaleString('es-AR');
+  const dolares = (n) => 'US$' + Math.ceil(n).toLocaleString('es-AR');
   let blue = null;
+  // Fuera de Argentina los precios van en dólares, desde US$10 (Francisco,
+  // 05/11/2026). El país lo dice Cloudflare (/cdn-cgi/trace, `loc=`); si no se
+  // sabe, o es un buscador (que no indexe la landing en dólares), quedan en pesos.
+  let enDolares = false;
 
   function calcular() {
     const u = +uIn.value, c = +cIn.value;
     $('v-usuarios').textContent = u;
     $('v-clientes').textContent = c.toLocaleString('es-AR');
+    if (enDolares) {
+      const costo = 3 + 0.005 * c + 1 * u;
+      const usd = Math.max(Math.ceil(costo * 1.5), PISO_USD);
+      const bonif = Math.max(costo, PISO_USD);
+      $('t-precio').textContent = dolares(usd);
+      $('t-bonif').textContent = Math.ceil(bonif) < usd
+        ? `Los 2 primeros meses: ${dolares(bonif)} por mes, al costo.`
+        : 'Es el precio mínimo.';
+      return;
+    }
     if (!blue) {
       $('t-precio').textContent = 'desde ' + pesos(PISO);
       $('t-bonif').textContent = 'Los 2 primeros meses, bonificados al costo.';
@@ -113,6 +129,26 @@
   uIn.addEventListener('input', calcular);
   cIn.addEventListener('input', calcular);
   calcular();
+
+  const pasarADolares = () => {
+    enDolares = true;
+    document.querySelectorAll('[data-usd]').forEach((el) => { el.textContent = el.getAttribute('data-usd'); });
+    calcular();
+  };
+  const esBuscador = /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|preview/i.test(navigator.userAgent);
+  const guardado = (() => { try { return sessionStorage.getItem('aqua-pais'); } catch { return null; } })();
+  const conPais = (pais) => { if (/^[A-Z]{2}$/.test(pais) && pais !== 'AR' && pais !== 'XX') pasarADolares(); };
+  if (!esBuscador) {
+    if (guardado !== null) conPais(guardado);
+    else fetch('/cdn-cgi/trace')
+      .then((r) => r.text())
+      .then((t) => {
+        const pais = (t.match(/^loc=([A-Z0-9]{2})$/m) || [])[1] || '';
+        try { sessionStorage.setItem('aqua-pais', pais); } catch { /* sin storage */ }
+        conPais(pais);
+      })
+      .catch(() => {});
+  }
 
   fetch('https://dolarapi.com/v1/dolares')
     .then((r) => r.json())
