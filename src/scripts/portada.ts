@@ -3,6 +3,7 @@
 // botón fijo en el celular y la calculadora de precio (misma fórmula que la landing).
 // Portada: aparecer al scroll, videos que se prenden al verse, botón fijo en el celular,
 // formulario de contacto, calculadora y el video «sellado». Ver src/pages/index.astro.
+import { enDolares, dolares, PISO_USD } from './pais';
 (() => {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches && !document.documentElement.classList.contains('mov');
 
@@ -88,20 +89,16 @@
   const uIn = $('c-usuarios'), cIn = $('c-clientes');
   if (!uIn || !cIn) return;
   const PISO = 15999;
-  const PISO_USD = 10;
   const pesos = (n) => '$' + Math.ceil(n).toLocaleString('es-AR');
-  const dolares = (n) => 'US$' + Math.ceil(n).toLocaleString('es-AR');
   let blue = null;
-  // Fuera de Argentina los precios van en dólares, desde US$10 (Francisco,
-  // 05/11/2026). El país lo dice Cloudflare (/cdn-cgi/trace, `loc=`); si no se
-  // sabe, o es un buscador (que no indexe la landing en dólares), quedan en pesos.
-  let enDolares = false;
+  // Fuera de Argentina, en dólares (ver scripts/pais.ts).
+  let usdModo = false;
 
   function calcular() {
     const u = +uIn.value, c = +cIn.value;
     $('v-usuarios').textContent = u;
     $('v-clientes').textContent = c.toLocaleString('es-AR');
-    if (enDolares) {
+    if (usdModo) {
       const costo = 3 + 0.005 * c + 1 * u;
       const usd = Math.max(Math.ceil(costo * 1.5), PISO_USD);
       const bonif = Math.max(costo, PISO_USD);
@@ -130,25 +127,7 @@
   cIn.addEventListener('input', calcular);
   calcular();
 
-  const pasarADolares = () => {
-    enDolares = true;
-    document.querySelectorAll('[data-usd]').forEach((el) => { el.textContent = el.getAttribute('data-usd'); });
-    calcular();
-  };
-  const esBuscador = /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|preview/i.test(navigator.userAgent);
-  const guardado = (() => { try { return sessionStorage.getItem('aqua-pais'); } catch { return null; } })();
-  const conPais = (pais) => { if (/^[A-Z]{2}$/.test(pais) && pais !== 'AR' && pais !== 'XX') pasarADolares(); };
-  if (!esBuscador) {
-    if (guardado !== null) conPais(guardado);
-    else fetch('/cdn-cgi/trace')
-      .then((r) => r.text())
-      .then((t) => {
-        const pais = (t.match(/^loc=([A-Z0-9]{2})$/m) || [])[1] || '';
-        try { sessionStorage.setItem('aqua-pais', pais); } catch { /* sin storage */ }
-        conPais(pais);
-      })
-      .catch(() => {});
-  }
+  enDolares().then((si) => { if (si) { usdModo = true; calcular(); } });
 
   fetch('https://dolarapi.com/v1/dolares')
     .then((r) => r.json())

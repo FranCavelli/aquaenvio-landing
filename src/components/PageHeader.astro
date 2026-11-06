@@ -5,8 +5,11 @@ interface Props {
   badge?: string;
   title: string;
   subtitle?: string;
+  // Para los de afuera de Argentina (scripts/pais.ts).
+  titleUsd?: string;
+  subtitleUsd?: string;
 }
-const { badge, title, subtitle } = Astro.props;
+const { badge, title, subtitle, titleUsd, subtitleUsd } = Astro.props;
 ---
 
 <section class="relative overflow-hidden bg-gradient-to-br from-aqua-900 via-aqua-800 to-aqua-700 pt-28 pb-16 text-white">
@@ -16,7 +19,7 @@ const { badge, title, subtitle } = Astro.props;
     {badge && (
       <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-100 ring-1 ring-white/20">{badge}</span>
     )}
-    <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">{title}</h1>
-    {subtitle && <p class="mx-auto mt-4 max-w-2xl text-cyan-100/85">{subtitle}</p>}
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl" data-usd={titleUsd}>{title}</h1>
+    {subtitle && <p class="mx-auto mt-4 max-w-2xl text-cyan-100/85" data-usd={subtitleUsd}>{subtitle}</p>}
   </div>
 </section>

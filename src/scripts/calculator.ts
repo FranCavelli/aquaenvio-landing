@@ -4,6 +4,7 @@
  */
 import { gsap } from 'gsap';
 import { PRECIO_MINIMO_ARS } from '../config';
+import { enDolares, dolares, PISO_USD } from './pais';
 
 const TARIFAS = {
   baseUsd: 3, // base del plan (USD/mes)
@@ -47,6 +48,9 @@ function init() {
 
   let dolar: number | null = null;
   let shownArs = 0; // valor actual mostrado (para animar el conteo)
+  // Fuera de Argentina: el precio grande va en dólares, sin cotización (scripts/pais.ts).
+  let usdModo = false;
+  let tween: gsap.core.Tween | null = null;
 
   const clamp = (v: number, min: number, max: number) =>
     Math.min(max, Math.max(min, Number.isFinite(v) ? v : min));
@@ -62,6 +66,14 @@ function init() {
 
     usdEl!.textContent = fmtUsd(usd);
 
+    if (usdModo) {
+      tween?.kill(); // que un conteo en pesos que venía andando no pise el precio en dólares
+      if (loadingEl) loadingEl.style.display = 'none';
+      arsEl!.textContent = dolares(Math.max(usd, PISO_USD));
+      if (bonifEl) bonifEl.textContent = dolares(Math.max(costoUsd(clientes, usuarios), PISO_USD));
+      return;
+    }
+
     if (ars == null) {
       arsEl!.textContent = '—';
       if (bonifEl) bonifEl.textContent = '—';
@@ -72,7 +84,8 @@ function init() {
     if (bonifEl) bonifEl.textContent = fmtArs(bonificadoArs(clientes, usuarios, dolar!));
 
     // Animación de conteo del precio (GSAP).
-    gsap.to(
+    tween?.kill();
+    tween = gsap.to(
       { v: shownArs },
       {
         v: ars,
@@ -110,6 +123,14 @@ function init() {
 
   bind(usuariosRange, usuariosNum, 1, 30);
   bind(clientesRange, clientesNum, 0, 3000);
+
+  enDolares().then((si) => {
+    if (!si) return;
+    usdModo = true;
+    // El cartelito «US$ X/mes · dólar blue» sobra: el precio grande ya está en dólares.
+    usdEl.parentElement?.style.setProperty('display', 'none');
+    render();
+  });
 
   // Cotización del dólar (mismo origen que la app).
   fetch('https://dolarapi.com/v1/dolares')

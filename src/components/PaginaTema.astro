@@ -6,8 +6,10 @@
 // que ser algo que la app hace HOY (ver Features.astro).
 import { whatsappUrl } from '../config';
 
-interface Bloque { titulo: string; texto: string; puntos?: string[] }
-interface Pregunta { p: string; r: string }
+// `usd`: el texto para los de afuera de Argentina (scripts/pais.ts). El JSON-LD queda en pesos.
+type Punto = string | { t: string; usd: string };
+interface Bloque { titulo: string; texto: string; puntos?: Punto[] }
+interface Pregunta { p: string; r: string; usd?: string }
 interface Props {
   bloques: Bloque[];
   preguntas: Pregunta[];
@@ -42,7 +44,7 @@ const faqLd = {
             {b.puntos.map((pt) => (
               <li class="flex gap-2 rounded-xl bg-white p-3 text-slate-700 shadow-sm ring-1 ring-slate-100">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-cyan-600"><path d="M20 6 9 17l-5-5"/></svg>
-                <span>{pt}</span>
+                {typeof pt === 'string' ? <span>{pt}</span> : <span data-usd={pt.usd}>{pt.t}</span>}
               </li>
             ))}
           </ul>
@@ -67,7 +69,7 @@ const faqLd = {
           <summary class="cursor-pointer list-none font-semibold text-slate-800 marker:hidden">
             <span class="flex items-center justify-between gap-3">{x.p}<span class="text-cyan-600 transition group-open:rotate-45">+</span></span>
           </summary>
-          <p class="mt-2 text-slate-600">{x.r}</p>
+          <p class="mt-2 text-slate-600" data-usd={x.usd}>{x.r}</p>
         </details>
       ))}
     </div>

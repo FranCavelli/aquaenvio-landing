@@ -46,7 +46,7 @@ const bloques = [
     texto:
       'Precios por mes publicados en la web de cada sistema al 4 de noviembre de 2026. Ojo con lo que incluye cada plan: en varios, la factura electrónica, el cobro con QR o el control de envases están solo en los planes más caros.',
     puntos: [
-      'Aquaenvio: desde $15.999, según usuarios y clientes, con todas las funciones',
+      { t: 'Aquaenvio: desde $15.999, según usuarios y clientes, con todas las funciones', usd: 'Aquaenvio: desde US$10, según usuarios y clientes, con todas las funciones' },
       'Centra: $15.000 por módulo (Planta o Reparto), $21.000 los dos',
       'Repartix: $29.900 (1 chofer, hasta 300 clientes), precio de lanzamiento',
       'Repartito: $44.900, plan único',
@@ -72,7 +72,7 @@ const bloques = [
 
 const preguntas = [
   { p: '¿Cuál es el mejor sistema para una sodería?', r: 'Depende de cómo trabajes. Si solo repartís, priorizá la app del repartidor sin señal, los envases por cliente y la cuenta corriente. Si además fabricás, sumá el llenado en planta y el stock del camión. Probá dos o tres con tus clientes reales antes de decidir.' },
-  { p: '¿Cuánto cuesta un software para sodería?', r: 'En noviembre de 2026, los sistemas para soderías en Argentina van de unos $15.000 a más de $100.000 por mes, según el tamaño y lo que incluye cada plan. Aquaenvio arranca en $15.999 con todas las funciones.' },
+  { p: '¿Cuánto cuesta un software para sodería?', r: 'En noviembre de 2026, los sistemas para soderías en Argentina van de unos $15.000 a más de $100.000 por mes, según el tamaño y lo que incluye cada plan. Aquaenvio arranca en $15.999 con todas las funciones.', usd: 'En noviembre de 2026, los sistemas para soderías en Argentina van de unos $15.000 a más de $100.000 por mes, según el tamaño y lo que incluye cada plan. Fuera de Argentina, Aquaenvio arranca en US$10 con todas las funciones.' },
   { p: '¿Hay sistemas para sodería gratis?', r: 'Hay pruebas gratis (Aquaenvio da una semana sin tarjeta) y algunos planes gratuitos de sistemas genéricos, pero sin las funciones del rubro, como los envases por cliente o el reparto sin señal.' },
   { p: '¿Puedo seguir usando mi cuaderno mientras pruebo?', r: 'Sí. Lo normal es probar una semana en paralelo con el cuaderno. Con Aquaenvio te dejan la cuenta armada con tus clientes y precios, así que empezás en el próximo reparto.' },
 ];
