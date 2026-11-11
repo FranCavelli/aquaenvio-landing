@@ -1,6 +1,7 @@
 /**
  * Fuera de Argentina, la landing muestra los precios en dólares, desde US$10
- * (Francisco, 05/11/2026). Lo usan todas las páginas (los dos layouts).
+ * (Francisco, 05/11/2026), y habla en neutro en vez de con voseo (11/11/2026,
+ * ver scripts/neutro.ts). Lo usan todas las páginas (los dos layouts).
  *
  * - El país lo dice Cloudflare en /cdn-cgi/trace (`loc=AR`); se guarda en la
  *   sesión para no volver a preguntar en cada página.
@@ -10,6 +11,8 @@
  *   visitante es de afuera se cambia uno por otro y `<html>` queda con
  *   `data-moneda="usd"` (para lo que se tenga que esconder por CSS).
  */
+import { pasarANeutro } from './neutro';
+
 export const PISO_USD = 10;
 
 const CLAVE = 'aqua-pais';
@@ -23,7 +26,13 @@ export function enDolares(): Promise<boolean> {
   promesa = (async () => {
     if (BUSCADOR.test(navigator.userAgent)) return false;
     let pais: string | null = null;
+    // Para ver la landing como de afuera: aquaenvio.com/?pais=CL (?pais=AR vuelve).
+    const forzado = new URLSearchParams(location.search).get('pais');
+    if (forzado && /^[A-Za-z]{2}$/.test(forzado)) {
+      try { sessionStorage.setItem(CLAVE, forzado.toUpperCase()); } catch { /* sin storage */ }
+    }
     try { pais = sessionStorage.getItem(CLAVE); } catch { /* sin storage */ }
+    if (pais === null && forzado) pais = forzado.toUpperCase();
     if (pais === null) {
       try {
         const t = await (await fetch('/cdn-cgi/trace')).text();
@@ -47,4 +56,5 @@ enDolares().then((si) => {
   document.querySelectorAll<HTMLElement>('[data-usd]').forEach((el) => {
     el.textContent = el.getAttribute('data-usd');
   });
+  pasarANeutro();
 });
