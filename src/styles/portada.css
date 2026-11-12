@@ -506,6 +506,26 @@ p { margin: 0; text-wrap: pretty; }
   .form__botones .btn { flex: 1 1 100%; }
 }
 
+/* Empresas que ya lo usan: franja corta entre el hero y el video. Los logos
+   traen su propio fondo (azul, negro, claro), así que van como íconos de app:
+   todos del mismo tamaño y con el nombre abajo. */
+.clientes-reales { padding: 64px 0 0; text-align: center; }
+.clientes-reales__titulo { margin: 0; font-family: var(--texto); font-stretch: normal; line-height: 1.4; }
+.clientes-reales__lista { list-style: none; margin: 26px auto 0; padding: 0; max-width: 980px;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
+.clientes-reales__lista li { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.clientes-reales__lista img { width: 104px; height: 104px; border-radius: 24px; object-fit: cover; background: #fff;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, .08), 0 14px 28px -16px rgba(7, 34, 58, .45); }
+.clientes-reales__lista span { font-weight: 600; font-size: 15px; line-height: 1.25; color: var(--tinta-2); }
+.clientes-reales + .video45 { padding-top: 72px; }
+@media (max-width: 640px) {
+  .clientes-reales { padding-top: 48px; }
+  .clientes-reales__lista { grid-template-columns: repeat(3, 1fr); gap: 22px 10px; margin-top: 20px; }
+  .clientes-reales__lista img { width: 84px; height: 84px; border-radius: 20px; }
+  .clientes-reales__lista span { font-size: 14px; }
+  .clientes-reales + .video45 { padding-top: 56px; }
+}
+
 /* Aquaenvio en 45 segundos */
 .video45 { padding-bottom: 0; }
 .video45__marco { max-width: 1000px; margin: 40px auto 0; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 50px 90px -40px rgba(7, 34, 58, .6), 0 0 0 1px rgba(15, 23, 42, .08); }
