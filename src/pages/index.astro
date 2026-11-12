@@ -3,6 +3,20 @@
    El <head> de SEO y el seguimiento son los mismos de siempre (SeoHead + Seguimiento, vía Portada.astro);
    las imágenes van optimizadas en /public/portada (WebP al ancho justo). */
 import Portada from '../layouts/Portada.astro';
+
+/* Carrusel «Algunas que ya reparten con Aquaenvio» (ver la sección más abajo).
+   Intercalados: los logos propios y los íconos de iniciales de las que no subieron logo. */
+const clientes = [
+  { img: 'aguas-del-parque', nombre: 'Aguas del Parque' },
+  { img: 'alaska', nombre: 'Alaska' },
+  { img: 'aguas-del-piyu', nombre: 'Aguas del Piyú' },
+  { img: 'novaqua', nombre: 'NOVAQUA' },
+  { img: 'aguas-oasis', nombre: 'Aguas Oasis' },
+  { img: 'distribuidora-lb', nombre: 'Distribuidora L&B' },
+  { img: 'agua-vida', nombre: 'Agua Vida' },
+  { img: 'bemwater', nombre: 'BemWater' },
+  { img: 'hielos-chinos', nombre: "Hielos Chino's" },
+];
 ---
 <Portada>
 <!-- Íconos (Lucide) -->
@@ -75,20 +89,28 @@ import Portada from '../layouts/Portada.astro';
 </section>
 
 <!-- ============ Empresas que ya lo usan (logos reales de aquaenvio.sbs) ============
-     Solo empresas activas y con logo propio. Afuera a propósito: Máxima Pureza
-     (pedido de Fran, 12/11), Prueba y las demo. Los archivos salen del logo que
-     cada empresa subió en Configuración, recortados a 240×240 en /portada/clientes. -->
+     Solo empresas activas (con ventas recientes). Afuera a propósito: Máxima Pureza
+     (pedido de Fran, 12/11), Prueba, las demo, Vitalidad (todavía sin ventas) y las
+     que figuran con nombre de persona. Las que tienen logo usan el que subieron en
+     Configuración (recortado a 240×240 en /portada/clientes); Alaska, Aguas Oasis y
+     BemWater no subieron logo y van con un ícono de iniciales nuestro, que no imita
+     ninguna marca. Si suben el suyo, reemplazarlo.
+     Carrusel en loop sin JS: la lista va dos veces (cada copia ya trae los clientes
+     dos veces, para que tape pantallas anchas) y se anima la cinta un -50%. -->
 <section class="clientes-reales" aria-labelledby="h-clientes">
   <div class="envoltura">
-    <h2 class="antetitulo clientes-reales__titulo revela" id="h-clientes">Ya reparten con Aquaenvio</h2>
-    <ul class="clientes-reales__lista revela">
-      <li><img src="/portada/clientes/aguas-del-parque.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>Aguas del Parque</span></li>
-      <li><img src="/portada/clientes/aguas-del-piyu.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>Aguas del Piyú</span></li>
-      <li><img src="/portada/clientes/novaqua.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>NOVAQUA</span></li>
-      <li><img src="/portada/clientes/distribuidora-lb.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>Distribuidora L&amp;B</span></li>
-      <li><img src="/portada/clientes/agua-vida.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>Agua Vida</span></li>
-      <li><img src="/portada/clientes/hielos-chinos.webp" alt="" width="240" height="240" loading="lazy" decoding="async"><span>Hielos Chino's</span></li>
-    </ul>
+    <h2 class="antetitulo clientes-reales__titulo revela" id="h-clientes">Algunas que ya reparten con Aquaenvio</h2>
+  </div>
+  <div class="clientes-reales__fila revela">
+    <div class="clientes-reales__cinta">
+      {[0, 1].map((copia) => (
+        <ul class="clientes-reales__lista" aria-hidden={copia === 1 ? 'true' : undefined}>
+          {[...clientes, ...clientes].map((c, i) => (
+            <li aria-hidden={i >= clientes.length ? 'true' : undefined}><img src={`/portada/clientes/${c.img}.webp`} alt="" width="240" height="240" loading="lazy" decoding="async"><span>{c.nombre}</span></li>
+          ))}
+        </ul>
+      ))}
+    </div>
   </div>
 </section>
 
